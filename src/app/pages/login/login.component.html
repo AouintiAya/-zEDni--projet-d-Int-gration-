@@ -1,0 +1,48 @@
+<div class="auth-page">
+
+    <!-- Section droite : Formulaire -->
+    <div class="form-section">
+      <div class="auth-container">
+        <div class="header-content">
+          <h1 class="logo">Connexion</h1>
+          <p class="subtitle">Accédez à votre compte</p>
+        </div>
+
+        <form class="login-form">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="votre@email.com"
+              required
+            />
+            <span class="error-message" id="email-error"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              required
+            />
+            <span class="error-message" id="password-error"></span>
+          </div>
+
+          <div class="form-options">
+            <a href="#" class="forgot-password">Mot de passe oublié ?</a>
+          </div>
+
+          <button type="submit" class="btn-submit">Se connecter</button>
+
+          <span class="error-message" id="form-error"></span>
+        </form>
+
+        <div class="register-section">
+          <p>Pas de compte ? <a href="/register" class="register-link">Créer un compte</a></p>
+        </div>
+      </div>
+    </div>
+</div>
