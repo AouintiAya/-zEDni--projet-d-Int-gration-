@@ -1,0 +1,166 @@
+/* --- Palette ---
+#1a3b5f (bleu foncé)
+#2d9cdb (bleu clair)
+#f2c94c (jaune)
+#545454 (gris foncé)
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+:host {
+  font-family: 'Roboto', sans-serif;
+  display: block;
+}
+
+/* === NAVBAR === */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 60px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 12px rgba(26, 59, 95, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 70px;
+  transition: all 0.3s ease;
+}
+
+/* === LOGO === */
+.logo img {
+  height: 90px;
+  width: 120px; /* inchangé */
+  filter: brightness(1.1);
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* === LINKS === */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 45px;
+  align-items: center;
+  margin: 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #1a3b5f;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  position: relative;
+  transition: all 0.3s ease;
+  font-family: 'BBH Sans Bogle', sans-serif;
+  border-radius: 8px;
+  padding: 6px 14px;
+}
+
+/* hover avec le même effet que le menu déroulant */
+.nav-links a:hover {
+  background: linear-gradient(90deg, #2d9cdb, #1a3b5f);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.nav-links a.active {
+  background: linear-gradient(90deg, #2d9cdb, #1a3b5f);
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 6px 14px;
+  transition: all 0.3s ease;
+}
+
+
+/* === ACCOUNT ICON === */
+.account {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  color: #1a3b5f;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(45, 156, 219, 0.15);
+  background-color: #f9fafb;
+}
+
+/* rend l’icône plus grande et claire */
+.icon i {
+  font-size: 3.2rem; /* agrandi ici */
+  color: #1a3b5f;
+  transition: all 0.3s ease;
+}
+
+/* hover moderne et doux */
+.icon:hover {
+  background: linear-gradient(135deg, #2d9cdb, #1a3b5f);
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(45, 156, 219, 0.3);
+}
+.icon:hover i,
+.account:hover .icon i {
+  color: #ffffff !important;
+}
+
+
+/* === DROPDOWN MENU === */
+.dropdown {
+  position: absolute;
+  top: 75px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 8px 20px rgba(26, 59, 95, 0.15);
+  border-radius: 15px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  z-index: 10;
+  animation: fadeIn 0.25s ease;
+}
+
+.dropdown a {
+  color: #1a3b5f;
+  text-decoration: none;
+  padding: 14px 18px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+/* même hover que les liens */
+.dropdown a:hover {
+  background: linear-gradient(90deg, #2d9cdb, #1a3b5f);
+  color: white;
+  transform: translateX(4px);
+}
+
+/* === Animation d'apparition === */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === Correction de sélection pour FA ICON === */
+.fa-solid.fa-user:hover {
+  color: #ffffff;
+}
