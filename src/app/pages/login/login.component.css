@@ -1,0 +1,186 @@
+
+/* ====== Page d'authentification ====== */
+.auth-page {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  backdrop-filter: blur(4px);
+  font-family: "Poppins", sans-serif;
+
+  /* Correction du background */
+  background-image: url('src/assets/images/bg1.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  /* Optionnel : s'assurer que la page fait 100% de la hauteur */
+  width: 100%;
+  height: 100vh;
+}
+/* ====== Section formulaire ====== */
+.form-section {
+  width: 40%;
+  min-width: 380px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ====== Conteneur du formulaire ====== */
+.auth-container {
+  width: 85%;
+  max-width: 420px;
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.auth-container:hover {
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* ====== En-tête ====== */
+.header-content {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a3b5f;
+}
+
+.subtitle {
+  color: #545454;
+  font-size: 0.95rem;
+  margin-top: 0.4rem;
+}
+
+/* ====== Formulaire ====== */
+.login-form .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.3rem;
+}
+
+label {
+  font-weight: 600;
+  color: #1a3b5f;
+  margin-bottom: 0.4rem;
+}
+
+input {
+  padding: 0.9rem 1rem;
+  border: 1.5px solid #d9e2ec;
+  border-radius: 10px;
+  outline: none;
+  font-size: 1rem;
+  background: #fafafa;
+  color: #1a3b5f;
+  transition: all 0.3s ease;
+}
+
+input::placeholder {
+  color: #999;
+}
+
+input:focus {
+  border-color: #2d9cdb;
+  background: #fff;
+  box-shadow: 0 0 6px rgba(45, 156, 219, 0.3);
+}
+
+/* ====== Options ====== */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.8rem;
+  font-size: 0.9rem;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #545454;
+}
+
+.forgot-password {
+  color: #2d9cdb;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+  color: #1a3b5f;
+}
+
+/* ====== Bouton ====== */
+.btn-submit {
+  width: 100%;
+  padding: 0.9rem;
+  background: linear-gradient(135deg, #2d9cdb, #1a3b5f);
+  color: #fff;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.btn-submit:hover {
+  transform: scale(1.03);
+  background: linear-gradient(135deg, #1a3b5f, #2d9cdb);
+}
+
+/* ====== Messages d'erreur ====== */
+.error-message {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+}
+
+/* ====== Section inscription ====== */
+.register-section {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: #545454;
+}
+
+.register-link {
+  color: #f2c94c;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.register-link:hover {
+  color: #2d9cdb;
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 900px) {
+  .auth-page {
+    justify-content: center;
+  }
+
+  .form-section {
+    width: 100%;
+    height: auto;
+    padding: 3rem 0;
+    box-shadow: none;
+    border-left: none;
+  }
+
+  .auth-container {
+    background: rgba(255, 255, 255, 0.9);
+  }
+}
