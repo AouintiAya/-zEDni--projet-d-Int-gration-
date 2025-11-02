@@ -1,0 +1,99 @@
+<div class="dashboard-page">
+  <!-- Navbar -->
+<nav class="navbar">
+  <div class="navbar-container">
+    <!-- Logo à gauche -->
+    <div class="logo-section">
+      <img src="assets/images/logo-1.png" alt="logo" />
+    </div>
+
+    <!-- Barre de recherche au centre -->
+    <div class="center-section">
+      <input type="text" placeholder="Rechercher les cours..." class="search-input"
+             [(ngModel)]="searchQuery" (keyup)="filterCourses()" />
+    </div>
+
+    <!-- Profil utilisateur à droite -->
+    <div class="navbar-menu">
+      <div class="user-profile">
+        <img src="assets/images/logo.png" alt="Profil" class="avatar" />
+        <span class="user-name">{{ userName }}</span>
+        <button class="btn-logout" (click)="logout()">Déconnexion</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+  <div class="dashboard-content">
+   <!-- Sidebar -->
+  <aside [class.closed]="!isSidebarOpen" class="sidebar">
+    <!-- Toggle arrow -->
+    <div class="sidebar-toggle" (click)="toggleSidebar()">
+      <span>{{ isSidebarOpen ? '<' : '>' }}</span>
+    </div>
+
+    <div class="menu-items">
+    <a 
+      href="#" 
+      class="menu-item"
+      *ngFor="let item of menuItems"
+      [class.active]="activeItem === item.name"
+      (click)="setActiveItem(item.name)"
+    >
+      <i [class]="item.icon" [style.color]="item.color"></i>
+      <span class="menu-text" *ngIf="isSidebarOpen">{{ item.name }}</span>
+    </a>
+  </div>
+
+  </aside>
+
+
+
+    <!-- Main Section -->
+    <main class="main-section">
+      <div class="welcome-section">
+        <h2>Bienvenue, {{ userName }}! 👋</h2>
+        <p>Consultez vos cours et vos progressions d'apprentissage</p>
+      </div>
+       <!-- Statistics Cards -->
+    <div class="stats-grid">
+      <div *ngFor="let stat of statCards" class="stat-card" [style.border-left-color]="stat.color">
+        <div class="stat-icon">{{ stat.icon }}</div>
+        <div class="stat-content">
+          <p class="stat-label">{{ stat.title }}</p>
+          <h4 class="stat-value">
+            {{ stat.value }}<span class="stat-unit">{{ stat.unit }}</span>
+          </h4>
+        </div>
+      </div>
+    </div>
+
+          
+      <!-- Courses Grid -->
+      <div class="courses-section">
+        <h3 class="section-title">Mes Cours</h3>
+        <div class="courses-grid">
+          <div class="course-card" *ngFor="let course of filteredCourses">
+            <div class="course-header" [style.background]="course.color">
+              <span class="course-code">{{ course.code }}</span>
+            </div>
+            <div class="course-body">
+              <h4>{{ course.name }}</h4>
+              <p class="course-instructor">Prof. {{ course.instructor }}</p>
+              <div class="course-progress">
+                <div class="progress-bar">
+                  <div class="progress-fill" [style.width]="course.progress + '%'"></div>
+                </div>
+                <span class="progress-text">{{ course.progress }}%</span>
+              </div>
+              <button class="btn-access">Accéder au cours</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </main>
+  </div>
+</div>
