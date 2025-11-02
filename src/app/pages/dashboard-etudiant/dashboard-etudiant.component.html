@@ -1,29 +1,4 @@
 <div class="dashboard-page">
-  <!-- Navbar -->
-<nav class="navbar">
-  <div class="navbar-container">
-    <!-- Logo à gauche -->
-    <div class="logo-section">
-      <img src="assets/images/logo-1.png" alt="logo" />
-    </div>
-
-    <!-- Barre de recherche au centre -->
-    <div class="center-section">
-      <input type="text" placeholder="Rechercher les cours..." class="search-input"
-             [(ngModel)]="searchQuery" (keyup)="filterCourses()" />
-    </div>
-
-    <!-- Profil utilisateur à droite -->
-    <div class="navbar-menu">
-      <div class="user-profile">
-        <img src="assets/images/logo.png" alt="Profil" class="avatar" />
-        <span class="user-name">{{ userName }}</span>
-        <button class="btn-logout" (click)="logout()">Déconnexion</button>
-      </div>
-    </div>
-  </div>
-</nav>
-
 
   <div class="dashboard-content">
    <!-- Sidebar -->
