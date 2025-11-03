@@ -8,7 +8,7 @@
 
   /* Correction du background */
   background-image: url("src/assets/images/bg1.png");
-  background-repeat: no-repeat;
+  background-repeat: repeat-x;
   background-position: center;
   background-size: cover;
 
@@ -25,6 +25,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 30%;
+  margin-top: 5%;
 }
 
 /* ====== Conteneur du formulaire ====== */

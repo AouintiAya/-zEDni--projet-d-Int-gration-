@@ -1,5 +1,6 @@
 
 /* ====== Page d'authentification ====== */
+
 .auth-page {
   display: flex;
   justify-content: flex-end;
@@ -25,6 +26,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 25%;
 }
 
 /* ====== Conteneur du formulaire ====== */
@@ -33,6 +35,7 @@
   max-width: 420px;
   background: #fff;
   padding: 2.5rem;
+  padding-bottom: 0;
   border-radius: 16px;
   box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
@@ -45,7 +48,7 @@
 /* ====== En-tête ====== */
 .header-content {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .logo {
@@ -64,7 +67,7 @@
 .login-form .form-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 1.3rem;
+  margin-bottom: 1rem;
 }
 
 label {
@@ -99,7 +102,7 @@ input:focus {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.8rem;
+  margin-bottom: 1rem;
   font-size: 0.9rem;
 }
 
