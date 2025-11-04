@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -20,24 +22,23 @@ public class SecurityConfig {
     @Autowired
     private JWTfilter jwtFilter;
 
-    @Bean
-public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-        .csrf(csrf -> csrf.disable())
-        .authorizeHttpRequests(auth -> auth
-            .anyRequest().permitAll()
-        )
-        .httpBasic(httpBasic -> httpBasic.disable()); // Désactive la popup
-
-    return http.build();
-}
-
-
-
     @Autowired
-    private  UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
+
     @Bean
-    public AuthenticationProvider authenticationProvider(){
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .anyRequest().permitAll()
+            )
+            .httpBasic(httpBasic -> httpBasic.disable()); // Désactive la popup
+
+        return http.build();
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
         provider.setUserDetailsService(userDetailsService);
@@ -45,10 +46,21 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
     }
 
     @Bean
-    public AuthenticationManager authenticationManager (AuthenticationConfiguration configuration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
-
-
+    // Configuration CORS pour Angular
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:4200")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowCredentials(true);
+            }
+        };
+    }
 }

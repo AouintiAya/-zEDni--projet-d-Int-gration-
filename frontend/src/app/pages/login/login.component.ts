@@ -12,15 +12,17 @@ export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
-    // Création du formulaire avec validations
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
   }
 
-  // Accesseurs pour le HTML
   get email() {
     return this.loginForm.get('email');
   }
@@ -36,11 +38,32 @@ export class LoginComponent {
     }
 
     this.authService.login(this.loginForm.value).subscribe({
-      next: (token) => {
-        this.authService.saveToken(token); // Sauvegarde le token
-        this.router.navigate(['/dashboard-etudiant']); // Redirige vers le dashboard
+      next: (response: any) => {
+        // Sauvegarde du token
+        const token = response.token || response;
+        this.authService.saveToken(token);
+
+        // Récupération du profil utilisateur
+        this.authService.getUserProfile().subscribe({
+          next: (user: any) => {
+            const role = user.role?.toUpperCase();
+
+            if (role === 'ENSEIGNANT') {
+              this.router.navigate(['/dashboard-enseignant']);
+            } else if (role === 'ETUDIANT') {
+              this.router.navigate(['/dashboard-etudiant']);
+            } else {
+              this.router.navigate(['/']); // fallback
+            }
+          },
+          error: (err) => {
+            console.error('Impossible de récupérer le profil', err);
+            this.router.navigate(['/']); // fallback
+          }
+        });
       },
       error: (err) => {
+        console.error('Erreur login', err);
         this.errorMessage = 'Email ou mot de passe incorrect';
       }
     });

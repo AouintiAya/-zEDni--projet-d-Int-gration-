@@ -7,19 +7,29 @@
       </div>
 
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+        <!-- Nom -->
+        <div class="form-group">
+          <label>Nom</label>
+          <input formControlName="nom" placeholder="Nom" />
+        </div>
+
+        <!-- Prénom -->
+        <div class="form-group">
+          <label>Prénom</label>
+          <input formControlName="prenom" placeholder="Prénom" />
+        </div>
+
         <!-- Email -->
         <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" formControlName="email" required />
-          <span *ngIf="email?.invalid && email?.touched" class="error-message">
-            Email invalide
-          </span>
+          <label>Email</label>
+          <input type="email" formControlName="email" placeholder="Email" />
+          <span *ngIf="email?.invalid && email?.touched" class="error-message">Email invalide</span>
         </div>
 
         <!-- Mot de passe -->
         <div class="form-group">
-          <label for="password">Mot de passe</label>
-          <input type="password" id="password" formControlName="password" required />
+          <label>Mot de passe</label>
+          <input type="password" formControlName="password" placeholder="Mot de passe" />
           <span *ngIf="password?.invalid && password?.touched" class="error-message">
             Mot de passe doit contenir au moins 6 caractères
           </span>
@@ -27,26 +37,17 @@
 
         <!-- Confirmer mot de passe -->
         <div class="form-group">
-          <label for="confirmPassword">Confirmer mot de passe</label>
-          <input type="password" id="confirmPassword" formControlName="confirmPassword" required />
-          <span *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.touched" class="error-message">
+          <label>Confirmer mot de passe</label>
+          <input type="password" formControlName="confirmPassword" placeholder="Confirmer mot de passe" />
+          <span *ngIf="registerForm.errors?.['passwordMismatch'] && confirmPassword?.touched" class="error-message">
             Les mots de passe ne correspondent pas
-          </span>
-        </div>
-
-        <!-- Téléphone -->
-        <div class="form-group">
-          <label for="telephone">Numéro de téléphone</label>
-          <input type="tel" id="telephone" formControlName="telephone" maxlength="8" required />
-          <span *ngIf="telephone?.invalid && telephone?.touched" class="error-message">
-            Numéro de téléphone invalide
           </span>
         </div>
 
         <!-- Rôle -->
         <div class="form-group">
-          <label for="role">Rôle</label>
-          <select id="role" formControlName="role" (change)="onRoleChange()">
+          <label>Rôle</label>
+          <select formControlName="role" (change)="onRoleChange()">
             <option value="">-- Sélectionnez un rôle --</option>
             <option value="etudiant">ETUDIANT</option>
             <option value="enseignant">ENSEIGNANT</option>
@@ -55,17 +56,15 @@
 
         <!-- Code enseignant -->
         <div class="form-group" *ngIf="showProfCode">
-          <label for="profCode">Code enseignant</label>
-          <input type="text" id="profCode" formControlName="profCode" placeholder="Entrez le code enseignant" />
+          <label>Code enseignant</label>
+          <input type="text" formControlName="profCode" placeholder="Code enseignant" />
           <span *ngIf="profCode?.invalid && profCode?.touched" class="error-message">
             Code enseignant invalide
           </span>
         </div>
 
-        <button type="submit" class="btn-submit" [disabled]="registerForm.invalid">
-          S'inscrire
-        </button>
-
+        <!-- Bouton submit -->
+        <button type="submit" [disabled]="registerForm.invalid">S'inscrire</button>
 
         <span class="error-message" *ngIf="errorMessage">{{ errorMessage }}</span>
         <span class="success-message" *ngIf="successMessage">{{ successMessage }}</span>

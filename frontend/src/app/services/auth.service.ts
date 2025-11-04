@@ -11,13 +11,20 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  register(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, data, { responseType: 'text' });
-  }
+  register(data: any): Observable<string> {
+  return this.http.post(`${this.apiUrl}/register`, data, { responseType: 'text' });
+}
+
 
   login(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, data, { responseType: 'text' });
   }
+  getUserProfile() {
+  const token = this.getToken();
+  return this.http.get('http://localhost:9091/api/users/me', { // <-- corrige l'URL ici
+    headers: { Authorization: `Bearer ${token}` }
+  });
+}
 
   saveToken(token: string) {
     localStorage.setItem('jwtToken', token);
