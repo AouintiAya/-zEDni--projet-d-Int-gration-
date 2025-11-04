@@ -17,8 +17,8 @@ export class AuthService {
 
 
   login(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, data, { responseType: 'text' });
-  }
+  return this.http.post(`${this.apiUrl}/login`, data); // laisse Angular parser le JSON automatiquement
+}
   getUserProfile() {
   const token = this.getToken();
   return this.http.get('http://localhost:9091/api/users/me', { // <-- corrige l'URL ici
