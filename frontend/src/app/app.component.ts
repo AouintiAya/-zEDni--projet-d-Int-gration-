@@ -15,8 +15,9 @@ export class AppComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.isLoggedIn = this.authService.isLoggedIn();
-
+    this.authService.isLoggedIn$.subscribe(status => {
+      this.isLoggedIn = status;
+    });
   }
 
   toggleMenu() {

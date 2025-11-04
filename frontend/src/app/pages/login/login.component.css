@@ -26,7 +26,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 25%;
+  margin-right: 30%;
 }
 
 /* ====== Conteneur du formulaire ====== */
@@ -60,7 +60,7 @@
 .subtitle {
   color: #545454;
   font-size: 0.95rem;
-  margin-top: 0.4rem;
+  margin-top: 0.1rem;
 }
 
 /* ====== Formulaire ====== */

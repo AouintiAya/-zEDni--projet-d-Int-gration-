@@ -8,6 +8,7 @@ describe('DashboardEnseignantComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [TeacherDashboardComponent],
       declarations: [TeacherDashboardComponent]
     });
     fixture = TestBed.createComponent(TeacherDashboardComponent);

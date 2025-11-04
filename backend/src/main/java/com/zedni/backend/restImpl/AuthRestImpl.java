@@ -1,12 +1,13 @@
 package com.zedni.backend.restImpl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.zedni.backend.dto.LoginRequest;
 import com.zedni.backend.dto.RegisterRequest;
 import com.zedni.backend.rest.AuthRest;
 import com.zedni.backend.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AuthRestImpl implements AuthRest {
