@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 interface StatCard {
   icon: string;
@@ -25,14 +26,14 @@ interface Course {
   styleUrls: ['./dashboard-etudiant.component.css']
 })
 export class DashboardEtudiantComponent {
-  constructor(private router: Router) { }  // <-- injection du Router
+  constructor(private router: Router,private authService: AuthService) { }  // <-- injection du Router
 
-  userName = 'Islem Aissa';
+  userName: string = 'Utilisateur'; // valeur par défaut
   searchQuery = '';
   isSidebarOpen = false;
   activeItem: string = 'Tableau de bord'; // par défaut
 
- 
+
   statCards: StatCard[] = [
     {
       icon: "📚",
@@ -89,7 +90,7 @@ export class DashboardEtudiantComponent {
   toggleSidebar(): void {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
-  
+
   setActiveItem(itemName: string): void {
   this.activeItem = itemName;
 }
@@ -97,5 +98,13 @@ export class DashboardEtudiantComponent {
    logout(): void {
     // Tu peux aussi supprimer les infos utilisateur ici si nécessaire
     this.router.navigate(['/login']); // redirige vers la page login
+  }
+  ngOnInit(): void {
+    const user = this.authService.getUserInfo();
+    if (user) {
+      // ici, tu peux personnaliser le nom
+      // par exemple, afficher seulement la partie avant le @ de l'email
+      this.userName = user.sub.split('@')[0];
+    }
   }
 }

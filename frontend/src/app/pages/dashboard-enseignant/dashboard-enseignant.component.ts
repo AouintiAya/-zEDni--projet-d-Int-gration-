@@ -1,6 +1,7 @@
 import { Component, type OnInit } from "@angular/core"
 import { CommonModule } from "@angular/common"
 import { FormsModule } from "@angular/forms"
+import { AuthService } from "src/app/services/auth.service"
 
 interface StatCard {
   icon: string
@@ -27,10 +28,11 @@ interface Course {
   styleUrls: ['./dashboard-enseignant.component.css']
 })
 export class TeacherDashboardComponent implements OnInit {
-  teacherName = "Dr. Mohamed Achraf"
-  teacherEmail = "mohammed@example.com"
-  teacherAvatar = "MA"
-  searchQuery = ""
+  constructor(private authService: AuthService) { }
+  userName: string = 'Utilisateur'; // valeur par défaut
+  searchQuery = ''
+  isSidebarOpen = false
+  activeItem: string = 'Tableau de bord' // par défaut
 
   statCards: StatCard[] = [
     {
@@ -89,15 +91,10 @@ export class TeacherDashboardComponent implements OnInit {
       status: "En cours",
       image: "assets/images/ai.jpg",
     },
-   
+
   ]
 
   filteredCourses: Course[] = []
-
-  ngOnInit(): void {
-    this.filteredCourses = this.courses
-  }
-
   onSearch(): void {
     if (!this.searchQuery.trim()) {
       this.filteredCourses = this.courses
@@ -126,6 +123,16 @@ export class TeacherDashboardComponent implements OnInit {
         return "#ff9800"
       default:
         return "#545454"
+    }
+  }
+
+ngOnInit(): void {
+    this.filteredCourses = this.courses
+    const user = this.authService.getUserInfo();
+    if (user) {
+      // ici, tu peux personnaliser le nom
+      // par exemple, afficher seulement la partie avant le @ de l'email
+      this.userName = user.sub.split('@')[0];
     }
   }
 }
