@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -31,41 +32,41 @@ export class LoginComponent {
     return this.loginForm.get('password');
   }
 
-  onSubmit() {
-    if (this.loginForm.invalid) {
-      this.errorMessage = 'Veuillez remplir correctement tous les champs.';
-      return;
-    }
+ onSubmit() {
+  if (this.loginForm.invalid) {
+    this.errorMessage = 'Veuillez remplir correctement tous les champs.';
+    return;
+  }
 
-    this.authService.login(this.loginForm.value).subscribe({
-      next: (response: any) => {
-        // Sauvegarde du token
-        const token = response.token || response;
+  this.authService.login(this.loginForm.value).subscribe({
+    next: (token: string) => {
+      if (token) {
+        // Sauvegarde du token dans le localStorage
         this.authService.saveToken(token);
 
-        // Récupération du profil utilisateur
-        this.authService.getUserProfile().subscribe({
-          next: (user: any) => {
-            const role = user.role?.toUpperCase();
+        // Décodage du token JWT
+        const decoded: any = jwtDecode(token);
+        console.log(decoded);
 
-            if (role === 'ENSEIGNANT') {
-              this.router.navigate(['/dashboard-enseignant']);
-            } else if (role === 'ETUDIANT') {
-              this.router.navigate(['/dashboard-etudiant']);
-            } else {
-              this.router.navigate(['/']); // fallback
-            }
-          },
-          error: (err) => {
-            console.error('Impossible de récupérer le profil', err);
-            this.router.navigate(['/']); // fallback
-          }
-        });
-      },
-      error: (err) => {
-        console.error('Erreur login', err);
-        this.errorMessage = 'Email ou mot de passe incorrect';
+        // Récupération du rôle
+        const role = decoded.role?.toUpperCase();
+
+        // Redirection selon le rôle
+        if (role === 'ROLE_ENSEIGNANT') {
+          this.router.navigate(['/dashboard-enseignant']);
+        } else if (role === 'ROLE_ETUDIANT') {
+          this.router.navigate(['/dashboard-etudiant']);
+        } else {
+          this.router.navigate(['/']); // redirection par défaut
+        }
+      } else {
+        this.errorMessage = 'Token non trouvé.';
       }
-    });
-  }
+    },
+    error: (err) => {
+      console.error('Erreur login', err);
+      this.errorMessage = 'Email ou mot de passe incorrect.';
+    }
+  });
+}
 }

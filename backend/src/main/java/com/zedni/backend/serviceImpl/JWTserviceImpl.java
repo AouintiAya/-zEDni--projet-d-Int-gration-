@@ -18,23 +18,22 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JWTserviceImpl implements JWTservice {
+    private final String secretKey ="zEDniE-Learning@DSI31/G1?authKey:23-10-25";
 
-    private final String secretKey = "zEDniE-Learning@DSI31/G1?authKey:23-10-25";
-
-    public String generateToken(String username, String role) {
+    @Override
+    public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+        String role = userDetails.getAuthorities().iterator().next().getAuthority();
         claims.put("role", role);
-
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(username)
+                .setSubject(userDetails.getUsername()) //email
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(getKey())
                 .compact();
     }
-
-    private Key getKey() {
+    private Key getKey(){
         return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
@@ -43,12 +42,12 @@ public class JWTserviceImpl implements JWTservice {
         return extractClaim(token, Claims::getSubject);
     }
 
-    private <T> T extractClaim(String token, Function<Claims, T> claimsTFunction) {
-        final Claims claims = extractAllClaims(token);
+    private <T> T extractClaim(String token , Function<Claims,T> claimsTFunction){
+        final Claims claims =  extractAllClaims(token);
         return claimsTFunction.apply(claims);
     }
 
-    private Claims extractAllClaims(String token) {
+    private Claims extractAllClaims(String token){
         return Jwts.parser()
                 .setSigningKey(getKey())
                 .build()
@@ -62,12 +61,11 @@ public class JWTserviceImpl implements JWTservice {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    private boolean isTokenExpired(String token) {
+    private boolean isTokenExpired(String token){
         return extractExpiration(token).before(new Date());
     }
 
-    private Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
+    private Date extractExpiration(String token){
+        return extractClaim(token,Claims::getExpiration);
     }
-
 }
