@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { jwtDecode } from 'jwt-decode';
@@ -13,35 +13,51 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   register(data: any): Observable<string> {
-  return this.http.post(`${this.apiUrl}/register`, data, { responseType: 'text' });
-}
+    return this.http.post(`${this.apiUrl}/register`, data, { responseType: 'text' });
+  }
 
+  login(data: any): Observable<string> {
+    return this.http.post(`${this.apiUrl}/login`, data, { responseType: 'text' });
+  }
 
-login(data: any): Observable<string> {
-  return this.http.post(`${this.apiUrl}/login`, data, { responseType: 'text' });
-}
-
-  saveToken(token: string) {
-    localStorage.setItem('jwtToken', token);
+  // 🔹 Sauvegarde uniforme
+  saveToken(token: string): void {
+    localStorage.setItem('token', token);
   }
 
   getToken(): string | null {
-    return localStorage.getItem('jwtToken');
+    return localStorage.getItem('token');
   }
 
-  logout() {
-    localStorage.removeItem('jwtToken');
+  logout(): void {
+    localStorage.removeItem('token');
   }
-  getUserInfo() {
-  const token = this.getToken();
-  if (!token) return null;
 
-  try {
-    const decoded: any = jwtDecode(token);
-    return decoded; // { sub: 'email', role: 'ROLE_ENSEIGNANT', ... }
-  } catch (e) {
-    console.error('Erreur lors du décodage du token', e);
-    return null;
+  // 🔹 Décodage du JWT
+  getUserInfo(): any {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const decoded: any = jwtDecode(token);
+      return decoded; // { sub: 'email', role: 'ROLE_ENSEIGNANT', ... }
+    } catch (e) {
+      console.error('Erreur lors du décodage du token', e);
+      return null;
+    }
   }
-}
+
+  // 🔹 Vérifie la validité du token
+  isLoggedIn(): boolean {
+    const token = this.getToken();
+    if (!token) return false;
+
+    try {
+      const decoded: any = jwtDecode(token);
+      const exp = decoded.exp * 1000;
+      return Date.now() < exp;
+    } catch {
+      return false;
+    }
+  }
 }

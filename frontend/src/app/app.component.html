@@ -14,9 +14,18 @@
     <div class="icon">
       <i class="fa-solid fa-user"></i>
     </div>
+
     <div class="dropdown" *ngIf="showMenu">
-      <a routerLink="/login">Se connecter</a>
-      <a routerLink="/register">S’inscrire</a>
+      <!-- Si connecté -->
+      <ng-container *ngIf="isLoggedIn; else notLoggedIn">
+        <a (click)="logout()">Se déconnecter</a>
+      </ng-container>
+
+      <!-- Si NON connecté -->
+      <ng-template #notLoggedIn>
+        <a routerLink="/login">Se connecter</a>
+        <a routerLink="/register">S’inscrire</a>
+      </ng-template>
     </div>
   </div>
 </nav>

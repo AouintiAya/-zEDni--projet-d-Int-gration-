@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from './services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,28 +9,35 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'zEDni';
+  showMenu = false;
+  isLoggedIn = false;
 
- showMenu = false; //
+  constructor(private authService: AuthService, private router: Router) {}
 
-   toggleMenu() {
+  ngOnInit(): void {
+    this.isLoggedIn = this.authService.isLoggedIn();
+
+  }
+
+  toggleMenu() {
     this.showMenu = !this.showMenu;
   }
 
+  logout(): void {
+    this.authService.logout();
+    this.isLoggedIn = false;
+    this.showMenu = false;
+    this.router.navigate(['/']);
+  }
 
   ngAfterViewInit() {
-  const links = document.querySelectorAll('.nav-links a');
+    const links = document.querySelectorAll('.nav-links a');
 
-  links.forEach(link => {
-    link.addEventListener('click', () => {
-      // Supprime la classe active de tous les liens
-      links.forEach(l => l.classList.remove('active'));
-      // Ajoute la classe active au lien cliqué
-      link.classList.add('active');
+    links.forEach(link => {
+      link.addEventListener('click', () => {
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      });
     });
-  });
+  }
 }
-
-}
-
-
-
