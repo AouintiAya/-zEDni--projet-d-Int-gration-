@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -8,14 +10,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class RegisterComponent {
   registerForm: FormGroup;
-  showProfCode = false;
-  successMessage = '';
-  errorMessage = '';
+  showProfCode: boolean = false;
+  errorMessage: string = '';
+  successMessage: string = '';
 
-
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group(
       {
+        nom: ['', Validators.required],
+        prenom: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', Validators.required],
@@ -27,53 +30,66 @@ export class RegisterComponent {
     );
   }
 
-  passwordMatchValidator(form: FormGroup) {
-    const password = form.get('password')?.value;
-    const confirm = form.get('confirmPassword')?.value;
-    return password === confirm ? null : { passwordMismatch: true };
+  get email() {
+    return this.registerForm.get('email');
   }
+
+  get password() {
+    return this.registerForm.get('password');
+  }
+
+  get confirmPassword() {
+    return this.registerForm.get('confirmPassword');
+  }
+
+  get telephone() {
+    return this.registerForm.get('telephone');
+  }
+
+  get profCode() {
+    return this.registerForm.get('profCode');
+  }
+
+  passwordMatchValidator(group: AbstractControl) {
+  const password = group.get('password')?.value;
+  const confirm = group.get('confirmPassword')?.value;
+
+  if (password !== confirm) {
+    group.get('confirmPassword')?.setErrors({ passwordMismatch: true });
+  } else {
+    group.get('confirmPassword')?.setErrors(null);
+  }
+  return null; // important pour que le FormGroup soit considéré valide
+}
 
   onRoleChange() {
     const role = this.registerForm.get('role')?.value;
     this.showProfCode = role === 'enseignant';
+    const profCodeControl = this.registerForm.get('profCode');
 
     if (this.showProfCode) {
-      this.registerForm.get('profCode')?.setValidators([Validators.required]);
+      profCodeControl?.setValidators([Validators.required]);
     } else {
-      this.registerForm.get('profCode')?.clearValidators();
-      this.registerForm.get('profCode')?.setValue('');
+      profCodeControl?.clearValidators();
+      profCodeControl?.setValue('');
     }
-    this.registerForm.get('profCode')?.updateValueAndValidity();
+
+    profCodeControl?.updateValueAndValidity();
   }
 
   onSubmit() {
-    this.errorMessage = '';
-    this.successMessage = '';
+    if (this.registerForm.invalid) return;
 
-    if (this.registerForm.invalid) {
-      this.errorMessage = 'Veuillez remplir tous les champs correctement.';
-      return;
-    }
-
-    const role = this.registerForm.get('role')?.value;
-    const profCode = this.registerForm.get('profCode')?.value;
-
-    if (role === 'enseignant' && profCode !== 'CODEPROF123') {
-      this.errorMessage = 'Code enseignant invalide.';
-      return;
-    }
-
-    this.successMessage = 'Inscription réussie !';
-    console.log(this.registerForm.value);
-    this.registerForm.reset();
-    this.showProfCode = false;
+    this.authService.register(this.registerForm.value).subscribe({
+      next: (res) => {
+        this.successMessage = 'Inscription réussie !';
+        this.errorMessage = '';
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        this.errorMessage = 'Erreur lors de l’inscription.';
+        this.successMessage = '';
+      }
+    });
   }
-
-  // Getters pour le template
-  get email() { return this.registerForm.get('email'); }
-  get password() { return this.registerForm.get('password'); }
-  get confirmPassword() { return this.registerForm.get('confirmPassword'); }
-  get cin() { return this.registerForm.get('cin'); }
-  get telephone() { return this.registerForm.get('telephone'); }
-  get profCode() { return this.registerForm.get('profCode'); }
 }

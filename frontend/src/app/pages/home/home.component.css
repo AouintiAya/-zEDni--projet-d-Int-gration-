@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
 /* --- Palette ---
 #1a3b5f (bleu foncé)
 #2d9cdb (bleu clair)
@@ -5,7 +8,6 @@
 #545454 (gris foncé)
 */
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 :host {
   font-family: 'Roboto', sans-serif;
@@ -65,7 +67,6 @@ html {
 }
 
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 :host {
   font-family: 'Poppins', sans-serif;

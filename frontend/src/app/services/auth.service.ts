@@ -1,42 +1,33 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private apiUrl = environment.apiUrl + '/auth';
 
-  private users: { email: string, password: string }[] = [];
-  private isLoggedIn = new BehaviorSubject<boolean>(false);
+  constructor(private http: HttpClient) {}
 
-  constructor() { }
-
-  // Créer un compte
-  register(email: string, password: string): Observable<boolean> {
-    const exists = this.users.find(u => u.email === email);
-    if (exists) {
-      return of(false); // utilisateur existe déjà
-    }
-    this.users.push({ email, password });
-    return of(true);
+  register(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, data, { responseType: 'text' });
   }
 
-  // Connexion
-  login(email: string, password: string): Observable<boolean> {
-    const user = this.users.find(u => u.email === email && u.password === password);
-    if (user) {
-      this.isLoggedIn.next(true);
-      return of(true);
-    }
-    return of(false);
+  login(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/login`, data, { responseType: 'text' });
   }
 
-  // Vérifier état de connexion
-  getAuthStatus(): Observable<boolean> {
-    return this.isLoggedIn.asObservable();
+  saveToken(token: string) {
+    localStorage.setItem('jwtToken', token);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('jwtToken');
   }
 
   logout() {
-    this.isLoggedIn.next(false);
+    localStorage.removeItem('jwtToken');
   }
 }

@@ -48,8 +48,8 @@
           <label for="role">Rôle</label>
           <select id="role" formControlName="role" (change)="onRoleChange()">
             <option value="">-- Sélectionnez un rôle --</option>
-            <option value="etudiant">Étudiant</option>
-            <option value="enseignant">Enseignant</option>
+            <option value="etudiant">ETUDIANT</option>
+            <option value="enseignant">ENSEIGNANT</option>
           </select>
         </div>
 
@@ -62,9 +62,10 @@
           </span>
         </div>
 
-        <button routerLink="/login" type="submit" class="btn-submit" [disabled]="registerForm.invalid">
+        <button type="submit" class="btn-submit" [disabled]="registerForm.invalid">
           S'inscrire
         </button>
+
 
         <span class="error-message" *ngIf="errorMessage">{{ errorMessage }}</span>
         <span class="success-message" *ngIf="successMessage">{{ successMessage }}</span>
