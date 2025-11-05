@@ -1,0 +1,13 @@
+FROM  node:17 AS build 
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm install -g @angular/cli && npm install
+COPY . .
+RUN npm run build
+CMD ["npm", "start"]
+
+
+FROM nginx:alpine
+COPY --from=build /app/dist/z-edni  /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
