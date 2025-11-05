@@ -71,4 +71,22 @@ export class AuthService {
   isLoggedIn(): boolean {
     return this.loggedIn.value;
   }
+   // Étape 1 : envoyer OTP
+  sendOtp(email: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/forgot-password`, { email });
+  }
+
+  // Étape 2 : vérifier OTP
+  verifyOtp(email: string, otp: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/verify-otp`, { email, otp });
+  }
+
+  // Étape 3 : réinitialiser le mot de passe
+  resetPassword(email: string, otp: string, newPassword: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/reset-password`, {
+      email,
+      otp,
+      newPassword
+    });
+  }
 }

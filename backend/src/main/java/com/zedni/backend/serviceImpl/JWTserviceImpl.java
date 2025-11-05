@@ -1,5 +1,11 @@
 package com.zedni.backend.serviceImpl;
 
+import com.zedni.backend.service.JWTservice;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
@@ -7,14 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
-
-import com.zedni.backend.service.JWTservice;
-
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JWTserviceImpl implements JWTservice {

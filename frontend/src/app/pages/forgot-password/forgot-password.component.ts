@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -6,49 +7,56 @@ import { Component } from '@angular/core';
   styleUrls: ['./forgot-password.component.css']
 })
 export class ForgotPasswordComponent {
-  email: string = '';
-  code: string = '';
-  password: string = '';
+  email = '';
+  otp = '';
+  newPassword = '';
 
-  step: number = 1; // 1=email, 2=code, 3=password
+  step = 1; // 1: email, 2: otp, 3: new password
+  message = '';
+  error = '';
 
-  emailError: string = '';
-  codeError: string = '';
-  successMessage: string = '';
+  constructor(private authService: AuthService) {}
 
-  // Simulation de la "base de données"
-  existingEmails = ['test@example.com', 'meriem@gmail.com'];
-  sentCode: string = '123456';
-
+  // Étape 1 : envoyer le code OTP
   onSubmitEmail() {
-    if (this.existingEmails.includes(this.email)) {
-      this.emailError = '';
-      this.step = 2;
-      alert('Un code a été envoyé à votre adresse email.');
-    } else {
-      this.emailError = "Cet email n'existe pas dans notre base de données.";
-    }
+    this.authService.sendOtp(this.email).subscribe({
+      next: () => {
+        this.error = '';
+        this.message = 'Un code a été envoyé à votre adresse email.';
+        this.step = 2;
+      },
+      error: (err) => {
+        this.error = err.error || "Email introuvable dans notre base de données.";
+      }
+    });
   }
 
+  // Étape 2 : vérifier le code
   onSubmitCode() {
-    if (this.code === this.sentCode) {
-      this.codeError = '';
-      this.step = 3;
-    } else {
-      this.codeError = 'Le code est incorrect.';
-    }
+    this.authService.verifyOtp(this.email, this.otp).subscribe({
+      next: () => {
+        this.error = '';
+        this.message = 'Code vérifié. Vous pouvez maintenant définir un nouveau mot de passe.';
+        this.step = 3;
+      },
+      error: (err) => {
+        this.error = err.error || 'Code incorrect ou expiré.';
+      }
+    });
   }
 
+  // Étape 3 : réinitialiser le mot de passe
   onSubmitPassword() {
-    this.successMessage = 'Votre mot de passe a été réinitialisé avec succès !';
-    alert('Mot de passe mis à jour.');
-    this.resetForm();
-  }
-
-  resetForm() {
-    this.email = '';
-    this.code = '';
-    this.password = '';
-    this.step = 1;
+    this.authService.resetPassword(this.email, this.otp, this.newPassword).subscribe({
+      next: () => {
+        this.message = 'Mot de passe réinitialisé avec succès !';
+        this.error = '';
+        this.step = 1;
+        this.email = this.otp = this.newPassword = '';
+      },
+      error: (err) => {
+        this.error = err.error || 'Erreur lors de la réinitialisation du mot de passe.';
+      }
+    });
   }
 }

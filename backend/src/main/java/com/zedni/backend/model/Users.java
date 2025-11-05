@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -20,6 +22,12 @@ public class Users {
     private String email;
     private String password;
     private String role;
+    private boolean enabled = true;
+    private String otp;
+    private LocalDateTime otpExpiry;
+
+
+
 
 
 }
