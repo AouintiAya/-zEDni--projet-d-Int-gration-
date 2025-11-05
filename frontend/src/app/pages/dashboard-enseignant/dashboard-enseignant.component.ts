@@ -126,6 +126,21 @@ export class TeacherDashboardComponent implements OnInit {
     }
   }
 
+  menuItems = [
+    { name: 'Tableau de bord', icon: 'fa-solid fa-home', color:'#1a3b5f' , route: '#' },
+    { name: 'Cours', icon: 'fa-solid fa-book', color:'#1a3b5f', route: '#' },
+    { name: 'Profil', icon: 'fa-solid fa-user', color:'#1a3b5f', route: '#' },
+    { name: 'Paramètres', icon: 'fa-solid fa-gear', color:'#1a3b5f', route: '#' },
+  ];
+
+  toggleSidebar(): void {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  setActiveItem(itemName: string): void {
+  this.activeItem = itemName;
+}
+
 ngOnInit(): void {
     this.filteredCourses = this.courses
     const user = this.authService.getUserInfo();

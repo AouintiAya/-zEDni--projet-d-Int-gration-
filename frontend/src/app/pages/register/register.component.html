@@ -64,7 +64,7 @@
         </div>
 
         <!-- Bouton submit -->
-        <button type="submit" [disabled]="registerForm.invalid">S'inscrire</button>
+        <button  type="submit" class="btn-submit" [disabled]="registerForm.invalid">S'inscrire</button>
 
         <span class="error-message" *ngIf="errorMessage">{{ errorMessage }}</span>
         <span class="success-message" *ngIf="successMessage">{{ successMessage }}</span>

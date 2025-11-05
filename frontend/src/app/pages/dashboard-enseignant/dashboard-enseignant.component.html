@@ -1,63 +1,86 @@
 <div class="teacher-dashboard">
+  <div class="dashboard-content">
 
-
-  <!-- Main Content -->
-  <main class="main-content">
-    <!-- Header Section -->
-    <div class="header-section">
-      <div class="header-content">
-        <h1>Tableau de bord professeur</h1>
-        <p>Bienvenue {{userName}}</p>
+    <!-- Sidebar -->
+    <aside [class.closed]="!isSidebarOpen" class="sidebar">
+      <!-- Toggle arrow -->
+      <div class="sidebar-toggle" (click)="toggleSidebar()">
+        <span>{{ isSidebarOpen ? '<' : '>' }}</span>
       </div>
-      <button class="create-course-btn" (click)="createCourse()">+ Créer un cours</button>
-    </div>
 
-    <!-- Statistics Cards -->
-    <div class="stats-grid">
-      <div *ngFor="let stat of statCards" class="stat-card" [style.border-left-color]="stat.color">
-        <div class="stat-icon">{{ stat.icon }}</div>
-        <div class="stat-content">
-          <p class="stat-label">{{ stat.title }}</p>
-          <h4 class="stat-value">
-            {{ stat.value }}<span class="stat-unit">{{ stat.unit }}</span>
-          </h4>
+      <div class="menu-items">
+        <a
+          href="#"
+          class="menu-item"
+          *ngFor="let item of menuItems"
+          [class.active]="activeItem === item.name"
+          (click)="setActiveItem(item.name)"
+        >
+          <i [class]="item.icon" [style.color]="item.color"></i>
+          <span class="menu-text" *ngIf="isSidebarOpen">{{ item.name }}</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header Section -->
+      <div class="header-section">
+        <div class="header-content">
+          <h1>Tableau de bord professeur</h1>
+          <p>Bienvenue {{ userName }}</p>
+        </div>
+        <button class="create-course-btn" (click)="createCourse()">+ Créer un cours</button>
+      </div>
+
+      <!-- Statistics Cards -->
+      <div class="stats-grid">
+        <div *ngFor="let stat of statCards" class="stat-card" [style.border-left-color]="stat.color">
+          <div class="stat-icon">{{ stat.icon }}</div>
+          <div class="stat-content">
+            <p class="stat-label">{{ stat.title }}</p>
+            <h4 class="stat-value">
+              {{ stat.value }}<span class="stat-unit">{{ stat.unit }}</span>
+            </h4>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- My Courses Section -->
-    <div class="courses-section">
-      <h2>Mes cours</h2>
-      <p class="courses-subtitle">Gérez vos cours et suivez leurs performances</p>
+      <!-- My Courses Section -->
+      <div class="courses-section">
+        <h2>Mes cours</h2>
+        <p class="courses-subtitle">Gérez vos cours et suivez leurs performances</p>
 
-      <div class="courses-grid">
-        <div *ngFor="let course of filteredCourses" class="course-card">
-          <div class="course-image">
-            <img [src]="course.image" [alt]="course.title" />
-            <span class="status-badge" [style.background-color]="getStatusColor(course.status)">
-              {{ course.status }}
-            </span>
-          </div>
-          <div class="course-content">
-            <h4>{{ course.title }}</h4>
-            <div class="course-stats">
-              <div class="stat">
-                <span class="icon">👥</span>
-                <span>{{ course.students }} étudiants</span>
-              </div>
-              <div class="stat">
-                <span class="icon">⭐</span>
-                <span>{{ course.rating }}/5</span>
-              </div>
+        <div class="courses-grid">
+          <div *ngFor="let course of filteredCourses" class="course-card">
+            <div class="course-image">
+              <img [src]="course.image" [alt]="course.title" />
+              <span class="status-badge" [style.background-color]="getStatusColor(course.status)">
+                {{ course.status }}
+              </span>
             </div>
-            <button class="edit-btn">Gérer le cours</button>
+            <div class="course-content">
+              <h4>{{ course.title }}</h4>
+              <div class="course-stats">
+                <div class="stat">
+                  <span class="icon">👥</span>
+                  <span>{{ course.students }} étudiants</span>
+                </div>
+                <div class="stat">
+                  <span class="icon">⭐</span>
+                  <span>{{ course.rating }}/5</span>
+                </div>
+              </div>
+              <button class="edit-btn">Gérer le cours</button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div *ngIf="filteredCourses.length === 0" class="empty-state">
-        <p>Aucun cours trouvé pour votre recherche</p>
+        <div *ngIf="filteredCourses.length === 0" class="empty-state">
+          <p>Aucun cours trouvé pour votre recherche</p>
+        </div>
       </div>
-    </div>
-  </main>
+    </main>
+
+  </div>
 </div>
