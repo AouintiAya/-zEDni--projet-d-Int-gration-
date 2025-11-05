@@ -26,7 +26,7 @@ public class JWTserviceImpl implements JWTservice {
         claims.put("role", role);
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(username) //email
+                .setSubject(userDetails.getUsername()) //email
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(getKey())
