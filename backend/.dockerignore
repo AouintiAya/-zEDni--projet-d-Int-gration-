@@ -1,0 +1,7 @@
+arget/
+.idea/
+.vscode/
+*.iml
+*.log
+.env
+.DS_Store
