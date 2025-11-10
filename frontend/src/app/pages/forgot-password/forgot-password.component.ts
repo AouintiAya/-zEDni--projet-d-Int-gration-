@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
@@ -14,33 +15,36 @@ export class ForgotPasswordComponent {
   step = 1; // 1: email, 2: otp, 3: new password
   message = '';
   error = '';
+  Router: any;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private cd: ChangeDetectorRef,private router: Router) {}
 
   // Étape 1 : envoyer le code OTP
   onSubmitEmail() {
     this.authService.sendOtp(this.email).subscribe({
-      next: () => {
+      next: (res: any) => {
         this.error = '';
-        this.message = 'Un code a été envoyé à votre adresse email.';
+        this.message = res.text || 'Un code a été envoyé à votre adresse email.';
         this.step = 2;
+        this.cd.detectChanges();
       },
       error: (err) => {
-        this.error = err.error || "Email introuvable dans notre base de données.";
+        this.error = err.error?.text || "Email introuvable dans notre base de données.";
       }
     });
   }
 
-  // Étape 2 : vérifier le code
+  // Étape 2 : vérifier le code OTP
   onSubmitCode() {
     this.authService.verifyOtp(this.email, this.otp).subscribe({
-      next: () => {
+      next: (res: any) => {
         this.error = '';
-        this.message = 'Code vérifié. Vous pouvez maintenant définir un nouveau mot de passe.';
+        this.message = res.text || 'Code vérifié. Vous pouvez maintenant définir un nouveau mot de passe.';
         this.step = 3;
+        this.cd.detectChanges();
       },
       error: (err) => {
-        this.error = err.error || 'Code incorrect ou expiré.';
+        this.error = err.error?.text || 'Code incorrect ou expiré.';
       }
     });
   }
@@ -48,14 +52,18 @@ export class ForgotPasswordComponent {
   // Étape 3 : réinitialiser le mot de passe
   onSubmitPassword() {
     this.authService.resetPassword(this.email, this.otp, this.newPassword).subscribe({
-      next: () => {
-        this.message = 'Mot de passe réinitialisé avec succès !';
+      next: (res: any) => {
+        this.message = res.text || 'Mot de passe réinitialisé avec succès !';
         this.error = '';
         this.step = 1;
         this.email = this.otp = this.newPassword = '';
+        this.cd.detectChanges();
+        setTimeout(() => {
+          this.Router.navigate(['/login']);
+        }, 2000);
       },
       error: (err) => {
-        this.error = err.error || 'Erreur lors de la réinitialisation du mot de passe.';
+        this.error = err.error?.text || 'Erreur lors de la réinitialisation du mot de passe.';
       }
     });
   }
