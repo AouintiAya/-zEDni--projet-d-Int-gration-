@@ -15,9 +15,12 @@ export class ForgotPasswordComponent {
   step = 1; // 1: email, 2: otp, 3: new password
   message = '';
   error = '';
-  Router: any;
 
-  constructor(private authService: AuthService, private cd: ChangeDetectorRef,private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private cd: ChangeDetectorRef,
+    private router: Router
+  ) {}
 
   // Étape 1 : envoyer le code OTP
   onSubmitEmail() {
@@ -51,20 +54,19 @@ export class ForgotPasswordComponent {
 
   // Étape 3 : réinitialiser le mot de passe
   onSubmitPassword() {
-    this.authService.resetPassword(this.email, this.otp, this.newPassword).subscribe({
-      next: (res: any) => {
-        this.message = res.text || 'Mot de passe réinitialisé avec succès !';
-        this.error = '';
-        this.step = 1;
-        this.email = this.otp = this.newPassword = '';
-        this.cd.detectChanges();
-        setTimeout(() => {
-          this.Router.navigate(['/login']);
-        }, 2000);
-      },
-      error: (err) => {
-        this.error = err.error?.text || 'Erreur lors de la réinitialisation du mot de passe.';
-      }
-    });
-  }
+  this.authService.resetPassword(this.email, this.otp, this.newPassword).subscribe({
+    next: (res: any) => {
+      this.message = res.text || 'Mot de passe réinitialisé avec succès !';
+      this.error = '';
+
+      // Attendre un petit délai pour montrer le message avant la redirection
+      setTimeout(() => {
+        this.router.navigate(['/login']);
+      }, 2000);
+    },
+    error: (err) => {
+      this.error = err.error?.text || 'Erreur lors de la réinitialisation du mot de passe.';
+    }
+  });
+}
 }

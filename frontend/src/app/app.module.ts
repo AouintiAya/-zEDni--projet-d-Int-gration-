@@ -12,6 +12,9 @@ import { RegisterComponent } from './pages/register/register.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { ProfilEnseignantComponent } from './pages/profil-enseignant/profil-enseignant.component';
+import { CoursEtudiantComponent } from './cours-etudiant/cours-etudiant.component';
 
 
 @NgModule({
@@ -21,7 +24,10 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ProfileComponent,
+    ProfilEnseignantComponent,
+    CoursEtudiantComponent
 
   ],
   imports: [

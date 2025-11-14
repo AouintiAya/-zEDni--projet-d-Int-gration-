@@ -1,0 +1,66 @@
+<div class="dashboard-page">
+
+  <div class="dashboard-content">
+
+    <!-- Sidebar identique Dashboard -->
+    <aside [class.closed]="!isSidebarOpen" class="sidebar">
+
+      <div class="sidebar-toggle" (click)="toggleSidebar()">
+        <span>{{ isSidebarOpen ? '<' : '>' }}</span>
+      </div>
+
+      <div class="menu-items">
+        <div
+          class="menu-item"
+          *ngFor="let item of menuItems"
+          [class.active]="activeItem === item.name"
+          (click)="setActiveItem(item.name, item.route)"
+        >
+          <i [class]="item.icon" [style.color]="item.color"></i>
+          <span class="menu-text" *ngIf="isSidebarOpen">{{ item.name }}</span>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ===== Contenu Profil ===== -->
+    <main class="main-section">
+
+      <div class="profile-container">
+        <h2>Mon Profil</h2>
+
+        <p *ngIf="message" class="success">{{ message }}</p>
+
+        <form [formGroup]="profileForm">
+          <div class="form-group">
+            <label>Nom d'utilisateur :</label>
+            <input type="text" formControlName="username" [readonly]="!isEditing" />
+          </div>
+
+          <div class="form-group">
+            <label>Email :</label>
+            <input type="email" formControlName="email" [readonly]="!isEditing" />
+          </div>
+
+          <div class="form-group">
+            <label>Téléphone :</label>
+            <input type="text" formControlName="phone" [readonly]="!isEditing" />
+          </div>
+
+          <div class="form-group">
+            <label>Rôle :</label>
+            <input type="text" formControlName="role" readonly />
+          </div>
+
+          <div class="buttons">
+            <button *ngIf="!isEditing" type="button" (click)="enableEdit()">Modifier</button>
+            <button *ngIf="isEditing" type="button" (click)="saveProfile()">Enregistrer</button>
+            <button *ngIf="isEditing" type="button" class="cancel" (click)="cancelEdit()">Annuler</button>
+          </div>
+        </form>
+      </div>
+
+    </main>
+
+  </div>
+</div>
