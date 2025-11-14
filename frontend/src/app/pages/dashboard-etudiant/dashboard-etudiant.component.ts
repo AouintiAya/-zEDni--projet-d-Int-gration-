@@ -26,37 +26,18 @@ interface Course {
   styleUrls: ['./dashboard-etudiant.component.css']
 })
 export class DashboardEtudiantComponent {
-  constructor(private router: Router,private authService: AuthService) { }  // <-- injection du Router
+  constructor(private router: Router, private authService: AuthService) {}
 
-  userName: string = 'Utilisateur'; // valeur par défaut
+  userName: string = 'Utilisateur';
   searchQuery = '';
   isSidebarOpen = false;
-  activeItem: string = 'Tableau de bord'; // par défaut
-
+  activeItem: string = 'Tableau de bord';
 
   statCards: StatCard[] = [
-    {
-      icon: "📚",
-      title: "Cours inscrits",
-      value: 5,
-      unit: "cours",
-      color: "#2d9cdb",
-    },
-    {
-      icon: "📊",
-      title: "Progression moyenne",
-      value: 65,
-      unit: "%",
-      color: "#f2c94c",
-    },
-    {
-      icon: "⏱️",
-      title: "Temps d'apprentissage",
-      value: 42,
-      unit: "h",
-      color: "#1a3b5f",
-    },
-  ]
+    { icon: "📚", title: "Cours inscrits", value: 5, unit: "cours", color: "#2d9cdb" },
+    { icon: "📊", title: "Progression moyenne", value: 65, unit: "%", color: "#f2c94c" },
+    { icon: "⏱️", title: "Temps d'apprentissage", value: 42, unit: "h", color: "#1a3b5f" },
+  ];
 
   courses: Course[] = [
     { id: 1, name: 'Développement Web', code: 'DW-101', instructor: 'Fatima Hassan', progress: 85, color: '#2d9cdb', icon: '📚' },
@@ -67,10 +48,9 @@ export class DashboardEtudiantComponent {
   ];
 
   menuItems = [
-    { name: 'Tableau de bord', icon: 'fa-solid fa-home', color:'#1a3b5f' , route: '#' },
-    { name: 'Cours', icon: 'fa-solid fa-book', color:'#1a3b5f', route: '#' },
-    { name: 'Profil', icon: 'fa-solid fa-user', color:'#1a3b5f', route: '#' },
-    { name: 'Paramètres', icon: 'fa-solid fa-gear', color:'#1a3b5f', route: '#' },
+    { name: 'Tableau de bord', icon: 'fa-solid fa-home', color: '#1a3b5f', route: '/dashboard' },
+    { name: 'Cours', icon: 'fa-solid fa-book', color: '#1a3b5f', route: '/cours' },
+    { name: 'Profil', icon: 'fa-solid fa-user', color: '#1a3b5f', route: '/profile' },
   ];
 
   filteredCourses = this.courses;
@@ -91,19 +71,21 @@ export class DashboardEtudiantComponent {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
-  setActiveItem(itemName: string): void {
-  this.activeItem = itemName;
-}
+  setActiveItem(itemName: string, route: string): void {
+    this.activeItem = itemName;
 
-   logout(): void {
-    // Tu peux aussi supprimer les infos utilisateur ici si nécessaire
-    this.router.navigate(['/login']); // redirige vers la page login
+    if (route && route !== '#') {
+      this.router.navigate([route]);
+    }
   }
+
+  logout(): void {
+    this.router.navigate(['/login']);
+  }
+
   ngOnInit(): void {
     const user = this.authService.getUserInfo();
     if (user) {
-      // ici, tu peux personnaliser le nom
-      // par exemple, afficher seulement la partie avant le @ de l'email
       this.userName = user.sub.split('@')[0];
     }
   }
