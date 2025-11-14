@@ -1,10 +1,37 @@
-<!-- 🌅 HERO IMAGE -->
-<section class="hero" >
-  <div class="hero-text">
-    <button (click)="scrollToFormations()">Découvrir nos formations</button>
+<div class="carousel-section">
+  <div class="carousel-inner">
+
+    <!-- 🟢 SLIDE 1 — IMAGE + BOUTON -->
+    <div class="carousel-item active">
+      <img src="/assets/images/arriere.png" alt="Image 1">
+      <button (click)="scrollToFormations()">Consulter nos formations</button>
+    </div>
+
+    <!-- SLIDE 2 — VIDEO -->
+    <div class="carousel-item">
+      <video src="/assets/videos/promovideo2.mp4" autoplay muted loop playsinline></video>
+    </div>
+
+    <!-- 🟢 SLIDE 3 — IMAGE + BOUTON -->
+    <div class="carousel-item">
+      <img src="/assets/images/promo1.png" alt="Image 2">
+      <button routerLink="/register">Inscrivez-vous maintenant</button>
+    </div>
+
+    <!-- SLIDE 4 — VIDEO -->
+    <div class="carousel-item">
+      <video src="/assets/videos/promovideo3.mp4" autoplay muted loop playsinline></video>
+    </div>
 
   </div>
-</section>
+
+  <button class="prev">&#10094;</button>
+  <button class="next">&#10095;</button>
+</div>
+
+
+
+
 
 <!-- 💡 POURQUOI CHOISIR ZEDNI -->
 <section class="why">
@@ -62,6 +89,40 @@
     </div>
   </div>
 </section>
+
+<!-- ✉️ CONTACT INFO -->
+<section class="contact-info" id="contact">
+  <div class="contact-container">
+    <h2>Contactez-nous</h2>
+    <p>Pour toute question ou information, voici comment nous joindre :</p>
+
+    <div class="contact-details">
+      <div class="contact-item">
+        <i class="fa-solid fa-phone"></i>
+        <span>+216 12 345 678</span>
+      </div>
+      <div class="contact-item">
+        <i class="fa-solid fa-envelope"></i>
+        <span>contact@zedni.com</span>
+      </div>
+      <div class="contact-item">
+        <i class="fa-solid fa-clock"></i>
+        <span>Horaires : 24/24 08:00 - 18:00</span>
+      </div>
+      <div class="contact-item">
+        <i class="fa-brands fa-facebook"></i>
+        <span>Facebook : @ZedniOfficial</span>
+      </div>
+    </div>
+
+    <!-- Bouton pour rediriger vers la page contact -->
+    <div class="contact-button">
+      <button routerLink="/contact">Nous contacter</button>
+    </div>
+  </div>
+</section>
+
+
 
 
 

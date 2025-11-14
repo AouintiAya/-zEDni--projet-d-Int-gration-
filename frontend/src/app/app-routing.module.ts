@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DashboardEtudiantComponent } from './pages/dashboard-etudiant/dashboard-etudiant.component';
+import { ContactComponent } from './pages/contact/contact.component';
 import { TeacherDashboardComponent } from './pages/dashboard-enseignant/dashboard-enseignant.component';
+import { DashboardEtudiantComponent } from './pages/dashboard-etudiant/dashboard-etudiant.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'dashboard-enseignant', component: TeacherDashboardComponent },
   { path: 'home', component: HomeComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'contact', component: ContactComponent },
 
 ];
 

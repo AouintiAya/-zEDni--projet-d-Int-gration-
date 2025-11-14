@@ -2,11 +2,28 @@
   <div class="logo">
     <img src="/assets/images/logo-1.png" alt="Zedni Logo">
   </div>
-<ul class="nav-links">
-  <li><a href="#" class="active">Accueil</a></li>
-  <li><a href="#">Formations</a></li>
-  <li><a href="#">Contact</a></li>
-  <li><a href="#">À propos</a></li>
+
+  <ul class="nav-links">
+  <li>
+    <a routerLink="/"  [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active">Accueil</a>
+  </li>
+  <li>
+    <a routerLink="/formations" routerLinkActive="active">Formations</a>
+  </li>
+  <li>
+    <a routerLink="/contact" routerLinkActive="active">Contact</a>
+  </li>
+  <li>
+    <a routerLink="/a-propos" routerLinkActive="active">À propos</a>
+  </li>
+
+  <li *ngIf="role === 'etudiant'">
+    <a routerLink="/dashboard-etudiant" routerLinkActive="active">Dashboard Étudiant</a>
+  </li>
+
+  <li *ngIf="role === 'enseignant'">
+    <a routerLink="/dashboard-enseignant" routerLinkActive="active">Dashboard Enseignant</a>
+  </li>
 </ul>
 
 
@@ -14,14 +31,11 @@
     <div class="icon">
       <i class="fa-solid fa-user"></i>
     </div>
-
     <div class="dropdown" *ngIf="showMenu">
-      <!-- Si connecté -->
       <ng-container *ngIf="isLoggedIn; else notLoggedIn">
         <a (click)="logout()">Se déconnecter</a>
       </ng-container>
 
-      <!-- Si NON connecté -->
       <ng-template #notLoggedIn>
         <a routerLink="/login">Se connecter</a>
         <a routerLink="/register">S’inscrire</a>

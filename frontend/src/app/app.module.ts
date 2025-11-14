@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { DashboardEtudiantComponent } from './pages/dashboard-etudiant/dashboard-etudiant.component'
-
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { ContactComponent } from './pages/contact/contact.component';
+import { DashboardEtudiantComponent } from './pages/dashboard-etudiant/dashboard-etudiant.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { JwtInterceptor } from './interceptors/jwt.interceptor';
-import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ContactComponent
 
   ],
   imports: [
@@ -29,7 +31,7 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
     ReactiveFormsModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,RouterModule
   ],
   providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
