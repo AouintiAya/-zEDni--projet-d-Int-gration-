@@ -1,0 +1,74 @@
+<div class="courses-container">
+  <!-- Header -->
+  <div class="courses-header">
+    <div>
+      <h1>Mes cours</h1>
+      <p class="subtitle">Gérez et organisez tous vos cours</p>
+    </div>
+    <button class="add-course-btn">+ Ajouter un cours</button>
+  </div>
+
+  <!-- Search -->
+  <div class="search-section">
+    <input
+      type="text"
+      placeholder="Rechercher un cours..."
+      [(ngModel)]="searchQuery"
+      (input)="onSearch()"
+      class="search-input"
+    />
+  </div>
+
+  <!-- Courses Table -->
+  <div class="courses-table-wrapper">
+    <table class="courses-table" *ngIf="filteredCourses.length > 0">
+      <thead>
+        <tr>
+          <th>Titre du cours</th>
+          <th>Étudiants</th>
+          <th>Note</th>
+          <th>Statut</th>
+          <th>Mise à jour</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let course of filteredCourses" class="course-row">
+          <td class="course-title-col">
+            <img [src]="course.image" [alt]="course.title" class="course-thumb" />
+            <div>
+              <p class="course-title">{{ course.title }}</p>
+              <p class="course-desc">{{ course.description }}</p>
+            </div>
+          </td>
+          <td>{{ course.students }}</td>
+          <td>
+            <span class="rating">
+              <i class="fas fa-star"></i> {{ course.rating }}/5
+            </span>
+          </td>
+          <td>
+            <span class="status-badge" [style.background-color]="getStatusColor(course.status)">
+              {{ course.status }}
+            </span>
+          </td>
+          <td>{{ course.lastUpdated }}</td>
+          <td class="actions-col">
+            <button class="action-btn edit-btn" (click)="editCourse(course.id)" title="Éditer">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="action-btn delete-btn" (click)="deleteCourse(course.id)" title="Supprimer">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="filteredCourses.length === 0" class="empty-state">
+      <i class="fas fa-inbox"></i>
+      <p>Aucun cours trouvé</p>
+      <p class="empty-hint">Créez votre premier cours pour commencer</p>
+    </div>
+  </div>
+</div>
