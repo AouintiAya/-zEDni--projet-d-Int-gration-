@@ -7,16 +7,19 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
-import { ContactComponent } from './pages/contact/contact.component';
-import { DashboardEtudiantComponent } from './pages/dashboard-etudiant/dashboard-etudiant.component';
-import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
-import { HomeComponent } from './pages/home/home.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { ProfileComponent } from './pages/profile/profile.component';
-import { ProfilEnseignantComponent } from './pages/profil-enseignant/profil-enseignant.component';
-import { CoursEtudiantComponent } from './pages/cours-etudiant/cours-etudiant.component';
 
+// Composants
+import { ContactComponent } from './pages/accueil/contact/contact.component';
+import { DashboardEtudiantComponent } from './pages/Etudiant/dashboard-etudiant/dashboard-etudiant.component';
+import { ForgotPasswordComponent } from './pages/Authentification/forgot-password/forgot-password.component';
+import { HomeComponent } from './pages/accueil/home/home.component';
+import { LoginComponent } from './pages/Authentification/login/login.component';
+import { RegisterComponent } from './pages/Authentification/register/register.component';
+import { ProfileComponent } from './pages/Etudiant/profileEtudiant/profile.component';
+import { ProfilEnseignantComponent } from './pages/enseignant/profil-enseignant/profil-enseignant.component';
+import { PageCoursEtudiantComponent } from './pages/Etudiant/page-cours-etudiant/page-cours-etudiant.component';
+import { CoursDisponibleComponent } from './pages/Etudiant/cours-disponible/cours-disponible.component';
+import { MesCoursComponent } from './pages/Etudiant/mescours/mescours.component';
 
 @NgModule({
   declarations: [
@@ -29,18 +32,20 @@ import { CoursEtudiantComponent } from './pages/cours-etudiant/cours-etudiant.co
     ContactComponent,
     ProfileComponent,
     ProfilEnseignantComponent,
-    CoursEtudiantComponent
-
+    PageCoursEtudiantComponent,
+    CoursDisponibleComponent,
+    MesCoursComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule,RouterModule
+    HttpClientModule,
+    RouterModule
   ],
   providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
