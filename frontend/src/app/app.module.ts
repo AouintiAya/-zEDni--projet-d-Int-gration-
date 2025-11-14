@@ -1,20 +1,27 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { DashboardEtudiantComponent } from './pages/dashboard-etudiant/dashboard-etudiant.component'
-
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { ContactComponent } from './pages/contact/contact.component';
+import { DashboardEtudiantComponent } from './pages/dashboard-etudiant/dashboard-etudiant.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+<<<<<<< HEAD
+=======
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ProfilEnseignantComponent } from './pages/profil-enseignant/profil-enseignant.component';
 import { PageCoursEtudiantComponent } from './pages/page-cours-etudiant/page-cours-etudiant.component';
+>>>>>>> 097d282bf9c49c6c089c827a7590f7532ea9f7d5
 
 
 @NgModule({
@@ -25,9 +32,12 @@ import { PageCoursEtudiantComponent } from './pages/page-cours-etudiant/page-cou
     RegisterComponent,
     HomeComponent,
     ForgotPasswordComponent,
+<<<<<<< HEAD
+    ContactComponent
+=======
     ProfileComponent,
     ProfilEnseignantComponent,
-    PageCoursEtudiantComponent
+    CoursEtudiantComponent
 
   ],
   imports: [
@@ -35,7 +45,7 @@ import { PageCoursEtudiantComponent } from './pages/page-cours-etudiant/page-cou
     ReactiveFormsModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,RouterModule
   ],
   providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
