@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-teacher-dashboard',
@@ -27,13 +28,25 @@ export class TeacherDashboardComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     const user = this.authService.getUserInfo();
     if (user) {
       this.userName = user.sub.split('@')[0];
     }
+
+    // 🔥 Active automatiquement le menu selon la route
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        const currentRoute = event.urlAfterRedirects;
+
+        const active = this.menuItems.find(item => item.route === currentRoute);
+        if (active) {
+          this.activeItem = active.name;
+        }
+      });
   }
 
   toggleSidebar(): void {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 interface Course {
   id: number;
@@ -67,7 +68,7 @@ export class CourseListComponent implements OnInit {
     },
   ];
 
-  constructor() { }
+  constructor(private router: Router) {} // 🔹 Injecter Router
 
   ngOnInit(): void {
     this.filteredCourses = this.courses;
@@ -104,5 +105,10 @@ export class CourseListComponent implements OnInit {
   deleteCourse(courseId: number): void {
     this.courses = this.courses.filter(c => c.id !== courseId);
     this.onSearch();
+  }
+
+   // 🔹 Fonction pour naviguer vers la création de cours
+  goToCreateCourse(): void {
+    this.router.navigate(['/dashboard-enseignant/create-course']);
   }
 }
