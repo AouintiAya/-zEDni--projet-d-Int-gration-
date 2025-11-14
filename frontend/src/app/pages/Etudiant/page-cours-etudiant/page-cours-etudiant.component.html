@@ -1,0 +1,46 @@
+<div class="courses-page">
+  <!-- Sidebar -->
+  <aside [class.closed]="!isSidebarOpen" class="sidebar">
+    <div class="sidebar-toggle" (click)="toggleSidebar()">
+      <span>{{ isSidebarOpen ? '<' : '>' }}</span>
+    </div>
+    <div class="menu-items">
+      <div
+        class="menu-item"
+        *ngFor="let item of menuItems"
+        [class.active]="activeItem === item.name"
+        (click)="setActiveItem(item.name, item.route)"
+      >
+        <i [class]="item.icon" [style.color]="item.color"></i>
+        <span class="menu-text" *ngIf="isSidebarOpen">{{ item.name }}</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Contenu principal -->
+  <main class="courses-container">
+    <h1 class="title">Espace Cours</h1>
+
+    <div class="cards-wrapper">
+      <!-- MES COURS -->
+      <div class="course-card" (click)="goToMyCourses()">
+        <div class="icon">
+          <img src="assets/images/icone2.png" alt="Mes cours" />
+        </div>
+        <h2>Mes Cours</h2>
+        <p>Consultez les cours auxquels vous êtes inscrit.</p>
+        <button (click)="goToMyCourses(); $event.stopPropagation()">Voir mes cours</button>
+      </div>
+
+      <!-- COURS DISPONIBLES -->
+      <div class="course-card" (click)="goToAvailableCourses()">
+        <div class="icon">
+          <img src="assets/images/icone1.png" alt="Cours disponibles" />
+        </div>
+        <h2>Cours disponibles</h2>
+        <p>Explorez les cours disponibles sur la plateforme.</p>
+        <button (click)="goToAvailableCourses()">Voir les cours</button>
+      </div>
+    </div>
+  </main>
+</div>

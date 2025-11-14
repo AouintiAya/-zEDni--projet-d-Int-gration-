@@ -1,19 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ContactComponent } from './pages/contact/contact.component';
-import { TeacherDashboardComponent } from './pages/dashboard-enseignant/dashboard-enseignant.component';
-import { DashboardEtudiantComponent } from './pages/dashboard-etudiant/dashboard-etudiant.component';
-import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
-import { HomeComponent } from './pages/home/home.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-<<<<<<< HEAD
-=======
-import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
-import { ProfileComponent } from './pages/profile/profile.component';
->>>>>>> 097d282bf9c49c6c089c827a7590f7532ea9f7d5
-
+import { ContactComponent } from './pages/accueil/contact/contact.component';
+import { TeacherDashboardComponent } from './pages/enseignant/dashboard-enseignant/dashboard-enseignant.component';
+import { DashboardEtudiantComponent } from './pages/Etudiant/dashboard-etudiant/dashboard-etudiant.component';
+import { ForgotPasswordComponent } from './pages/Authentification/forgot-password/forgot-password.component';
+import { HomeComponent } from './pages/accueil/home/home.component';
+import { LoginComponent } from './pages/Authentification/login/login.component';
+import { RegisterComponent } from './pages/Authentification/register/register.component';
+import { ProfileComponent } from './pages/Etudiant/profileEtudiant/profile.component';
+import { PageCoursEtudiantComponent } from './pages/Etudiant/page-cours-etudiant/page-cours-etudiant.component';
+import { CoursDisponibleComponent } from './pages/Etudiant/cours-disponible/cours-disponible.component';
+import { MesCoursComponent } from './pages/Etudiant/mescours/mescours.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -24,12 +22,12 @@ const routes: Routes = [
   { path: 'dashboard-enseignant', component: TeacherDashboardComponent },
   { path: 'home', component: HomeComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
-<<<<<<< HEAD
   { path: 'contact', component: ContactComponent },
-
-=======
   { path: 'profile', component: ProfileComponent },
->>>>>>> 097d282bf9c49c6c089c827a7590f7532ea9f7d5
+  { path: 'cours', component: PageCoursEtudiantComponent },
+  { path: 'coursdisponible', component: CoursDisponibleComponent },
+  { path: 'mescours', component: MesCoursComponent }
+
 ];
 
 @NgModule({

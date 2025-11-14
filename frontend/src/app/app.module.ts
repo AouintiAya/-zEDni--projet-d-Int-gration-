@@ -7,21 +7,17 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
-import { ContactComponent } from './pages/contact/contact.component';
-import { DashboardEtudiantComponent } from './pages/dashboard-etudiant/dashboard-etudiant.component';
-import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
-import { HomeComponent } from './pages/home/home.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-<<<<<<< HEAD
-=======
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { JwtInterceptor } from './interceptors/jwt.interceptor';
-import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
-import { ProfileComponent } from './pages/profile/profile.component';
-import { ProfilEnseignantComponent } from './pages/profil-enseignant/profil-enseignant.component';
-import { PageCoursEtudiantComponent } from './pages/page-cours-etudiant/page-cours-etudiant.component';
->>>>>>> 097d282bf9c49c6c089c827a7590f7532ea9f7d5
+import { ContactComponent } from './pages/accueil/contact/contact.component';
+import { DashboardEtudiantComponent } from './pages/Etudiant/dashboard-etudiant/dashboard-etudiant.component';
+import { ForgotPasswordComponent } from './pages/Authentification/forgot-password/forgot-password.component';
+import { HomeComponent } from './pages/accueil/home/home.component';
+import { LoginComponent } from './pages/Authentification/login/login.component';
+import { RegisterComponent } from './pages/Authentification/register/register.component';
+import { ProfileComponent } from './pages/Etudiant/profileEtudiant/profile.component';
+import { ProfilEnseignantComponent } from './pages/enseignant/profil-enseignant/profil-enseignant.component';
+import { PageCoursEtudiantComponent } from './pages/Etudiant/page-cours-etudiant/page-cours-etudiant.component';
+import { CoursDisponibleComponent } from './pages/Etudiant/cours-disponible/cours-disponible.component';
+import { MesCoursComponent } from './pages/Etudiant/mescours/mescours.component';
 
 
 @NgModule({
@@ -32,13 +28,12 @@ import { PageCoursEtudiantComponent } from './pages/page-cours-etudiant/page-cou
     RegisterComponent,
     HomeComponent,
     ForgotPasswordComponent,
-<<<<<<< HEAD
-    ContactComponent
-=======
+    ContactComponent,
     ProfileComponent,
     ProfilEnseignantComponent,
-    CoursEtudiantComponent
-
+    PageCoursEtudiantComponent,
+    CoursDisponibleComponent,
+    MesCoursComponent
   ],
   imports: [
     BrowserModule,
