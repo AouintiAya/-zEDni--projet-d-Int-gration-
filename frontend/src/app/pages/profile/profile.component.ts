@@ -69,4 +69,8 @@ export class ProfileComponent implements OnInit {
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
+ 
+
+
+
 }

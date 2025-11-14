@@ -18,7 +18,6 @@ import { ProfilEnseignantComponent } from './pages/profil-enseignant/profil-ense
 import { CoursEtudiantComponent } from './pages/cours-etudiant/cours-etudiant.component';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +30,6 @@ import { CoursEtudiantComponent } from './pages/cours-etudiant/cours-etudiant.co
     ProfileComponent,
     ProfilEnseignantComponent,
     CoursEtudiantComponent
-
 
   ],
   imports: [

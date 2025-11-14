@@ -1,0 +1,119 @@
+<div class="create-course-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <div class="header-content">
+      <h1 class="header-title">Créer un nouveau cours</h1>
+      <p class="header-subtitle">Organisez votre contenu pédagogique de manière structurée et professionnelle</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content-wrapper">
+    <!-- Form Card -->
+    <div class="form-card">
+      <form [formGroup]="coursForm" (ngSubmit)="onSubmit()">
+
+        <!-- Title Field -->
+        <div class="form-group">
+          <label for="titre" class="form-label">
+            Titre du cours <span class="required-asterisk">*</span>
+          </label>
+          <input
+            id="titre"
+            type="text"
+            formControlName="titre"
+            class="form-input"
+            [class.form-input-error]="isTitleInvalid"
+            placeholder="Ex: Introduction à Angular"
+          >
+          <div class="form-error" *ngIf="isTitleInvalid">
+            <span *ngIf="coursForm.get('titre')?.errors?.['required']">Le titre est requis</span>
+            <span *ngIf="coursForm.get('titre')?.errors?.['minlength']">Minimum 3 caractères</span>
+          </div>
+        </div>
+
+        <!-- Description Field -->
+        <div class="form-group">
+          <label for="description" class="form-label">
+            Description <span class="required-asterisk">*</span>
+          </label>
+          <textarea
+            id="description"
+            formControlName="description"
+            class="form-textarea"
+            [class.form-input-error]="isDescriptionInvalid"
+            placeholder="Décrivez le contenu et les objectifs du cours..."
+          ></textarea>
+          <div class="form-error" *ngIf="isDescriptionInvalid">
+            <span *ngIf="coursForm.get('description')?.errors?.['required']">La description est requise</span>
+            <span *ngIf="coursForm.get('description')?.errors?.['minlength']">Minimum 10 caractères</span>
+          </div>
+          <span class="char-count">{{ coursForm.get('description')?.value?.length || 0 }}/500</span>
+        </div>
+
+        <!-- Content Field -->
+        <div class="form-group">
+          <label for="contenu" class="form-label">
+            Contenu du cours <span class="required-asterisk">*</span>
+          </label>
+          <textarea
+            id="contenu"
+            formControlName="contenu"
+            class="form-textarea"
+            [class.form-input-error]="isContentInvalid"
+            placeholder="Entrez le contenu détaillé du cours..."
+          ></textarea>
+          <div class="form-error" *ngIf="isContentInvalid">
+            <span *ngIf="coursForm.get('contenu')?.errors?.['required']">Le contenu est requis</span>
+            <span *ngIf="coursForm.get('contenu')?.errors?.['minlength']">Minimum 20 caractères</span>
+          </div>
+          <span class="char-count">{{ coursForm.get('contenu')?.value?.length || 0 }}/5000</span>
+        </div>
+
+        <!-- File Upload Section -->
+        <div class="form-group">
+          <label for="resources" class="form-label">Ressources (PDF, images, vidéos)</label>
+          
+          <div class="file-upload-area">
+            <input
+              id="resources"
+              type="file"
+              #fileInput
+              (change)="onFileSelected($event)"
+              multiple
+              accept=".pdf,.jpg,.jpeg,.png,.gif,.mp4"
+              style="display: none"
+            >
+            
+            <button
+              type="button"
+              class="upload-button"
+              (click)="fileInput.click()"
+            >
+              <span>Cliquez pour ajouter des fichiers</span>
+            </button>
+            <p class="upload-hint">Formats: PDF, JPG, PNG, GIF, MP4 (Max 10MB)</p>
+          </div>
+
+          <!-- Files List -->
+          <div class="files-list" *ngIf="selectedFiles.length > 0">
+            <h3 class="files-title">Fichiers ajoutés</h3>
+            <div class="files-grid">
+              <div class="file-item" *ngFor="let fileObj of selectedFiles; let i = index">
+                <p class="file-name">{{ fileObj.file.name }}</p>
+                <p class="file-size">{{ (fileObj.file.size / 1024).toFixed(1) }} KB</p>
+                <button type="button" class="remove-button" (click)="removeFile(i)">Supprimer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-button" [disabled]="isSubmitting">
+          <span *ngIf="!isSubmitting">Créer le cours</span>
+          <span *ngIf="isSubmitting">Création en cours...</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

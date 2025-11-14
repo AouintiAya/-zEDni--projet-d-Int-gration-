@@ -8,11 +8,12 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
-<<<<<<< HEAD
-=======
-import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { DashboardWelcomeComponent } from './pages/dashboard-welcome/dashboard-welcome.component';
+import { CreateCourseComponent } from './pages/create-course/create-course.component';
+import { CourseListComponent } from './pages/course-list/course-list.component';
 import { ProfileComponent } from './pages/profile/profile.component';
->>>>>>> 097d282bf9c49c6c089c827a7590f7532ea9f7d5
+
+
 
 
 const routes: Routes = [
@@ -21,15 +22,19 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
 
   { path: 'dashboard-etudiant', component: DashboardEtudiantComponent },
-  { path: 'dashboard-enseignant', component: TeacherDashboardComponent },
+  { path: 'dashboard-enseignant', component: TeacherDashboardComponent,
+    children: [
+      { path: '', component: DashboardWelcomeComponent }, // page par défaut
+      { path: 'create-course', component: CreateCourseComponent },
+      { path: 'mes-cours', component: CourseListComponent },
+      { path: 'profil', component: ProfileComponent },
+    ]
+   },
   { path: 'home', component: HomeComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
-<<<<<<< HEAD
   { path: 'contact', component: ContactComponent },
-
-=======
   { path: 'profile', component: ProfileComponent },
->>>>>>> 097d282bf9c49c6c089c827a7590f7532ea9f7d5
+
 ];
 
 @NgModule({
