@@ -15,6 +15,8 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ProfilEnseignantComponent } from './pages/profil-enseignant/profil-enseignant.component';
 import { CoursEtudiantComponent } from './cours-etudiant/cours-etudiant.component';
+import { PageCoursComponent } from './page-cours/page-cours.component';
+import { PageCoursEtudiantComponent } from './pages/page-cours-etudiant/page-cours-etudiant.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { CoursEtudiantComponent } from './cours-etudiant/cours-etudiant.componen
     ForgotPasswordComponent,
     ProfileComponent,
     ProfilEnseignantComponent,
-    CoursEtudiantComponent
+    CoursEtudiantComponent,
+    PageCoursComponent,
+    PageCoursEtudiantComponent
 
   ],
   imports: [
