@@ -1,4 +1,4 @@
-package com.zedni.backend.dto;
+package com.zedni.backend.dto.Auth;
 
 public class AuthResponse {
     public String token;

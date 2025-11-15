@@ -1,4 +1,4 @@
-package com.zedni.backend.dto;
+package com.zedni.backend.dto.Auth;
 
 
 import lombok.Data;
