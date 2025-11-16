@@ -1,26 +1,30 @@
 package com.zedni.backend.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Enseignant extends Personne{
+public class Examen {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String titre;
+    private String url; // PDF stocké
+    private Boolean corrigé = false;
 
-    private String code;
+    @ManyToOne
+    @JoinColumn(name = "cours_id")
+    private Cours cours;
 
+    @OneToMany(mappedBy = "examen", fetch = FetchType.LAZY)
     @JsonIgnore
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private Users user;
-
+    private List<ParticipationExamen> participations;
 }

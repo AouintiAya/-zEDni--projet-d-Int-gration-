@@ -1,7 +1,6 @@
 package com.zedni.backend.service;
 
-import com.zedni.backend.dto.RegisterRequest;
-import com.zedni.backend.model.Users;
+import com.zedni.backend.dto.Auth.RegisterRequest;
 
 public interface UserService {
     public String register(RegisterRequest request);

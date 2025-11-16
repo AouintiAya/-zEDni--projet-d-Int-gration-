@@ -1,8 +1,8 @@
 package com.zedni.backend.restImpl;
 
-import com.zedni.backend.dto.LoginRequest;
-import com.zedni.backend.dto.RegisterRequest;
-import com.zedni.backend.dto.ResetPasswordRequest;
+import com.zedni.backend.dto.Auth.LoginRequest;
+import com.zedni.backend.dto.Auth.RegisterRequest;
+import com.zedni.backend.dto.Auth.ResetPasswordRequest;
 import com.zedni.backend.rest.AuthRest;
 import com.zedni.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

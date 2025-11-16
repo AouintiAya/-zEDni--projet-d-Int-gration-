@@ -1,7 +1,6 @@
 package com.zedni.backend.serviceImpl;
 
-import com.zedni.backend.dto.AuthResponse;
-import com.zedni.backend.dto.RegisterRequest;
+import com.zedni.backend.dto.Auth.RegisterRequest;
 import com.zedni.backend.model.Enseignant;
 import com.zedni.backend.model.Etudiant;
 import com.zedni.backend.model.Users;
@@ -14,10 +13,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
