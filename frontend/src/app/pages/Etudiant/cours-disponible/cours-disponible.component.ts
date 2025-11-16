@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { CoursService, CoursDTO } from '../../../services/coursService/cours.service';
 interface Course {
   name: string;
   description: string;
@@ -14,62 +14,47 @@ interface Course {
   styleUrls: ['./cours-disponible.component.css']
 })
 export class CoursDisponibleComponent implements OnInit {
-  isSidebarOpen = false;
-  activeItem = 'Cours';
-  searchTerm: string = '';
+  isearchTerm = '';
+    isSidebarOpen = false;
+    activeItem = 'Mes Cours';
 
-  menuItems = [
-    { name: 'Tableau de bord', icon: 'fa-solid fa-home', color: '#1a3b5f', route: '/dashboard-etudiant' },
-    { name: 'Cours', icon: 'fa-solid fa-book', color: '#1a3b5f', route: '/cours' },
-    { name: 'Profil', icon: 'fa-solid fa-user', color: '#1a3b5f', route: '/profile' },
-  ];
+    courses: CoursDTO[] = [];
 
-  courses: Course[] = [
-    {
-      name: 'Cybersécurité',
-      description: 'Apprenez à protéger les systèmes et réseaux contre les menaces numériques modernes.',
-      image: 'assets/images/cyber.jpg',
-      rating: 5
-    },
-    {
-      name: 'Intelligence Artificielle',
-      description: 'Découvrez les bases et applications de l’IA dans le monde moderne.',
-      image: 'assets/images/ai.jpg',
-      rating: 4
-    },
-    {
-      name: 'Développement Web',
-      description: 'Apprenez HTML, CSS, JavaScript et frameworks modernes.',
-      image: 'assets/images/python.jpg',
-      rating: 4
+    menuItems = [
+      { name: 'Tableau de bord', icon: 'fa-solid fa-home', color: '#1a3b5f', route: '/dashboard-etudiant' },
+      { name: 'Cours', icon: 'fa-solid fa-book', color: '#1a3b5f', route: '/cours' },
+      { name: 'Profil', icon: 'fa-solid fa-user', color: '#1a3b5f', route: '/profile' },
+    ];
+
+    constructor(private router: Router, private coursService: CoursService) {}
+
+    ngOnInit() {
+      this.loadCourses();
     }
-    // Ajouter plus de cours ici
-  ];
 
-  constructor(private router: Router) {}
+    loadCourses() {
+      this.coursService.getAllCours().subscribe({
+        next: (data) => this.courses = data,
+        error: (err) => console.error('Erreur chargement cours:', err)
+      });
+    }
 
-  ngOnInit(): void {}
+    toggleSidebar() {
+      this.isSidebarOpen = !this.isSidebarOpen;
+    }
 
-  toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
-  }
-
-  setActiveItem(itemName: string, route: string): void {
-    this.activeItem = itemName;
-    if (route) {
+    setActiveItem(name: string, route: string) {
+      this.activeItem = name;
       this.router.navigate([route]);
     }
-  }
 
-  enroll(course: Course) {
-    alert(`Vous êtes inscrit au cours : ${course.name}`);
-    // ici tu peux appeler un service pour enregistrer l'inscription
-  }
+    filteredMyCourses() {
+      return this.courses.filter(c =>
+        c.titre.toLowerCase().includes(this.isearchTerm.toLowerCase())
+      );
+    }
 
-  filteredCourses(): Course[] {
-    if (!this.searchTerm) return this.courses;
-    return this.courses.filter(course =>
-      course.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
+    openCourse(course: CoursDTO) {
+      this.router.navigate(['/cours', course.id]);
+    }
   }
-}
