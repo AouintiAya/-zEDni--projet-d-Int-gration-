@@ -7,6 +7,8 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+
+// Composants
 import { ContactComponent } from './pages/accueil/contact/contact.component';
 import { DashboardEtudiantComponent } from './pages/Etudiant/dashboard-etudiant/dashboard-etudiant.component';
 import { ForgotPasswordComponent } from './pages/Authentification/forgot-password/forgot-password.component';
@@ -18,7 +20,7 @@ import { ProfilEnseignantComponent } from './pages/enseignant/profil-enseignant/
 import { PageCoursEtudiantComponent } from './pages/Etudiant/page-cours-etudiant/page-cours-etudiant.component';
 import { CoursDisponibleComponent } from './pages/Etudiant/cours-disponible/cours-disponible.component';
 import { MesCoursComponent } from './pages/Etudiant/mescours/mescours.component';
-
+import { CreateCourseComponent } from './pages/enseignant/create-course/create-course.component';
 
 @NgModule({
   declarations: [
@@ -33,17 +35,19 @@ import { MesCoursComponent } from './pages/Etudiant/mescours/mescours.component'
     ProfilEnseignantComponent,
     PageCoursEtudiantComponent,
     CoursDisponibleComponent,
-    MesCoursComponent
+    MesCoursComponent,
+    CreateCourseComponent,
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule,RouterModule
+    HttpClientModule,
+    RouterModule
   ],
   providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

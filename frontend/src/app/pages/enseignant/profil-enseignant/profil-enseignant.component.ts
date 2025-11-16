@@ -17,15 +17,6 @@ export class ProfilEnseignantComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private router: Router) {}
 
-  menuItems = [
-    { name: 'Tableau de bord', icon: 'fa-solid fa-home', color: '#1a3b5f', route: '/dashboard-etudiant' },
-    { name: 'Cours', icon: 'fa-solid fa-book', color: '#1a3b5f', route: '/cours' },
-    { name: 'Profil', icon: 'fa-solid fa-user', color: '#1a3b5f', route: '/profile' },
-  ];
-
-  isSidebarOpen = false;
-  activeItem = 'Profil';
-
   ngOnInit(): void {
     this.loadFakeUser();
   }
@@ -61,12 +52,4 @@ export class ProfilEnseignantComponent implements OnInit {
     this.message = "Profil mis à jour (simulation locale).";
   }
 
-  setActiveItem(itemName: string, route: string): void {
-    this.activeItem = itemName;
-    this.router.navigate([route]);
-  }
-
-  toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
-  }
 }

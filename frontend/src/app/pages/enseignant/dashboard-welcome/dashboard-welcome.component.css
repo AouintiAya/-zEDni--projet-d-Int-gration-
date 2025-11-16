@@ -1,0 +1,233 @@
+/* ========== HEADER SECTION ========== */
+.header-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.header-content h1 {
+  color: #1a3b5f;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.header-content p {
+  color: #545454;
+  font-size: 1rem;
+}
+
+.create-course-btn {
+  background: linear-gradient(135deg, #2d9cdb, #1a3b5f);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.8rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(45, 156, 219, 0.3);
+}
+
+.create-course-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(45, 156, 219, 0.4);
+}
+
+/* ========== STATS GRID ========== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 1.75rem;
+  border-radius: 12px;
+  border-left: 4px solid #2d9cdb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  min-width: 60px;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-label {
+  color: #545454;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.stat-value {
+  color: #1a3b5f;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.stat-unit {
+  font-size: 1rem;
+  color: #2d9cdb;
+  font-weight: 600;
+  margin-left: 0.5rem;
+}
+
+/* ========== COURSES SECTION ========== */
+.courses-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.courses-section h2 {
+  color: #1a3b5f;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.courses-subtitle {
+  color: #545454;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.course-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.course-card:hover {
+  box-shadow: 0 8px 24px rgba(45, 156, 219, 0.15);
+  transform: translateY(-4px);
+  border-color: #2d9cdb;
+}
+
+.course-image {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+
+.course-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.status-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.course-content {
+  padding: 1.5rem;
+}
+
+.course-content h4 {
+  color: #1a3b5f;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.course-stats {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #545454;
+  font-size: 0.9rem;
+}
+
+.stat .icon {
+  font-size: 1.2rem;
+}
+
+.edit-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, #2d9cdb, #1a3b5f);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-btn:hover {
+  box-shadow: 0 4px 12px rgba(45, 156, 219, 0.3);
+  transform: translateY(-2px);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #545454;
+  font-size: 1rem;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .header-section {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .stats-grid,
+  .courses-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .create-course-btn {
+    width: 100%;
+  }
+}
