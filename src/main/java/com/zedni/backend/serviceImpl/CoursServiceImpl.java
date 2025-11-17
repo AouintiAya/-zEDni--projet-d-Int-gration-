@@ -127,4 +127,18 @@ public class CoursServiceImpl implements CoursService {
         System.out.println("Updating course ID: " + id);
         return cours;
     }
+
+    @Transactional(readOnly = true)
+    public List<CoursDTO> getCoursByEnseignantEmail(String email) {
+        Enseignant enseignant = enseignantRepo.findByUserEmail(email)
+                .orElseThrow(() -> new RuntimeException("Enseignant not found"));
+
+        List<Cours> cours = coursRepo.findByEnseignantId(enseignant.getId());
+
+        return cours.stream()
+                .map(this::convertToDTO)  // <-- utiliser this::convertToDTO
+                .collect(Collectors.toList());
+    }
+
+
 }

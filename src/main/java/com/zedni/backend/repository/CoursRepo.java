@@ -15,4 +15,8 @@ public interface CoursRepo extends JpaRepository<Cours,Long> {
     @Query("SELECT c FROM Cours c LEFT JOIN FETCH c.ressources WHERE c.id = :id")
     Optional<Cours> findByIdWithRessources(@Param("id") Long id);
 
+    List<Cours> findByEnseignantId(Long enseignantId);
+
+
+
 }
