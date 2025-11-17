@@ -1,0 +1,12 @@
+<h2>Créer un Quiz</h2>
+
+<input type="text" placeholder="Titre du quiz" [(ngModel)]="titre" />
+
+<!-- Chaque question -->
+<div class="question" *ngFor="let q of questions; let i = index">
+  <input type="text" [(ngModel)]="q.texte" placeholder="Texte de la question {{ i + 1 }}" />
+  <input type="text" [(ngModel)]="q.reponseCorrecte" placeholder="Réponse correcte {{ i + 1 }}" />
+</div>
+
+<button (click)="addQuestion()">Ajouter Question</button>
+<button (click)="submitQuiz()">Créer Quiz</button>
