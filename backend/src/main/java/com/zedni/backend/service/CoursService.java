@@ -12,4 +12,5 @@ public interface CoursService {
     CoursDTO getCoursByIdDTO(Long id);
     void deleteCours(Long id);
     Cours updateCours(Long id, String titre, String description, MultipartFile image, String email) throws IOException;
+    public List<CoursDTO> getCoursByEnseignantEmail(String email);
 }

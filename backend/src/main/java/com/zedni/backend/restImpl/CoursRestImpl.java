@@ -58,4 +58,12 @@ public class CoursRestImpl implements CoursRest {
             Cours cours=coursService.updateCours(id,titre,description,image,principal.getName());
             return ResponseEntity.ok(cours);
     }
+    @Override
+    public ResponseEntity<List<CoursDTO>> getCoursOfEnseignant(Principal principal) {
+
+        List<CoursDTO> cours = coursService.getCoursByEnseignantEmail(principal.getName());
+
+        return ResponseEntity.ok(cours);
+    }
+
 }

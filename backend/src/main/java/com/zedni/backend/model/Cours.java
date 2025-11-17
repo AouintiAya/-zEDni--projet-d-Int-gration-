@@ -43,6 +43,10 @@ public class Cours {
     @JsonIgnore
     private List<Quiz> quizzes;
 
+    @OneToMany(mappedBy = "cours")
+    private List<ParticipationCours> participants;
+
+
 
 
 }

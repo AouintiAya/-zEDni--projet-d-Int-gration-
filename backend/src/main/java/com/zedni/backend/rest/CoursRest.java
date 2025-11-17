@@ -46,5 +46,8 @@ public interface CoursRest {
             @RequestParam(value = "image", required = false) MultipartFile image,
             Principal principal) throws IOException;
 
+    @PreAuthorize("hasAuthority('ROLE_ENSEIGNANT')")
+    @GetMapping("/enseignant/my-cours")
+    ResponseEntity<List<CoursDTO>> getCoursOfEnseignant(Principal principal);
 
 }
