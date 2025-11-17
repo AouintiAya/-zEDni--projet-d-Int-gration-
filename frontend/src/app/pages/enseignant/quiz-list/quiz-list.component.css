@@ -1,0 +1,203 @@
+/* =========================
+   Conteneur principal
+========================= */
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 30px;
+  background-color: #f8fafb;
+  min-height: 100vh;
+}
+
+/* =========================
+   Titre de la page
+========================= */
+h2 {
+  color: #1a3b5f;
+  margin-bottom: 25px;
+  font-size: 2rem;
+  text-align: center;
+}
+
+/* =========================
+   Tableau
+========================= */
+table {
+  width: 90%;
+  max-width: 900px;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+thead {
+  background-color: #2d9cdb;
+  color: #fff;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+  background-color: #f1f7fc;
+}
+
+/* =========================
+   Boutons
+========================= */
+button {
+  padding: 8px 15px;
+  margin: 0 3px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #fff;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+/* Boutons spécifiques */
+button:nth-child(1) {
+  background-color: #2d9cdb; /* Participations */
+}
+button:nth-child(1):hover {
+  background-color: #1a7acb;
+}
+
+button:nth-child(2) {
+  background-color: #f2c94c; /* Modifier */
+  color: #1a3b5f;
+}
+button:nth-child(2):hover {
+  background-color: #e6b800;
+}
+
+button:nth-child(3) {
+  background-color: #eb5757; /* Supprimer */
+}
+button:nth-child(3):hover {
+  background-color: #c0392b;
+}
+
+/* =========================
+   Responsive
+========================= */
+@media (max-width: 700px) {
+  table, th, td, button {
+    width: 95%;
+    display: block;
+    text-align: center;
+    margin: 5px auto;
+  }
+
+  td {
+    padding: 10px 0;
+  }
+
+  button {
+    margin: 5px 0;
+  }
+}
+
+
+.edit-form {
+  margin-top: 30px;
+  padding: 20px;
+  max-width: 700px;
+  width: 95%;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.edit-form h3 {
+  color: #1a3b5f;
+  margin-bottom: 15px;
+}
+
+.edit-form h4 {
+  margin-top: 20px;
+  color: #2d9cdb;
+}
+
+.edit-form label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+.edit-form input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.question-form {
+  background-color: #f8faff;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.remove-btn {
+  background-color: #eb5757;
+  color: #fff;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.remove-btn:hover {
+  background-color: #c0392b;
+}
+
+.edit-form .buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+.edit-form .buttons button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.edit-form .buttons button:first-child {
+  background-color: #2d9cdb;
+  color: #fff;
+}
+
+.edit-form .buttons button:first-child:hover {
+  background-color: #1a7acb;
+}
+
+.edit-form .buttons button:last-child {
+  background-color: #eb5757;
+  color: #fff;
+}
+
+.edit-form .buttons button:last-child:hover {
+  background-color: #c0392b;
+}

@@ -1,0 +1,20 @@
+<h3>Participations du Quiz: {{ quiz?.titre }}</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Étudiant</th>
+      <th>Réponses</th>
+      <th>Note</th>
+      <th>Corrigé</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of participations">
+      <td>{{ p.studentId }}</td>
+      <td>{{ p.reponses }}</td>
+      <td>{{ p.note }}</td>
+      <td>{{ p.corrige }}</td>
+    </tr>
+  </tbody>
+</table>

@@ -21,6 +21,9 @@ import { PageCoursEtudiantComponent } from './pages/Etudiant/page-cours-etudiant
 import { CoursDisponibleComponent } from './pages/Etudiant/cours-disponible/cours-disponible.component';
 import { MesCoursComponent } from './pages/Etudiant/mescours/mescours.component';
 import { CreateCourseComponent } from './pages/enseignant/create-course/create-course.component';
+import { QuizListComponent } from './pages/enseignant/quiz-list/quiz-list.component';
+import { CreateQuizComponent } from './pages/enseignant/create-quiz/create-quiz.component';
+import { ParticipationListComponent } from './pages/enseignant/participation-list/participation-list.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,9 @@ import { CreateCourseComponent } from './pages/enseignant/create-course/create-c
     CoursDisponibleComponent,
     MesCoursComponent,
     CreateCourseComponent,
+    QuizListComponent,
+    CreateQuizComponent,
+    ParticipationListComponent,
   ],
   imports: [
     BrowserModule,

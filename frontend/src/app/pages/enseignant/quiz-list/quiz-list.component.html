@@ -1,0 +1,48 @@
+<h2>Liste des Quiz</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Titre</th>
+      <th>Nombre de questions</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let quiz of quizzes">
+      <td>{{ quiz.titre }}</td>
+      <td>{{ quiz.questions.length }}</td>
+      <td>
+        <button (click)="viewParticipations(quiz)">Participations</button>
+        <button (click)="modifyQuiz(quiz)">Modifier</button>
+        <button (click)="deleteQuiz(quiz)">Supprimer</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Formulaire de modification complet -->
+<div *ngIf="selectedQuiz" class="edit-form">
+  <h3>Modifier le Quiz</h3>
+
+  <label>Titre du Quiz :</label>
+  <input type="text" [(ngModel)]="selectedQuiz.titre" />
+
+  <div *ngFor="let q of selectedQuiz.questions; let i = index" class="question-form">
+    <h4>Question {{ i + 1 }}</h4>
+    <label>Texte :</label>
+    <input type="text" [(ngModel)]="q.texte" placeholder="Texte de la question" />
+
+    <label>Réponse correcte :</label>
+    <input type="text" [(ngModel)]="q.reponseCorrecte" placeholder="Réponse correcte" />
+
+    <button type="button" (click)="removeQuestion(i)" class="remove-btn">Supprimer la question</button>
+  </div>
+
+  <button type="button" (click)="addQuestion()">Ajouter une question</button>
+
+  <div class="buttons">
+    <button (click)="saveQuiz()">Sauvegarder</button>
+    <button (click)="cancelEdit()">Annuler</button>
+  </div>
+</div>
