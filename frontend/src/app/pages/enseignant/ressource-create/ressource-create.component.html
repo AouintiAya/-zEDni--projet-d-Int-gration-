@@ -1,0 +1,26 @@
+<div class="container">
+  <h1>Ajouter une ressource</h1>
+  <form (ngSubmit)="submit()">
+    <div>
+      <label>Titre</label>
+      <input type="text" [(ngModel)]="titre" name="titre" required>
+    </div>
+
+    <div>
+      <label>Type</label>
+      <select [(ngModel)]="type" name="type">
+        <option value="pdf">PDF</option>
+        <option value="video">Vidéo</option>
+        <option value="image">Image</option>
+        <option value="link">Lien externe</option>
+      </select>
+    </div>
+
+    <div>
+      <label>URL</label>
+      <input type="text" [(ngModel)]="url" name="url" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+  </form>
+</div>

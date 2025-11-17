@@ -1,0 +1,48 @@
+<div class="courses-container">
+  <!-- Header Section -->
+  <div class="courses-header">
+    <div class="header-content">
+      <h1 class="header-title">Mes Cours</h1>
+      <p class="header-subtitle">Gérez et consultez tous vos cours</p>
+    </div>
+    <a routerLink="/dashboard-enseignant/cours-create" class="add-course-button">
+      <span class="button-icon">+</span>
+      Ajouter un cours
+    </a>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-spinner" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Chargement des cours...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && coursList.length === 0">
+    <div class="empty-icon">📚</div>
+    <h2>Aucun cours trouvé</h2>
+    <p>Vous n'avez pas encore créé de cours. Créez votre premier cours maintenant!</p>
+    <a routerLink="/dashboard-enseignant/cours-create" class="empty-action-button">
+      Créer un cours
+    </a>
+  </div>
+
+  <!-- Courses Grid -->
+  <div class="courses-grid" *ngIf="!isLoading && coursList.length > 0">
+    <div class="course-card" *ngFor="let course of coursList">
+      <div class="card-image">
+        <img [src]="course.imageUrl" [alt]="course.titre" />
+        <div class="card-overlay"></div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">{{ course.titre }}</h3>
+        <p class="card-description">{{ course.description }}</p>
+      </div>
+      <div class="card-actions">
+        <a [routerLink]="['/dashboard-enseignant/mes-cours', course.id]" class="card-button">
+          Voir le cours
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,139 @@
+/* ======== Container ======== */
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.09);
+  animation: fadeIn 0.4s ease;
+}
+
+/* ======== Course Title ======== */
+h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1a3b5f;
+  margin-bottom: 15px;
+}
+
+/* ======== Course Description ======== */
+p {
+  font-size: 16px;
+  color: #4a5568;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  white-space: pre-line;
+}
+
+/* ======== Course Image ======== */
+img {
+  width: 100%;
+  max-height: 350px;
+  object-fit: cover;
+  border-radius: 14px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+/* ======== Add Resource Button ======== */
+.btn-primary {
+  background-color: #2d9cdb !important;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: none;
+  margin-bottom: 30px;
+  transition: 0.3s ease;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  background-color: #1a85b6 !important;
+  transform: translateY(-2px);
+}
+
+/* ======== Resources Title ======== */
+h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a3b5f;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+/* ======== Resources List ======== */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 15px 20px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.25s ease;
+}
+
+li:hover {
+  background: #eef6fb;
+  border-color: #c2e3f7;
+}
+
+/* Resource title + type */
+li span {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Link "Ouvrir" */
+a {
+  color: #2d9cdb;
+  font-weight: 600;
+  text-decoration: none;
+  margin-right: 15px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Delete Button */
+.btn-danger {
+  background-color: #e63946 !important;
+  border: none;
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 8px;
+  transition: 0.25s ease;
+}
+
+.btn-danger:hover {
+  background-color: #b92c38 !important;
+}
+
+/* ======== Loading State ======== */
+.loading {
+  text-align: center;
+  font-size: 18px;
+  color: #4a5568;
+  padding: 40px;
+}
+
+/* ======== Fade-in animation ======== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

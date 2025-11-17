@@ -1,0 +1,22 @@
+<div class="container">
+  <h1>Créer un nouveau cours</h1>
+
+  <form (ngSubmit)="submit()">
+    <div class="mb-3">
+      <label for="titre" class="form-label">Titre du cours</label>
+      <input type="text" id="titre" name="titre" class="form-control" [(ngModel)]="titre" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea id="description" name="description" class="form-control" [(ngModel)]="description" required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="image" class="form-label">Image du cours (optionnel)</label>
+      <input type="file" id="image" class="form-control" (change)="onFileSelected($event)">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Créer le cours</button>
+  </form>
+</div>
