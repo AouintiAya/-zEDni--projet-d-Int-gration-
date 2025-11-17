@@ -1,20 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardWelcomeComponent } from './pages/enseignant/dashboard-welcome/dashboard-welcome.component';
-import { CreateCourseComponent } from './pages/enseignant/create-course/create-course.component';
-import { CourseListComponent } from './pages/enseignant/course-list/course-list.component';
 import { ContactComponent } from './pages/accueil/contact/contact.component';
-import { TeacherDashboardComponent } from './pages/enseignant/dashboard-enseignant/dashboard-enseignant.component';
-import { DashboardEtudiantComponent } from './pages/Etudiant/dashboard-etudiant/dashboard-etudiant.component';
-import { ForgotPasswordComponent } from './pages/Authentification/forgot-password/forgot-password.component';
 import { HomeComponent } from './pages/accueil/home/home.component';
+import { ForgotPasswordComponent } from './pages/Authentification/forgot-password/forgot-password.component';
 import { LoginComponent } from './pages/Authentification/login/login.component';
 import { RegisterComponent } from './pages/Authentification/register/register.component';
-import { ProfileComponent } from './pages/Etudiant/profileEtudiant/profile.component';
-import { PageCoursEtudiantComponent } from './pages/Etudiant/page-cours-etudiant/page-cours-etudiant.component';
-import { CoursDisponibleComponent } from './pages/Etudiant/cours-disponible/cours-disponible.component';
-import { MesCoursComponent } from './pages/Etudiant/mescours/mescours.component';
+import { DetailCoursComponent } from './pages/enseignant/course-details/course-details.component';
+import { CourseListComponent } from './pages/enseignant/course-list/course-list.component';
+import { CreateCourseComponent } from './pages/enseignant/create-course/create-course.component';
+import { TeacherDashboardComponent } from './pages/enseignant/dashboard-enseignant/dashboard-enseignant.component';
+import { DashboardWelcomeComponent } from './pages/enseignant/dashboard-welcome/dashboard-welcome.component';
 import { ProfilEnseignantComponent } from './pages/enseignant/profil-enseignant/profil-enseignant.component';
+import { CoursDisponibleComponent } from './pages/Etudiant/cours-disponible/cours-disponible.component';
+import { DashboardEtudiantComponent } from './pages/Etudiant/dashboard-etudiant/dashboard-etudiant.component';
+import { MesCoursComponent } from './pages/Etudiant/mescours/mescours.component';
+import { PageCoursEtudiantComponent } from './pages/Etudiant/page-cours-etudiant/page-cours-etudiant.component';
+import { ProfileComponent } from './pages/Etudiant/profileEtudiant/profile.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -28,6 +30,7 @@ const routes: Routes = [
       { path: 'create-course', component: CreateCourseComponent },
       { path: 'mes-cours', component: CourseListComponent },
       { path: 'profil-enseignant', component: ProfilEnseignantComponent },
+      { path: 'detailCours/:id', component: DetailCoursComponent }
 
       
     ]
@@ -39,6 +42,7 @@ const routes: Routes = [
   { path: 'cours', component: PageCoursEtudiantComponent },
   { path: 'coursdisponible', component: CoursDisponibleComponent },
   { path: 'mescours', component: MesCoursComponent }
+
 
 ];
 

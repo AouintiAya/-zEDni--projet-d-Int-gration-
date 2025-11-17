@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -110,5 +110,10 @@ export class CourseListComponent implements OnInit {
    // 🔹 Fonction pour naviguer vers la création de cours
   goToCreateCourse(): void {
     this.router.navigate(['/dashboard-enseignant/create-course']);
+  }
+
+  
+   goToDetail(courseId: number) {
+    this.router.navigate(['/dashboard-enseignant/detailCours', courseId]);
   }
 }
