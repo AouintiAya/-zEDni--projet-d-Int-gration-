@@ -1,0 +1,15 @@
+<div class="course-details-container" *ngIf="course">
+  <h1>{{ course.title }}</h1>
+  <img [src]="course.image" [alt]="course.title" class="course-image" />
+  <p class="course-description">{{ course.description }}</p>
+
+  <div class="actions-buttons">
+    <button class="btn btn-primary" (click)="addQuiz()">Voir Quiz</button>
+    <button class="btn btn-secondary" (click)="addExam()">Voir Examen</button>
+  </div>
+</div>
+
+
+<div *ngIf="!course">
+  <p>Chargement...</p>
+</div>

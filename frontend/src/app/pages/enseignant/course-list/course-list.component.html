@@ -6,7 +6,6 @@
       <p class="subtitle">Gérez et organisez tous vos cours</p>
     </div>
     <button class="add-course-btn" (click)="goToCreateCourse()">+ Ajouter un cours</button>
-
   </div>
 
   <!-- Search -->
@@ -55,12 +54,20 @@
           </td>
           <td>{{ course.lastUpdated }}</td>
           <td class="actions-col">
-            <button class="action-btn edit-btn" (click)="editCourse(course.id)" title="Éditer">
+            <button class="action-btn edit-btn" (click)="editCourse(course.id); $event.stopPropagation()" title="Éditer">
               <i class="fas fa-edit"></i>
             </button>
-            <button class="action-btn delete-btn" (click)="deleteCourse(course.id)" title="Supprimer">
+            <button class="action-btn delete-btn" (click)="deleteCourse(course.id); $event.stopPropagation()" title="Supprimer">
               <i class="fas fa-trash"></i>
             </button>
+<button class="action-btn view-btn" 
+        (click)="goToDetail(course.id); $event.stopPropagation()" 
+        title="Voir détails">
+  <i class="fas fa-eye"></i>
+</button>
+
+
+
           </td>
         </tr>
       </tbody>
@@ -68,8 +75,4 @@
 
     <div *ngIf="filteredCourses.length === 0" class="empty-state">
       <i class="fas fa-inbox"></i>
-      <p>Aucun cours trouvé</p>
-      <p class="empty-hint">Créez votre premier cours pour commencer</p>
-    </div>
-  </div>
-</div>
+      <p>Aucun cours trouv

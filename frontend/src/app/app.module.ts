@@ -8,20 +8,22 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
+
 // Composants
 import { ContactComponent } from './pages/accueil/contact/contact.component';
-import { DashboardEtudiantComponent } from './pages/Etudiant/dashboard-etudiant/dashboard-etudiant.component';
-import { ForgotPasswordComponent } from './pages/Authentification/forgot-password/forgot-password.component';
 import { HomeComponent } from './pages/accueil/home/home.component';
+import { ForgotPasswordComponent } from './pages/Authentification/forgot-password/forgot-password.component';
 import { LoginComponent } from './pages/Authentification/login/login.component';
 import { RegisterComponent } from './pages/Authentification/register/register.component';
-import { ProfileComponent } from './pages/Etudiant/profileEtudiant/profile.component';
-import { ProfilEnseignantComponent } from './pages/enseignant/profil-enseignant/profil-enseignant.component';
-import { PageCoursEtudiantComponent } from './pages/Etudiant/page-cours-etudiant/page-cours-etudiant.component';
-import { CoursDisponibleComponent } from './pages/Etudiant/cours-disponible/cours-disponible.component';
-import { MesCoursComponent } from './pages/Etudiant/mescours/mescours.component';
+import { DetailCoursComponent } from './pages/enseignant/course-details/course-details.component';
 import { CreateCourseComponent } from './pages/enseignant/create-course/create-course.component';
 import { CourseDetailsComponent } from './pages/Etudiant/course-details/course-details.component';
+import { ProfilEnseignantComponent } from './pages/enseignant/profil-enseignant/profil-enseignant.component';
+import { CoursDisponibleComponent } from './pages/Etudiant/cours-disponible/cours-disponible.component';
+import { DashboardEtudiantComponent } from './pages/Etudiant/dashboard-etudiant/dashboard-etudiant.component';
+import { MesCoursComponent } from './pages/Etudiant/mescours/mescours.component';
+import { PageCoursEtudiantComponent } from './pages/Etudiant/page-cours-etudiant/page-cours-etudiant.component';
+import { ProfileComponent } from './pages/Etudiant/profileEtudiant/profile.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { CourseDetailsComponent } from './pages/Etudiant/course-details/course-d
     MesCoursComponent,
     CreateCourseComponent,
     CourseDetailsComponent,
+    DetailCoursComponent,
   ],
   imports: [
     BrowserModule,
