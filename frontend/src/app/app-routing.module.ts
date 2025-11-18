@@ -6,6 +6,7 @@ import { ForgotPasswordComponent } from './pages/Authentification/forgot-passwor
 import { LoginComponent } from './pages/Authentification/login/login.component';
 import { RegisterComponent } from './pages/Authentification/register/register.component';
 import { DetailCoursComponent } from './pages/enseignant/course-details/course-details.component';
+import { CourseExamsComponent } from './pages/enseignant/course-exams/course-exams.component';
 import { CourseListComponent } from './pages/enseignant/course-list/course-list.component';
 import { CreateCourseComponent } from './pages/enseignant/create-course/create-course.component';
 import { TeacherDashboardComponent } from './pages/enseignant/dashboard-enseignant/dashboard-enseignant.component';
@@ -18,22 +19,38 @@ import { MesCoursComponent } from './pages/Etudiant/mescours/mescours.component'
 import { PageCoursEtudiantComponent } from './pages/Etudiant/page-cours-etudiant/page-cours-etudiant.component';
 import { ProfileComponent } from './pages/Etudiant/profileEtudiant/profile.component';
 
+import { CreateQuizComponent } from './pages/enseignant/create-quiz/create-quiz.component';
+import { QuizListComponent } from './pages/enseignant/quiz-list/quiz-list.component';
+import { ParticipationListComponent } from './pages/enseignant/participation-list/participation-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
+
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
 
   { path: 'dashboard-etudiant', component: DashboardEtudiantComponent },
-  { path: 'dashboard-enseignant', component: TeacherDashboardComponent,
+
+  {
+    path: 'dashboard-enseignant',
+    component: TeacherDashboardComponent,
     children: [
-      { path: '', component: DashboardWelcomeComponent }, // page par défaut
+      { path: '', component: DashboardWelcomeComponent },
       { path: 'create-course', component: CreateCourseComponent },
       { path: 'mes-cours', component: CourseListComponent },
       { path: 'profil-enseignant', component: ProfilEnseignantComponent },
-      { path: 'detailCours/:id', component: DetailCoursComponent }
+      { path: 'detailCours/:id', component: DetailCoursComponent },
+      { path: 'detailCours/:id', component: DetailCoursComponent },
+      // QUIZ
+      { path: 'create-quiz', component: CreateQuizComponent },
+      { path: 'quiz-list/:courseId', component: QuizListComponent },
+      { path: 'quiz-list/participations/:quizId', component: ParticipationListComponent },
+
+      // EXAMS
+      { path: 'courseExam/:id', component: CourseExamsComponent }
     ]
-   },
+  },
+
   { path: 'home', component: HomeComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'contact', component: ContactComponent },
@@ -51,4 +68,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

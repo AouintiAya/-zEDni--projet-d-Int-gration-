@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
-
 // Composants
 import { ContactComponent } from './pages/accueil/contact/contact.component';
 import { HomeComponent } from './pages/accueil/home/home.component';
@@ -24,6 +23,10 @@ import { DashboardEtudiantComponent } from './pages/Etudiant/dashboard-etudiant/
 import { MesCoursComponent } from './pages/Etudiant/mescours/mescours.component';
 import { PageCoursEtudiantComponent } from './pages/Etudiant/page-cours-etudiant/page-cours-etudiant.component';
 import { ProfileComponent } from './pages/Etudiant/profileEtudiant/profile.component';
+import { QuizListComponent } from './pages/enseignant/quiz-list/quiz-list.component';
+import { CreateQuizComponent } from './pages/enseignant/create-quiz/create-quiz.component';
+import { ParticipationListComponent } from './pages/enseignant/participation-list/participation-list.component';
+import { CourseExamsComponent } from './pages/enseignant/course-exams/course-exams.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +45,10 @@ import { ProfileComponent } from './pages/Etudiant/profileEtudiant/profile.compo
     CreateCourseComponent,
     CourseDetailsComponent,
     DetailCoursComponent,
+    QuizListComponent,
+    CreateQuizComponent,
+    ParticipationListComponent,
+    CourseExamsComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,4 +63,4 @@ import { ProfileComponent } from './pages/Etudiant/profileEtudiant/profile.compo
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
