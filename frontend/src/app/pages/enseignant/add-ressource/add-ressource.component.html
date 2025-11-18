@@ -1,0 +1,66 @@
+<div class="add-resource-page">
+  <div class="form-container">
+    <h2>Ajouter une ressource</h2>
+
+    <form (ngSubmit)="onSubmit()" #resourceForm="ngForm">
+
+      <!-- Titre -->
+      <div class="form-group">
+        <label for="titre">Titre de la ressource</label>
+        <input
+          type="text"
+          id="titre"
+          name="titre"
+          [(ngModel)]="ressource.titre"
+          class="form-control"
+          placeholder="Ex: Chapitre 1 - Introduction"
+          required
+        />
+      </div>
+
+      <!-- Type -->
+      <div class="form-group">
+        <label for="type">Type de ressource</label>
+        <select
+          id="type"
+          name="type"
+          [(ngModel)]="ressource.type"
+          class="form-control"
+          required
+        >
+          <option value="">-- Sélectionner --</option>
+          <option value="PDF">PDF</option>
+          <option value="Vidéo">Vidéo</option>
+          <option value="Lien">Lien externe</option>
+          <option value="Document">Document</option>
+        </select>
+      </div>
+
+      <!-- URL -->
+      <div class="form-group">
+        <label for="url">URL / Lien</label>
+        <input
+          type="text"
+          id="url"
+          name="url"
+          [(ngModel)]="ressource.url"
+          class="form-control"
+          placeholder="Ex: http://..."
+          required
+        />
+      </div>
+
+      <!-- Bouton -->
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="btn-submit"
+          [disabled]="resourceForm.invalid"
+        >
+          Ajouter la ressource
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

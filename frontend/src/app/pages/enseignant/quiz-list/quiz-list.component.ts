@@ -102,4 +102,9 @@ export class QuizListComponent implements OnInit {
   removeQuestion(i: number) {
     if (this.selectedQuiz) this.selectedQuiz.questions.splice(i, 1);
   }
+
+  goBackToCourses() {
+    // Redirige vers la liste des cours
+    this.router.navigate(['/dashboard-enseignant/mes-cours']);
+  }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 // Définition des types
 interface Participation {
@@ -13,6 +13,7 @@ interface Quiz {
   id: number;
   titre: string;
   questions: { texte: string; reponseCorrecte: string }[];
+  coursId?: number; // facultatif pour redirection
 }
 
 @Component({
@@ -25,7 +26,7 @@ export class ParticipationListComponent implements OnInit {
   quiz: Quiz | null = null;
   participations: Participation[] = [];
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     // Récupérer l'ID du quiz depuis l'URL
@@ -39,7 +40,8 @@ export class ParticipationListComponent implements OnInit {
         questions: [
           { texte: '2 + 2 = ?', reponseCorrecte: '4' },
           { texte: '3 * 3 = ?', reponseCorrecte: '9' }
-        ]
+        ],
+        coursId: 1
       },
       {
         id: 2,
@@ -47,7 +49,8 @@ export class ParticipationListComponent implements OnInit {
         questions: [
           { texte: 'Force = masse * ?', reponseCorrecte: 'accélération' },
           { texte: 'Vitesse de la lumière ?', reponseCorrecte: '3e8 m/s' }
-        ]
+        ],
+        coursId: 2
       }
     ];
 
@@ -66,6 +69,15 @@ export class ParticipationListComponent implements OnInit {
         { studentId: 'Étudiant4', reponses: 'F, 3e8', note: 9, corrige: 'F, 3e8' },
         { studentId: 'Étudiant5', reponses: 'F, 2e8', note: 7, corrige: 'F, 3e8' }
       ];
+    }
+  }
+
+  goBackToQuizList() {
+    if (this.quiz?.coursId) {
+      this.router.navigate(['/dashboard-enseignant/quiz-list', this.quiz.coursId]);
+    } else {
+      // si coursId non défini, revenir à la liste générale
+      this.router.navigate(['/dashboard-enseignant/quiz-list']);
     }
   }
 }

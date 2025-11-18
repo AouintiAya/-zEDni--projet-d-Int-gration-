@@ -55,6 +55,11 @@ export class DetailCoursComponent implements OnInit {
     // ici tu peux rediriger vers une page création examen
   }
 
+  addResource() {
+  this.router.navigate(['/dashboard-enseignant/add-ressource', this.courseId]);
+}
+
+
   // 🔹 Retour à la liste des cours
   goBack() {
     this.router.navigate(['/dashboard-enseignant/mes-cours']);

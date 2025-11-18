@@ -27,6 +27,7 @@ import { QuizListComponent } from './pages/enseignant/quiz-list/quiz-list.compon
 import { CreateQuizComponent } from './pages/enseignant/create-quiz/create-quiz.component';
 import { ParticipationListComponent } from './pages/enseignant/participation-list/participation-list.component';
 import { CourseExamsComponent } from './pages/enseignant/course-exams/course-exams.component';
+import { AddRessourceComponent } from './pages/enseignant/add-ressource/add-ressource.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { CourseExamsComponent } from './pages/enseignant/course-exams/course-exa
     CreateQuizComponent,
     ParticipationListComponent,
     CourseExamsComponent,
+    AddRessourceComponent,
   ],
   imports: [
     BrowserModule,
