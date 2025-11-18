@@ -6,6 +6,7 @@ import { ForgotPasswordComponent } from './pages/Authentification/forgot-passwor
 import { LoginComponent } from './pages/Authentification/login/login.component';
 import { RegisterComponent } from './pages/Authentification/register/register.component';
 import { DetailCoursComponent } from './pages/enseignant/course-details/course-details.component';
+import { CourseExamsComponent } from './pages/enseignant/course-exams/course-exams.component';
 import { CourseListComponent } from './pages/enseignant/course-list/course-list.component';
 import { CreateCourseComponent } from './pages/enseignant/create-course/create-course.component';
 import { TeacherDashboardComponent } from './pages/enseignant/dashboard-enseignant/dashboard-enseignant.component';
@@ -38,6 +39,7 @@ const routes: Routes = [
       { path: 'quiz-list/:courseId', component: QuizListComponent },
       { path: 'quiz-list/participations/:quizId', component: ParticipationListComponent },
 
+      { path: 'courseExam/:id', component: CourseExamsComponent }
 
       
     ]
@@ -48,7 +50,9 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'cours', component: PageCoursEtudiantComponent },
   { path: 'coursdisponible', component: CoursDisponibleComponent },
-  { path: 'mescours', component: MesCoursComponent }
+  { path: 'mescours', component: MesCoursComponent },
+  
+  
 
 
 ];

@@ -50,11 +50,8 @@ export class DetailCoursComponent implements OnInit {
   this.router.navigate([`/dashboard-enseignant/quiz-list`, this.courseId]);
 }
 
-
-
-
-  addExam() {
-    console.log(`Ajouter examen pour le cours ${this.courseId}`);
+  SeeExam() {
+      this.router.navigate(['/dashboard-enseignant/courseExam', this.courseId]);
     // ici tu peux rediriger vers une page création examen
   }
 

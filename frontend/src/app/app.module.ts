@@ -26,6 +26,7 @@ import { ProfileComponent } from './pages/Etudiant/profileEtudiant/profile.compo
 import { QuizListComponent } from './pages/enseignant/quiz-list/quiz-list.component';
 import { CreateQuizComponent } from './pages/enseignant/create-quiz/create-quiz.component';
 import { ParticipationListComponent } from './pages/enseignant/participation-list/participation-list.component';
+import { CourseExamsComponent } from './pages/enseignant/course-exams/course-exams.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { ParticipationListComponent } from './pages/enseignant/participation-lis
     QuizListComponent,
     CreateQuizComponent,
     ParticipationListComponent,
+    CourseExamsComponent,
   ],
   imports: [
     BrowserModule,
