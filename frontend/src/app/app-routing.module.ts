@@ -24,26 +24,32 @@ import { ParticipationListComponent } from './pages/enseignant/participation-lis
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
+
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
 
   { path: 'dashboard-etudiant', component: DashboardEtudiantComponent },
-  { path: 'dashboard-enseignant', component: TeacherDashboardComponent,
+
+  {
+    path: 'dashboard-enseignant',
+    component: TeacherDashboardComponent,
     children: [
-      { path: '', component: DashboardWelcomeComponent }, // page par défaut
+      { path: '', component: DashboardWelcomeComponent },
       { path: 'create-course', component: CreateCourseComponent },
       { path: 'mes-cours', component: CourseListComponent },
       { path: 'profil-enseignant', component: ProfilEnseignantComponent },
       { path: 'detailCours/:id', component: DetailCoursComponent },
+
+      // QUIZ
       { path: 'create-quiz', component: CreateQuizComponent },
       { path: 'quiz-list/:courseId', component: QuizListComponent },
       { path: 'quiz-list/participations/:quizId', component: ParticipationListComponent },
 
+      // EXAMS
       { path: 'courseExam/:id', component: CourseExamsComponent }
-
-      
     ]
-   },
+  },
+
   { path: 'home', component: HomeComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'contact', component: ContactComponent },
@@ -51,14 +57,10 @@ const routes: Routes = [
   { path: 'cours', component: PageCoursEtudiantComponent },
   { path: 'coursdisponible', component: CoursDisponibleComponent },
   { path: 'mescours', component: MesCoursComponent },
-  
-  
-
-
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
-
 // Composants
 import { ContactComponent } from './pages/accueil/contact/contact.component';
 import { HomeComponent } from './pages/accueil/home/home.component';
@@ -62,4 +61,4 @@ import { CourseExamsComponent } from './pages/enseignant/course-exams/course-exa
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
