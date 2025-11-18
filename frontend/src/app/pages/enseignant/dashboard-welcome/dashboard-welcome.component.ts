@@ -26,13 +26,13 @@ export class DashboardWelcomeComponent implements OnInit {
   filteredCourses: CoursDTO[] = [];
 
   statCards: StatCard[] = [
-    { icon: '📘', title: 'Cours', value: 0, unit: '', color: '#3f51b5' },
-    { icon: '👥', title: 'Étudiants', value: 0, unit: '', color: '#009688' },
+    { icon: '📘', title: 'Cours', value: 0, unit: '', color: '#2d9cdb' },
+    { icon: '👥', title: 'Étudiants', value: 0, unit: '', color: '#f2c94c' },
   ];
 
   constructor(
-    private authService: AuthService,
     private router: Router,
+    private authService: AuthService,
     private coursService: CoursService
   ) {}
 
@@ -51,14 +51,11 @@ export class DashboardWelcomeComponent implements OnInit {
   loadCourses(): void {
     this.coursService.getMyCours().subscribe({
       next: (res) => {
-        // Ajouter le compteur d'étudiants pour chaque cours
         this.courses = res.map(course => ({
           ...course,
           etudiantsCount: (course as any).participations?.length || 0
         }));
         this.filteredCourses = this.courses;
-
-        // Mettre à jour les statistiques
         this.updateStats();
       },
       error: (err) => console.error(err)
@@ -66,9 +63,8 @@ export class DashboardWelcomeComponent implements OnInit {
   }
 
   updateStats(): void {
-    this.statCards[0].value = this.courses.length; // Nombre de cours
-    this.statCards[1].value = this.courses.reduce((acc, course) => acc + (course.etudiantsCount || 0), 0); // Total étudiants
-    // L'index 2 (Avis) reste 0 ou tu peux le calculer si tu as des notes
+    this.statCards[0].value = this.courses.length;
+    this.statCards[1].value = this.courses.reduce((acc, course) => acc + (course.etudiantsCount || 0), 0);
   }
 
   getStatusColor(status: string | undefined): string {
