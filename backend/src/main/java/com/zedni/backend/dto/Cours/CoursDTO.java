@@ -15,5 +15,7 @@ public class CoursDTO {
     private String titre;
     private String description;
     private String enseignantEmail;
+    private String imageUrl;
     private List<RessourceDTO> ressources;
+
 }

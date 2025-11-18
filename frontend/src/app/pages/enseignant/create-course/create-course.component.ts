@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CoursService } from 'src/app/services/coursService/cours.service';
 
 @Component({
   selector: 'app-create-course',
@@ -7,63 +8,67 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./create-course.component.css']
 })
 export class CreateCourseComponent implements OnInit {
+
   coursForm!: FormGroup;
   selectedFile: File | null = null;
   selectedFilePreview: string | ArrayBuffer | null = null;
   isSubmitting: boolean = false;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private coursService: CoursService) {}
 
   ngOnInit(): void {
     this.coursForm = this.fb.group({
       titre: ['', [Validators.required, Validators.minLength(3)]],
-      description: ['', [Validators.required, Validators.minLength(10)]],
+      description: ['', [Validators.required, Validators.minLength(10)]]
     });
   }
 
-  // Gestion du fichier image
-  onFileSelected(event: any): void {
-    if (event.target.files && event.target.files.length > 0) {
-      this.selectedFile = event.target.files[0];
+  onFileSelected(event: any) {
+    const file: File | null = event.target.files && event.target.files[0] ? event.target.files[0] : null;
+    this.selectedFile = file;
 
-      const reader = new FileReader();
-      reader.onload = e => this.selectedFilePreview = reader.result;
-      reader.readAsDataURL(this.selectedFile!);
+    if (!file) {
+      this.selectedFilePreview = null;
+      return;
     }
+
+    // Preview
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.selectedFilePreview = reader.result;
+    };
+    reader.readAsDataURL(file);
   }
 
-  onSubmit(): void {
-    if (this.coursForm.valid) {
-      this.isSubmitting = true;
+  onSubmit() {
+    if (this.coursForm.invalid) {
+      this.coursForm.markAllAsTouched();
+      return;
+    }
 
-      // Simuler l'upload et création du cours
-      const newCourse = {
-        titre: this.coursForm.value.titre,
-        description: this.coursForm.value.description,
-        imageFile: this.selectedFile
-      };
+    this.isSubmitting = true;
 
-      console.log('Cours créé :', newCourse);
+    const formData = new FormData();
+    formData.append('titre', this.coursForm.value.titre);
+    formData.append('description', this.coursForm.value.description);
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile);
+    }
 
-      setTimeout(() => {
-        this.isSubmitting = false;
+    this.coursService.createCours(formData).subscribe({
+      next: (res) => {
+        alert('Cours créé avec succès !');
+
         this.coursForm.reset();
         this.selectedFile = null;
         this.selectedFilePreview = null;
-        alert('Cours créé avec succès !');
-      }, 1000);
-    } else {
-      alert('Veuillez remplir tous les champs requis.');
-    }
-  }
-
-  get isTitleInvalid(): boolean {
-    const control = this.coursForm.get('titre');
-    return !!(control && control.invalid && control.touched);
-  }
-
-  get isDescriptionInvalid(): boolean {
-    const control = this.coursForm.get('description');
-    return !!(control && control.invalid && control.touched);
+        this.isSubmitting = false;
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Erreur lors de la création du cours');
+        this.isSubmitting = false;
+      }
+    });
   }
 }

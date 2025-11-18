@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { CoursDTO, CoursService } from 'src/app/services/coursService/cours.service';
 
 interface StatCard {
   icon: string;
@@ -9,15 +10,6 @@ interface StatCard {
   value: string | number;
   unit: string;
   color: string;
-}
-
-interface Course {
-  id: number;
-  title: string;
-  students: number;
-  rating: number;
-  status: string;
-  image: string;
 }
 
 @Component({
@@ -28,97 +20,66 @@ interface Course {
   styleUrls: ['./dashboard-welcome.component.css']
 })
 export class DashboardWelcomeComponent implements OnInit {
-  userName: string = 'Utilisateur';
-  filteredCourses: Course[] = [];
+
+  userName: string = 'Professeur';
+  courses: CoursDTO[] = [];
+  filteredCourses: CoursDTO[] = [];
 
   statCards: StatCard[] = [
-    {
-      icon: "📚",
-      title: "Cours créés",
-      value: 8,
-      unit: "cours",
-      color: "#1a3b5f",
-    },
-    {
-      icon: "👥",
-      title: "Étudiants inscrits",
-      value: 245,
-      unit: "étudiants",
-      color: "#2d9cdb",
-    },
-    {
-      icon: "💰",
-      title: "Revenus totaux",
-      value: 2450,
-      unit: "€",
-      color: "#f2c94c",
-    },
-  ];
-
-  courses: Course[] = [
-    {
-      id: 1,
-      title: "Web Development Fundamentals",
-      students: 45,
-      rating: 4.8,
-      status: "En cours",
-      image: "assets/images/css.jpg",
-    },
-    {
-      id: 2,
-      title: "Programmation Python",
-      students: 32,
-      rating: 4.9,
-      status: "En cours",
-      image: "assets/images/python.jpg",
-    },
-    {
-      id: 3,
-      title: "Cybersécurité",
-      students: 28,
-      rating: 4.7,
-      status: "Complété",
-      image: "assets/images/cyber.jpg",
-    },
-    {
-      id: 4,
-      title: "Intelligence Artificielle",
-      students: 36,
-      rating: 4.6,
-      status: "En cours",
-      image: "assets/images/ai.jpg",
-    },
+    { icon: '📘', title: 'Cours', value: 0, unit: '', color: '#3f51b5' },
+    { icon: '👥', title: 'Étudiants', value: 0, unit: '', color: '#009688' },
   ];
 
   constructor(
     private authService: AuthService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private coursService: CoursService
+  ) {}
 
   ngOnInit(): void {
-    this.filteredCourses = this.courses;
     const user = this.authService.getUserInfo();
     if (user) {
       this.userName = user.sub.split('@')[0];
     }
+    this.loadCourses();
   }
 
   createCourse(): void {
-    console.log("Creating new course...");
-    // Naviguer vers la page de création
     this.router.navigate(['/dashboard-enseignant/create-course']);
   }
 
-  getStatusColor(status: string): string {
-    switch (status) {
-      case "En cours":
-        return "#2d9cdb";
-      case "Complété":
-        return "#4caf50";
-      case "Brouillon":
-        return "#ff9800";
-      default:
-        return "#545454";
+  loadCourses(): void {
+    this.coursService.getMyCours().subscribe({
+      next: (res) => {
+        // Ajouter le compteur d'étudiants pour chaque cours
+        this.courses = res.map(course => ({
+          ...course,
+          etudiantsCount: (course as any).participations?.length || 0
+        }));
+        this.filteredCourses = this.courses;
+
+        // Mettre à jour les statistiques
+        this.updateStats();
+      },
+      error: (err) => console.error(err)
+    });
+  }
+
+  updateStats(): void {
+    this.statCards[0].value = this.courses.length; // Nombre de cours
+    this.statCards[1].value = this.courses.reduce((acc, course) => acc + (course.etudiantsCount || 0), 0); // Total étudiants
+    // L'index 2 (Avis) reste 0 ou tu peux le calculer si tu as des notes
+  }
+
+  getStatusColor(status: string | undefined): string {
+    switch (status?.toLowerCase()) {
+      case 'published': return '#4caf50';
+      case 'draft': return '#ff9800';
+      default: return '#9e9e9e';
     }
+  }
+
+  goToCourse(id: number): void {
+    this.router.navigate(['/dashboard-enseignant/course', id]);
   }
 }

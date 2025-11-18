@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { CoursService, ParticipationCoursDto, CoursDTO } from '../../../services/coursService/cours.service';
+import {
+  CoursService,
+  ParticipationCoursDto,
+  CoursDTO,
+} from '../../../services/coursService/cours.service';
 
 interface StatCard {
   icon: string;
@@ -11,15 +15,18 @@ interface StatCard {
   color: string;
 }
 
-
 @Component({
   selector: 'app-dashboard-etudiant',
   templateUrl: './dashboard-etudiant.component.html',
-  styleUrls: ['./dashboard-etudiant.component.css']
+  styleUrls: ['./dashboard-etudiant.component.css'],
 })
 export class DashboardEtudiantComponent {
   searchTerm: string = '';
-  constructor(private router: Router, private authService: AuthService,private coursService: CoursService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private coursService: CoursService
+  ) {}
   courses: CoursDTO[] = [];
 
   userName: string = 'Utilisateur';
@@ -28,15 +35,48 @@ export class DashboardEtudiantComponent {
   activeItem: string = 'Tableau de bord';
 
   statCards: StatCard[] = [
-    { icon: "📚", title: "Cours inscrits", value: 0, unit: "cours", color: "#2d9cdb" },
-    { icon: "📊", title: "Progression moyenne", value: 65, unit: "%", color: "#f2c94c" },
-    { icon: "⏱️", title: "Temps d'apprentissage", value: 42, unit: "h", color: "#1a3b5f" },
+    {
+      icon: '📚',
+      title: 'Cours inscrits',
+      value: 0,
+      unit: 'cours',
+      color: '#2d9cdb',
+    },
+    {
+      icon: '📊',
+      title: 'Progression moyenne',
+      value: 65,
+      unit: '%',
+      color: '#f2c94c',
+    },
+    {
+      icon: '⏱️',
+      title: "Temps d'apprentissage",
+      value: 42,
+      unit: 'h',
+      color: '#1a3b5f',
+    },
   ];
 
   menuItems = [
-    { name: 'Tableau de bord', icon: 'fa-solid fa-home', color: '#1a3b5f', route: '/dashboard' },
-    { name: 'Cours', icon: 'fa-solid fa-book', color: '#1a3b5f', route: '/cours' },
-    { name: 'Profil', icon: 'fa-solid fa-user', color: '#1a3b5f', route: '/profile' },
+    {
+      name: 'Tableau de bord',
+      icon: 'fa-solid fa-home',
+      color: '#1a3b5f',
+      route: '/dashboard',
+    },
+    {
+      name: 'Cours',
+      icon: 'fa-solid fa-book',
+      color: '#1a3b5f',
+      route: '/cours',
+    },
+    {
+      name: 'Profil',
+      icon: 'fa-solid fa-user',
+      color: '#1a3b5f',
+      route: '/profile',
+    },
   ];
 
   toggleSidebar(): void {
@@ -60,11 +100,12 @@ export class DashboardEtudiantComponent {
     if (user) {
       this.userName = user.sub.split('@')[0];
     }
-  // Charger les cours
-  this.loadMyCourses();
+    // Charger les cours
+    this.loadMyCourses();
   }
+
   filteredMyCourses() {
-    return this.courses.filter(c =>
+    return this.courses.filter((c) =>
       c.titre.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
@@ -74,27 +115,29 @@ export class DashboardEtudiantComponent {
     this.coursService.getMyCourses().subscribe({
       next: (data: ParticipationCoursDto[]) => {
         // Convertir les participations en CoursDTO pour l'affichage
-        this.courses = data.map(p => ({
-          id: p.coursId,          // <-- utiliser l'id réel du cours
+        this.courses = data.map((p) => ({
+          id: p.coursId, // <-- utiliser l'id réel du cours
           titre: p.titreCours,
-          description: '',        // à compléter côté backend si tu veux la description complète
-          enseignantEmail: '',    // ou récupérer depuis backend si disponible
+          description: '', // à compléter côté backend si tu veux la description complète
+          enseignantEmail: '', // ou récupérer depuis backend si disponible
           dateInscription: p.dateInscription,
           ressources: [],
-          imageUrl: ''            // ou récupérer depuis backend si disponible
+          imageUrl: '', // ou récupérer depuis backend si disponible
         }));
         this.numberOfCourses = this.courses.length; // Met à jour le nombre de cours
         // Mettre à jour la statCard "Cours inscrits"
-const coursStat = this.statCards.find(s => s.title === "Cours inscrits");
-if (coursStat) {
-  coursStat.value = this.numberOfCourses;
-}
+        const coursStat = this.statCards.find(
+          (s) => s.title === 'Cours inscrits'
+        );
+        if (coursStat) {
+          coursStat.value = this.numberOfCourses;
+        }
       },
-      error: (err) => console.error('Erreur chargement cours:', err)
+      error: (err) => console.error('Erreur chargement cours:', err),
     });
   }
   openCourse(course: CoursDTO) {
-      // redirige vers /courses/<id du cours>
-      this.router.navigate(['/courses', course.id]);
-    }
+    // redirige vers /courses/<id du cours>
+    this.router.navigate(['/courses', course.id]);
+  }
 }

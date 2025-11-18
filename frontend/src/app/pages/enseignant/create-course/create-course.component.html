@@ -15,12 +15,7 @@
             type="text"
             formControlName="titre"
             placeholder="Ex: Introduction à Angular"
-            [class.invalid]="isTitleInvalid"
           />
-          <div class="error" *ngIf="isTitleInvalid">
-            <span *ngIf="coursForm.get('titre')?.errors?.['required']">Le titre est requis</span>
-            <span *ngIf="coursForm.get('titre')?.errors?.['minlength']">Minimum 3 caractères</span>
-          </div>
         </div>
 
         <!-- Description -->
@@ -30,12 +25,7 @@
             id="description"
             formControlName="description"
             placeholder="Décrivez le contenu du cours"
-            [class.invalid]="isDescriptionInvalid"
           ></textarea>
-          <div class="error" *ngIf="isDescriptionInvalid">
-            <span *ngIf="coursForm.get('description')?.errors?.['required']">La description est requise</span>
-            <span *ngIf="coursForm.get('description')?.errors?.['minlength']">Minimum 10 caractères</span>
-          </div>
         </div>
 
         <!-- Image Upload -->

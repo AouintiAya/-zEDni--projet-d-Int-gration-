@@ -17,7 +17,6 @@ export class TeacherDashboardComponent implements OnInit {
 
   menuItems = [
     { name: 'Accueil', icon: 'fa-solid fa-home', color: '#1a3b5f', route: '/dashboard-enseignant' },
-    { name: 'Créer un cours', icon: 'fa-solid fa-plus', color: '#1a3b5f', route: '/dashboard-enseignant/create-course' },
     { name: 'Mes cours', icon: 'fa-solid fa-book', color: '#1a3b5f', route: '/dashboard-enseignant/mes-cours' },
     { name: 'Profil', icon: 'fa-solid fa-user', color: '#1a3b5f', route: '/dashboard-enseignant/profil-enseignant' },
     { name: 'Déconnexion', icon: 'fa-solid fa-right-from-bracket', color: '#1a3b5f', route: '#' },
