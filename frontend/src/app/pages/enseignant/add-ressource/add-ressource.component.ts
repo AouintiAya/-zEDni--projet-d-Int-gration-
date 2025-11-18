@@ -47,4 +47,48 @@ export class AddRessourceComponent implements OnInit {
     alert("Ressource ajoutée avec succès !");
     this.router.navigate(['/dashboard-enseignant/course-details', this.courseId]);
   }
+
+  getFileAccept(): string {
+  switch (this.ressource.type) {
+    case 'PDF':
+      return '.pdf';
+    case 'Vidéo':
+      return '.mp4,.avi,.mov,.mkv';
+    case 'Document':
+      return '.doc,.docx,.xls,.xlsx,.ppt,.pptx';
+    default:
+      return '*/*';
+  }
+}
+
+getUploadHint(): string {
+  switch (this.ressource.type) {
+    case 'PDF':
+      return 'PDF jusqu\'à 50 MB';
+    case 'Vidéo':
+      return 'Vidéo jusqu\'à 500 MB (MP4, AVI, MOV, MKV)';
+    case 'Document':
+      return 'Document jusqu\'à 50 MB (Word, Excel, PowerPoint)';
+    default:
+      return 'Fichier jusqu\'à 50 MB';
+  }
+}
+
+getFileSize(bytes: number): string {
+  if (bytes === 0) return '0 Bytes';
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+}
+
+removeFile(): void {
+  this.ressource.file = null;
+}
+
+goBack(): void {
+  this.router.navigate(['/dashboard-enseignant/detailCours', this.courseId]);
+}
+
+
 }

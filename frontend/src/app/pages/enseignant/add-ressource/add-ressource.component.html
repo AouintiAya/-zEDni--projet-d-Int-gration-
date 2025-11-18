@@ -1,78 +1,171 @@
-<div class="add-resource-page">
-  <div class="form-container">
-    <h2>Ajouter une ressource</h2>
+<div class="add-ressource-wrapper">
+  <!-- Header Section -->
+  <div class="header-section">
+    <button class="btn-back" (click)="goBack()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M19 12H5M12 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Retour
+    </button>
 
-    <form (ngSubmit)="onSubmit()" #resourceForm="ngForm" enctype="multipart/form-data">
+    <div class="header-content">
+      <h1>Ajouter une ressource</h1>
+      <p class="subtitle">Enrichissez votre cours avec du contenu pédagogique</p>
+    </div>
+  </div>
 
-      <!-- Titre -->
-      <div class="form-group">
-        <label for="titre">Titre de la ressource</label>
-        <input
-          type="text"
-          id="titre"
-          name="titre"
-          [(ngModel)]="ressource.titre"
-          class="form-control"
-          placeholder="Ex: Chapitre 1 - Introduction"
-          required
-        />
+  <!-- Main Content -->
+  <div class="content-container">
+    <!-- Form Section -->
+    <div class="form-section">
+      <form (ngSubmit)="onSubmit()" #resourceForm="ngForm" class="resource-form">
+
+        <!-- Titre Input -->
+        <div class="form-group">
+          <label for="titre" class="form-label">
+            <span class="label-text">Titre de la ressource</span>
+            <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="titre"
+            name="titre"
+            [(ngModel)]="ressource.titre"
+            class="form-input"
+            placeholder="Ex: Chapitre 1 - Introduction"
+            required
+          />
+          <p class="input-hint">Donnez un titre descriptif à votre ressource</p>
+        </div>
+
+        <!-- Type Selection -->
+        <div class="form-group">
+          <label for="type" class="form-label">
+            <span class="label-text">Type de ressource</span>
+            <span class="required">*</span>
+          </label>
+          <select
+            id="type"
+            name="type"
+            [(ngModel)]="ressource.type"
+            class="form-select"
+            required
+          >
+            <option value="">-- Sélectionner un type --</option>
+            <option value="PDF">📄 PDF</option>
+            <option value="Vidéo">🎬 Vidéo</option>
+            <option value="Document">📝 Document</option>
+            <option value="Lien">🔗 Lien externe</option>
+          </select>
+          <p class="input-hint">Choisissez le type de contenu que vous souhaitez ajouter</p>
+        </div>
+
+        <!-- Conditional: URL for External Link -->
+        <div *ngIf="ressource.type === 'Lien'" class="form-group animated-group">
+          <label for="url" class="form-label">
+            <span class="label-text">URL / Lien externe</span>
+            <span class="required">*</span>
+          </label>
+          <input
+            type="url"
+            id="url"
+            name="url"
+            [(ngModel)]="ressource.url"
+            class="form-input"
+            placeholder="Ex: https://www.exemple.com"
+            required
+          />
+          <p class="input-hint">Entrez l'adresse URL complète du lien</p>
+        </div>
+
+        <!-- Conditional: File Upload for Other Types -->
+        <div *ngIf="ressource.type !== 'Lien' && ressource.type !== ''" class="form-group animated-group">
+          <label for="file" class="form-label">
+            <span class="label-text">Fichier</span>
+            <span class="required">*</span>
+          </label>
+
+          <div class="file-upload-wrapper">
+            <input
+              type="file"
+              id="file"
+              (change)="onFileSelected($event)"
+              class="file-input"
+              [accept]="getFileAccept()"
+            />
+            <label for="file" class="file-upload-label">
+              <svg class="upload-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+              </svg>
+              <span class="upload-text">Cliquez pour ajouter un fichier</span>
+              <span class="upload-hint">{{ getUploadHint() }}</span>
+            </label>
+          </div>
+
+          <!-- File Preview -->
+          <div *ngIf="ressource.file" class="file-preview">
+            <div class="preview-header">
+              <div class="file-info">
+                <svg class="file-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                </svg>
+                <div>
+                  <p class="file-name">{{ ressource.file.name }}</p>
+                  <p class="file-size">{{ getFileSize(ressource.file.size) }}</p>
+                </div>
+              </div>
+              <button type="button" class="btn-remove-file" (click)="removeFile()">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" [disabled]="resourceForm.invalid">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+            Ajouter la ressource
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- Info Section -->
+    <div class="info-section">
+      <div class="info-card">
+        <h3>Types de ressources disponibles</h3>
+        <ul class="resource-types-list">
+          <li>
+            <strong>PDF:</strong> Documents en format PDF (supports de cours, présentations)
+          </li>
+          <li>
+            <strong>Vidéo:</strong> Vidéos YouTube ou autres plateformes d'hébergement
+          </li>
+          <li>
+            <strong>Document:</strong> Fichiers Word, Excel ou autres formats éducatifs
+          </li>
+          <li>
+            <strong>Lien:</strong> Ressources externes (articles, sites web, etc.)
+          </li>
+        </ul>
       </div>
 
-      <!-- Type -->
-      <div class="form-group">
-        <label for="type">Type de ressource</label>
-        <select
-          id="type"
-          name="type"
-          [(ngModel)]="ressource.type"
-          class="form-control"
-          required
-        >
-          <option value="">-- Sélectionner --</option>
-          <option value="PDF">PDF</option>
-          <option value="Vidéo">Vidéo</option>
-          <option value="Lien">Lien externe</option>
-          <option value="Document">Document</option>
-        </select>
+      <div class="info-card">
+        <h3>Conseils de téléchargement</h3>
+        <ul class="tips-list">
+          <li>Utilisez des noms de fichiers clairs et descriptifs</li>
+          <li>Limitez la taille des fichiers à 50 MB</li>
+          <li>Testez les liens externes avant de les ajouter</li>
+          <li>Organisez vos ressources par thème ou chapitre</li>
+        </ul>
       </div>
+    </div>
 
-      <!-- URL externe (visible si type = Lien) -->
-      <div class="form-group" *ngIf="ressource.type === 'Lien'">
-        <label for="url">URL / Lien externe</label>
-        <input
-          type="text"
-          id="url"
-          name="url"
-          [(ngModel)]="ressource.url"
-          class="form-control"
-          placeholder="Ex: http://..."
-          required
-        />
-      </div>
-
-      <!-- Upload fichier (visible si type ≠ Lien) -->
-      <div class="form-group" *ngIf="ressource.type !== 'Lien'">
-        <label for="file">Choisir un fichier</label>
-        <input
-          type="file"
-          id="file"
-          (change)="onFileSelected($event)"
-          class="form-control"
-          [required]="ressource.type !== 'Lien'"
-        />
-      </div>
-
-      <!-- Boutons -->
-      <div class="form-actions">
-        <button
-          type="submit"
-          class="btn-submit"
-          [disabled]="resourceForm.invalid"
-        >
-          Ajouter la ressource
-        </button>
-      </div>
-
-    </form>
   </div>
 </div>

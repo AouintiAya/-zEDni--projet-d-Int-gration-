@@ -63,6 +63,14 @@ export class DetailCoursComponent implements OnInit {
     this.router.navigate([`/dashboard-enseignant/add-ressource`, this.course.id]);
   }
 
+
+  addQuiz(): void {
+  if (!this.course) return;
+  // Navigue vers la page de création d’un quiz pour ce cours
+  this.router.navigate([`/dashboard-enseignant/create-quiz`, this.course.id]);
+}
+
+
   goBack(): void {
     this.router.navigate(['/dashboard-enseignant/mes-cours']);
   }

@@ -80,4 +80,24 @@ export class ParticipationListComponent implements OnInit {
       this.router.navigate(['/dashboard-enseignant/quiz-list']);
     }
   }
+
+
+  getAverageScore(): number {
+  if (this.participations.length === 0) return 0;
+  const total = this.participations.reduce((sum, p) => sum + p.note, 0);
+  return total / this.participations.length;
+}
+
+getHighScoresCount(): number {
+  return this.participations.filter(p => p.note >= 8).length;
+}
+
+getMediumScoresCount(): number {
+  return this.participations.filter(p => p.note >= 5 && p.note < 8).length;
+}
+
+getLowScoresCount(): number {
+  return this.participations.filter(p => p.note < 5).length;
+}
+
 }
