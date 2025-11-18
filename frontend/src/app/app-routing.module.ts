@@ -15,6 +15,7 @@ import { PageCoursEtudiantComponent } from './pages/Etudiant/page-cours-etudiant
 import { CoursDisponibleComponent } from './pages/Etudiant/cours-disponible/cours-disponible.component';
 import { MesCoursComponent } from './pages/Etudiant/mescours/mescours.component';
 import { ProfilEnseignantComponent } from './pages/enseignant/profil-enseignant/profil-enseignant.component';
+import { CourseDetailsComponent } from './pages/Etudiant/course-details/course-details.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -28,8 +29,6 @@ const routes: Routes = [
       { path: 'create-course', component: CreateCourseComponent },
       { path: 'mes-cours', component: CourseListComponent },
       { path: 'profil-enseignant', component: ProfilEnseignantComponent },
-
-      
     ]
    },
   { path: 'home', component: HomeComponent },
@@ -38,7 +37,9 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'cours', component: PageCoursEtudiantComponent },
   { path: 'coursdisponible', component: CoursDisponibleComponent },
-  { path: 'mescours', component: MesCoursComponent }
+  { path: 'mescours', component: MesCoursComponent },
+  { path: 'courses/:id', component: CourseDetailsComponent }
+
 
 ];
 

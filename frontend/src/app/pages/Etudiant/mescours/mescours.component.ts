@@ -1,7 +1,6 @@
-// duplicate import removed; CoursService is imported together with CoursDTO below
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CoursService, CoursDTO } from '../../../services/coursService/cours.service';
+import { CoursService, ParticipationCoursDto, CoursDTO } from '../../../services/coursService/cours.service';
 
 @Component({
   selector: 'app-my-courses',
@@ -25,15 +24,27 @@ export class MesCoursComponent implements OnInit {
   constructor(private router: Router, private coursService: CoursService) {}
 
   ngOnInit() {
-    this.loadCourses();
+    this.loadMyCourses();
   }
 
-  loadCourses() {
-    this.coursService.getAllCours().subscribe({
-      next: (data) => this.courses = data,
-      error: (err) => console.error('Erreur chargement cours:', err)
-    });
-  }
+ loadMyCourses() {
+  this.coursService.getMyCourses().subscribe({
+    next: (data: ParticipationCoursDto[]) => {
+      // Convertir les participations en CoursDTO pour l'affichage
+      this.courses = data.map(p => ({
+        id: p.coursId,          // <-- utiliser l'id réel du cours
+        titre: p.titreCours,
+        description: '',        // à compléter côté backend si tu veux la description complète
+        enseignantEmail: '',    // ou récupérer depuis backend si disponible
+        dateInscription: p.dateInscription,
+        ressources: [],
+        imageUrl: ''            // ou récupérer depuis backend si disponible
+      }));
+    },
+    error: (err) => console.error('Erreur chargement cours:', err)
+  });
+}
+
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
@@ -51,6 +62,7 @@ export class MesCoursComponent implements OnInit {
   }
 
   openCourse(course: CoursDTO) {
-    this.router.navigate(['/cours', course.id]);
+    // redirige vers /courses/<id du cours>
+    this.router.navigate(['/courses', course.id]);
   }
 }

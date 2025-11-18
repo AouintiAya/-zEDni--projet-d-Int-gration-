@@ -43,31 +43,33 @@
       </div>
     </div>
 
-
-      <!-- Courses Grid -->
-      <div class="courses-section">
-        <h3 class="section-title">Mes Cours</h3>
-        <div class="courses-grid">
-          <div class="course-card" *ngFor="let course of filteredCourses">
-            <div class="course-header" [style.background]="course.color">
-              <span class="course-code">{{ course.code }}</span>
-            </div>
-            <div class="course-body">
-              <h4>{{ course.name }}</h4>
-              <p class="course-instructor">Prof. {{ course.instructor }}</p>
-              <div class="course-progress">
-                <div class="progress-bar">
-                  <div class="progress-fill" [style.width]="course.progress + '%'"></div>
-                </div>
-                <span class="progress-text">{{ course.progress }}%</span>
-              </div>
-              <button class="btn-access">Accéder au cours</button>
-            </div>
-          </div>
-        </div>
+<!-- Courses Grid -->
+<div class="courses-section">
+  <h3 class="section-title">Mes Cours</h3>
+  <div class="courses-grid">
+    <div class="course-card" *ngFor="let course of filteredMyCourses()">
+      <!-- Image -->
+      <div class="course-header">
+        <img [src]="course.imageUrl || 'assets/images/python.jpg'" [alt]="course.titre" />
       </div>
 
+      <!-- Contenu -->
+      <div class="course-body">
+        <h4>{{ course.titre }}</h4>
+        <p>{{ course.description }}</p>
+        <p class="date-inscription">Inscrit le: {{ course.dateInscription | date:'dd/MM/yyyy HH:mm' }}</p>
 
+        <!-- Évaluation -->
+        <div class="course-rating">
+          <span class="star" *ngFor="let s of [1,2,3,4,5]">★</span>
+        </div>
+
+        <!-- Bouton -->
+        <button class="btn-access" (click)="openCourse(course)">Voir le cours</button>
+      </div>
+    </div>
+  </div>
+</div>
     </main>
   </div>
 </div>

@@ -21,6 +21,7 @@ import { PageCoursEtudiantComponent } from './pages/Etudiant/page-cours-etudiant
 import { CoursDisponibleComponent } from './pages/Etudiant/cours-disponible/cours-disponible.component';
 import { MesCoursComponent } from './pages/Etudiant/mescours/mescours.component';
 import { CreateCourseComponent } from './pages/enseignant/create-course/create-course.component';
+import { CourseDetailsComponent } from './pages/Etudiant/course-details/course-details.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { CreateCourseComponent } from './pages/enseignant/create-course/create-c
     CoursDisponibleComponent,
     MesCoursComponent,
     CreateCourseComponent,
+    CourseDetailsComponent,
   ],
   imports: [
     BrowserModule,

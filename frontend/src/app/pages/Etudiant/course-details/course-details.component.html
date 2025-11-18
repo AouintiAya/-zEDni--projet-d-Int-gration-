@@ -1,0 +1,45 @@
+<div class="main-container">
+  <!-- Sidebar -->
+  <aside [class.closed]="!isSidebarOpen" class="sidebar">
+    <div class="sidebar-toggle" (click)="toggleSidebar()">
+      <span>{{ isSidebarOpen ? '<' : '>' }}</span>
+    </div>
+
+    <div class="menu-items">
+      <div
+        class="menu-item"
+        *ngFor="let item of menuItems"
+        [class.active]="activeItem === item.name"
+        (click)="setActiveItem(item.name, item.route)"
+      >
+        <i [class]="item.icon" [style.color]="item.color"></i>
+        <span class="menu-text" *ngIf="isSidebarOpen">{{ item.name }}</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Contenu principal -->
+  <div class="content-wrapper">
+    <div class="course-details" *ngIf="course">
+      <img class="course-image"
+           [src]="course.imageUrl || 'assets/images/python.jpg'"
+           [alt]="course.titre">
+
+      <div class="course-content">
+        <h1>{{ course.titre }}</h1>
+        <p class="description">{{ course.description || 'Aucune description disponible.' }}</p>
+        <div class="stars">⭐️⭐️⭐️⭐️☆</div>
+        <h3>Ressources :</h3>
+        <ul>
+          <li *ngFor="let r of course.ressources || []">
+            {{ r.nom }} – <a [href]="r.url" target="_blank">Télécharger</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div *ngIf="!course">
+      <p>Chargement des détails du cours...</p>
+    </div>
+  </div>
+</div>

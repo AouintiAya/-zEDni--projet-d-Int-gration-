@@ -1,4 +1,5 @@
 <div class="courses-page">
+  <!-- Sidebar -->
   <aside [class.closed]="!isSidebarOpen" class="sidebar">
     <div class="sidebar-toggle" (click)="toggleSidebar()">
       <span>{{ isSidebarOpen ? '<' : '>' }}</span>
@@ -17,8 +18,9 @@
     </div>
   </aside>
 
+  <!-- Contenu principal -->
   <main class="courses-container">
-    <h1 class="title">Mes Cours</h1>
+    <h1 class="title">Cours Disponibles</h1>
 
     <div class="search-bar">
       <input type="text" placeholder="Rechercher un cours..." [(ngModel)]="isearchTerm">
@@ -27,7 +29,7 @@
     <div class="cards-wrapper">
       <div class="course-card" *ngFor="let course of filteredMyCourses()">
         <div class="icon">
-          <img [src]="course.imageUrl" [alt]="course.titre" />
+          <img [src]="course.imageUrl || 'assets/images/ai.jpg'" [alt]="course.titre" />
         </div>
         <h2>{{ course.titre }}</h2>
         <p>{{ course.description }}</p>

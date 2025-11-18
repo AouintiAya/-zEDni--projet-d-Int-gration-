@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { CoursService, ParticipationCoursDto, CoursDTO } from '../../../services/coursService/cours.service';
 
 interface StatCard {
   icon: string;
@@ -10,15 +11,6 @@ interface StatCard {
   color: string;
 }
 
-interface Course {
-  id: number;
-  name: string;
-  code: string;
-  instructor: string;
-  progress: number;
-  color: string;
-  icon: string;
-}
 
 @Component({
   selector: 'app-dashboard-etudiant',
@@ -26,7 +18,9 @@ interface Course {
   styleUrls: ['./dashboard-etudiant.component.css']
 })
 export class DashboardEtudiantComponent {
-  constructor(private router: Router, private authService: AuthService) {}
+  searchTerm: string = '';
+  constructor(private router: Router, private authService: AuthService,private coursService: CoursService) {}
+  courses: CoursDTO[] = [];
 
   userName: string = 'Utilisateur';
   searchQuery = '';
@@ -34,17 +28,9 @@ export class DashboardEtudiantComponent {
   activeItem: string = 'Tableau de bord';
 
   statCards: StatCard[] = [
-    { icon: "📚", title: "Cours inscrits", value: 5, unit: "cours", color: "#2d9cdb" },
+    { icon: "📚", title: "Cours inscrits", value: 0, unit: "cours", color: "#2d9cdb" },
     { icon: "📊", title: "Progression moyenne", value: 65, unit: "%", color: "#f2c94c" },
     { icon: "⏱️", title: "Temps d'apprentissage", value: 42, unit: "h", color: "#1a3b5f" },
-  ];
-
-  courses: Course[] = [
-    { id: 1, name: 'Développement Web', code: 'DW-101', instructor: 'Fatima Hassan', progress: 85, color: '#2d9cdb', icon: '📚' },
-    { id: 2, name: 'Base de Données', code: 'BD-102', instructor: 'Ali Mohamed', progress: 70, color: '#f2c94c', icon: '🗄️' },
-    { id: 3, name: 'Algorithmes', code: 'ALG-103', instructor: 'Hamza Ibrahim', progress: 92, color: '#1a3b5f', icon: '⚙️' },
-    { id: 4, name: 'Programmation Python', code: 'PY-104', instructor: 'Noor Ahmed', progress: 78, color: '#2d9cdb', icon: '🐍' },
-    { id: 5, name: 'Réseaux Informatiques', code: 'RES-105', instructor: 'Mohamed Ali', progress: 65, color: '#f2c94c', icon: '🌐' }
   ];
 
   menuItems = [
@@ -52,20 +38,6 @@ export class DashboardEtudiantComponent {
     { name: 'Cours', icon: 'fa-solid fa-book', color: '#1a3b5f', route: '/cours' },
     { name: 'Profil', icon: 'fa-solid fa-user', color: '#1a3b5f', route: '/profile' },
   ];
-
-  filteredCourses = this.courses;
-
-  filterCourses(): void {
-    if (!this.searchQuery.trim()) {
-      this.filteredCourses = this.courses;
-    } else {
-      const query = this.searchQuery.toLowerCase();
-      this.filteredCourses = this.courses.filter(course =>
-        course.name.toLowerCase().includes(query) ||
-        course.code.toLowerCase().includes(query)
-      );
-    }
-  }
 
   toggleSidebar(): void {
     this.isSidebarOpen = !this.isSidebarOpen;
@@ -88,5 +60,41 @@ export class DashboardEtudiantComponent {
     if (user) {
       this.userName = user.sub.split('@')[0];
     }
+  // Charger les cours
+  this.loadMyCourses();
   }
+  filteredMyCourses() {
+    return this.courses.filter(c =>
+      c.titre.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+  numberOfCourses: number = 0; // stocke le nombre de cours
+
+  loadMyCourses() {
+    this.coursService.getMyCourses().subscribe({
+      next: (data: ParticipationCoursDto[]) => {
+        // Convertir les participations en CoursDTO pour l'affichage
+        this.courses = data.map(p => ({
+          id: p.coursId,          // <-- utiliser l'id réel du cours
+          titre: p.titreCours,
+          description: '',        // à compléter côté backend si tu veux la description complète
+          enseignantEmail: '',    // ou récupérer depuis backend si disponible
+          dateInscription: p.dateInscription,
+          ressources: [],
+          imageUrl: ''            // ou récupérer depuis backend si disponible
+        }));
+        this.numberOfCourses = this.courses.length; // Met à jour le nombre de cours
+        // Mettre à jour la statCard "Cours inscrits"
+const coursStat = this.statCards.find(s => s.title === "Cours inscrits");
+if (coursStat) {
+  coursStat.value = this.numberOfCourses;
+}
+      },
+      error: (err) => console.error('Erreur chargement cours:', err)
+    });
+  }
+  openCourse(course: CoursDTO) {
+      // redirige vers /courses/<id du cours>
+      this.router.navigate(['/courses', course.id]);
+    }
 }
