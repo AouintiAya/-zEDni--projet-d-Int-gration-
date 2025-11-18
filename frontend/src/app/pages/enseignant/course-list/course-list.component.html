@@ -53,7 +53,10 @@
   <td>{{ course.enseignantEmail }}</td>
 
   <td class="actions-col">
-
+ <!-- View Details -->
+  <button class="action-btn view-btn" (click)="viewCourse(course.id!)">
+    <i class="fas fa-eye"></i>
+  </button>
     <!-- Edit -->
     <button class="action-btn edit-btn"
       *ngIf="editingCourseId !== course.id"

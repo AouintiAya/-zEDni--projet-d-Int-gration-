@@ -4,17 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CoursDTO, CoursService } from 'src/app/services/coursService/cours.service';
 
-interface Course {
-  id: number;
-  title: string;
-  students: number;
-  rating: number;
-  status: string;
-  image: string;
-  description?: string;
-  lastUpdated?: string;
-}
-
 @Component({
   selector: 'app-courses',
   standalone: true,
@@ -30,7 +19,6 @@ export class CourseListComponent implements OnInit {
   editingCourseId?: number;
   selectedImage?: File;
 
-  // 🔥 Toute la data d’édition dans un seul objet propre
   editData = {
     titre: '',
     description: ''
@@ -42,16 +30,18 @@ export class CourseListComponent implements OnInit {
     this.loadCourses();
   }
 
+  // Charger tous les cours de l'enseignant connecté
   loadCourses(): void {
     this.coursService.getMyCours().subscribe({
       next: (res) => {
         this.courses = res;
-        this.filteredCourses = res;
+        this.filteredCourses = [...res]; // clone pour recherche
       },
       error: (err) => console.error(err)
     });
   }
 
+  // Recherche dans les cours
   onSearch(): void {
     const q = this.searchQuery.toLowerCase();
     this.filteredCourses = this.courses.filter(c =>
@@ -60,9 +50,8 @@ export class CourseListComponent implements OnInit {
     );
   }
 
+  // Redirection vers création d’un nouveau cours
   createCourse(): void {
-    console.log("Creating new course...");
-    // Naviguer vers la page de création
     this.router.navigate(['/dashboard-enseignant/create-course']);
   }
 
@@ -70,7 +59,7 @@ export class CourseListComponent implements OnInit {
   //       EDITION
   // ------------------ //
 
-  startEditCourse(course: any) {
+  startEditCourse(course: CoursDTO) {
     this.editingCourseId = course.id;
     this.editData = {
       titre: course.titre,
@@ -88,16 +77,15 @@ export class CourseListComponent implements OnInit {
     this.selectedImage = event.target.files[0];
   }
 
-  updateCourse(course: any) {
+  updateCourse(course: CoursDTO) {
     this.coursService.updateCourse(
       course.id,
       this.editData.titre,
       this.editData.description,
       this.selectedImage
-    )
-    .subscribe({
+    ).subscribe({
       next: (updated) => {
-        Object.assign(course, updated); // mise à jour immédiate UI
+        Object.assign(course, updated);
         this.editingCourseId = undefined;
         this.selectedImage = undefined;
       },
@@ -109,8 +97,16 @@ export class CourseListComponent implements OnInit {
     if (!confirm("Supprimer ce cours ?")) return;
 
     this.coursService.deleteCourse(id).subscribe({
-      next: () => this.courses = this.courses.filter(c => c.id !== id),
+      next: () => {
+        this.courses = this.courses.filter(c => c.id !== id);
+        this.filteredCourses = this.filteredCourses.filter(c => c.id !== id);
+      },
       error: (err) => console.error(err)
     });
+  }
+
+  // Redirection vers la page de détails du cours
+  viewCourse(courseId: number): void {
+    this.router.navigate(['/dashboard-enseignant/detailCours', courseId]);
   }
 }

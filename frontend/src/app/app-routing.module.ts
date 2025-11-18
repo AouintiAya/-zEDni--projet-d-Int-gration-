@@ -41,7 +41,6 @@ const routes: Routes = [
       { path: 'mes-cours', component: CourseListComponent },
       { path: 'profil-enseignant', component: ProfilEnseignantComponent },
       { path: 'detailCours/:id', component: DetailCoursComponent },
-      { path: 'detailCours/:id', component: DetailCoursComponent },
       { path: 'add-ressource/:id', component: AddRessourceComponent },
 
 

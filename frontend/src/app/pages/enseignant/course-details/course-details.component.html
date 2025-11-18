@@ -1,17 +1,38 @@
-<div class="course-details-container" *ngIf="course">
-  <h1>{{ course.title }}</h1>
-  <img [src]="course.image" [alt]="course.title" class="course-image" />
+<div class="course-details-container" *ngIf="!loading && course">
+  <h1 class="course-title">{{ course.titre }}</h1>
+
+  <!-- Image du cours avec fallback -->
+  <img
+    [src]="course.imageUrl || 'assets/default-course.jpg'"
+    [alt]="course.titre"
+    class="course-image"
+  />
+
+  <!-- Description -->
   <p class="course-description">{{ course.description }}</p>
 
+<!-- Infos complémentaires -->
+  <div class="course-info">
+    <p><strong>Enseignant :</strong> {{ course.enseignantEmail }}</p>
+    <p><strong>Nombre de ressources :</strong> {{ course.ressources?.length || 0 }}</p>
+    <p><strong>Nombre d’étudiants inscrits :</strong> {{ course.etudiantsCount || 0 }}</p>
+  </div>
+
+  <!-- Boutons d’action -->
   <div class="actions-buttons">
     <button class="btn btn-primary" (click)="seeQuiz()">Voir Quiz</button>
-    <button class="btn btn-secondary" (click)="SeeExam()">Voir Examen</button>
-    <!-- 🔹 Nouveau bouton -->
-  <button class="btn btn-success" (click)="addResource()">Ajouter Ressource</button>
+    <button class="btn btn-secondary" (click)="seeExam()">Voir Examen</button>
+    <button class="btn btn-success" (click)="addResource()">Ajouter Ressource</button>
+    <button class="btn btn-light" (click)="goBack()">Retour à la liste</button>
   </div>
 </div>
 
+<!-- Affichage pendant le chargement -->
+<div *ngIf="loading" class="loading-state">
+  <p>Chargement du cours...</p>
+</div>
 
-<div *ngIf="!course">
-  <p>Chargement...</p>
+<!-- Affichage si le cours est introuvable -->
+<div *ngIf="!loading && !course" class="empty-state">
+  <p>Cours introuvable.</p>
 </div>
