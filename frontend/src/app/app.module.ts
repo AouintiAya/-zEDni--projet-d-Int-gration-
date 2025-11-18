@@ -28,6 +28,9 @@ import { CreateQuizComponent } from './pages/enseignant/create-quiz/create-quiz.
 import { ParticipationListComponent } from './pages/enseignant/participation-list/participation-list.component';
 import { CourseExamsComponent } from './pages/enseignant/course-exams/course-exams.component';
 import { AddRessourceComponent } from './pages/enseignant/add-ressource/add-ressource.component';
+import { RessourceListComponent } from './pages/enseignant/ressource-list/ressource-list.component';
+import { RessourceDetailComponent } from './pages/enseignant/ressource-detail/ressource-detail.component';
+import { SafeUrlPipe } from './safe-url.pipe';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,9 @@ import { AddRessourceComponent } from './pages/enseignant/add-ressource/add-ress
     ParticipationListComponent,
     CourseExamsComponent,
     AddRessourceComponent,
+    RessourceListComponent,
+    RessourceDetailComponent,
+    SafeUrlPipe,
   ],
   imports: [
     BrowserModule,

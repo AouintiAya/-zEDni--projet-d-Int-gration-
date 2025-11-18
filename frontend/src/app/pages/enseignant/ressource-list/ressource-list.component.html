@@ -1,0 +1,20 @@
+<h3>Ressources</h3>
+
+<div *ngIf="ressources.length === 0">Aucune ressource disponible</div>
+
+<ul>
+  <li *ngFor="let r of ressources">
+    <!-- Si c'est un lien externe -->
+    <a *ngIf="r.url && r.type === 'Lien'" [href]="r.url" target="_blank">
+      {{ r.titre }}
+    </a>
+
+    <!-- Si c'est un fichier ou autre type, titre cliquable pour naviguer -->
+    <span *ngIf="!r.url || r.type !== 'Lien'" (click)="openResource(r)" style="cursor: pointer; color: blue; text-decoration: underline;">
+      {{ r.titre }}
+    </span>
+
+    <!-- Afficher le nom du fichier si présent -->
+    <span *ngIf="r.fileName && r.type !== 'Lien'">({{ r.fileName }})</span>
+  </li>
+</ul>
