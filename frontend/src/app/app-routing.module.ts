@@ -21,6 +21,7 @@ import { ProfileComponent } from './pages/Etudiant/profileEtudiant/profile.compo
 import { CreateQuizComponent } from './pages/enseignant/create-quiz/create-quiz.component';
 import { QuizListComponent } from './pages/enseignant/quiz-list/quiz-list.component';
 import { ParticipationListComponent } from './pages/enseignant/participation-list/participation-list.component';
+import { AddRessourceComponent } from './pages/enseignant/add-ressource/add-ressource.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -39,6 +40,8 @@ const routes: Routes = [
       { path: 'mes-cours', component: CourseListComponent },
       { path: 'profil-enseignant', component: ProfilEnseignantComponent },
       { path: 'detailCours/:id', component: DetailCoursComponent },
+      { path: 'add-ressource/:id', component: AddRessourceComponent },
+
 
       // QUIZ
       { path: 'create-quiz', component: CreateQuizComponent },

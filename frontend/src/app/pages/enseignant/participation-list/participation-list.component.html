@@ -1,5 +1,12 @@
 <h3>Participations du Quiz: {{ quiz?.titre }}</h3>
 
+<!-- Bouton retour -->
+<div class="back-btn-container">
+  <button class="btn-back" (click)="goBackToQuizList()">
+    ← Retour à la liste des quiz
+  </button>
+</div>
+
 <table>
   <thead>
     <tr>

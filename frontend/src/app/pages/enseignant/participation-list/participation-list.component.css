@@ -1,31 +1,88 @@
+/* Conteneur principal */
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 20px;
+  background-color: #f5f6fa;
+  min-height: 90vh;
+  font-family: Arial, sans-serif;
+}
+
+/* Titre */
+h3 {
+  text-align: center;
+  color: #1a3b5f;
+  margin-bottom: 25px;
+  font-weight: 600;
+  font-size: 24px;
+}
+
+/* Bouton retour */
+.back-btn-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.btn-back {
+  background-color: #6c757d;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+}
+
+/* Tableau */
 table {
   width: 90%;
-  max-width: 800px;
-  margin: 20px auto;
+  max-width: 900px;
+  margin: 0 auto 40px auto;
   border-collapse: collapse;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
   background-color: #fff;
   border-radius: 8px;
   overflow: hidden;
 }
 
+/* En-tête du tableau */
 thead {
   background-color: #2d9cdb;
   color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 th, td {
   padding: 12px 15px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 14px;
 }
 
+/* Ligne survolée */
 tr:hover {
   background-color: #f1f7fc;
+  transition: background-color 0.2s ease;
 }
 
-h3 {
-  text-align: center;
-  color: #1a3b5f;
-  margin-top: 20px;
+/* Responsive pour petits écrans */
+@media (max-width: 600px) {
+  table, th, td {
+    font-size: 12px;
+  }
+
+  .btn-back {
+    width: 100%;
+    text-align: center;
+  }
 }
