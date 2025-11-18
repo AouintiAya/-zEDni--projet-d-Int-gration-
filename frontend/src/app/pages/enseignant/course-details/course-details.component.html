@@ -2,6 +2,9 @@
   <h1>{{ course.title }}</h1>
   <img [src]="course.image" [alt]="course.title" class="course-image" />
   <p class="course-description">{{ course.description }}</p>
+  <!-- Liste des ressources -->
+  <app-ressource-list [courseId]="courseId"></app-ressource-list>
+
 
   <div class="actions-buttons">
     <button class="btn btn-primary" (click)="seeQuiz()">Voir Quiz</button>

@@ -2,7 +2,7 @@
   <div class="form-container">
     <h2>Ajouter une ressource</h2>
 
-    <form (ngSubmit)="onSubmit()" #resourceForm="ngForm">
+    <form (ngSubmit)="onSubmit()" #resourceForm="ngForm" enctype="multipart/form-data">
 
       <!-- Titre -->
       <div class="form-group">
@@ -36,9 +36,9 @@
         </select>
       </div>
 
-      <!-- URL -->
-      <div class="form-group">
-        <label for="url">URL / Lien</label>
+      <!-- URL externe (visible si type = Lien) -->
+      <div class="form-group" *ngIf="ressource.type === 'Lien'">
+        <label for="url">URL / Lien externe</label>
         <input
           type="text"
           id="url"
@@ -50,7 +50,19 @@
         />
       </div>
 
-      <!-- Bouton -->
+      <!-- Upload fichier (visible si type ≠ Lien) -->
+      <div class="form-group" *ngIf="ressource.type !== 'Lien'">
+        <label for="file">Choisir un fichier</label>
+        <input
+          type="file"
+          id="file"
+          (change)="onFileSelected($event)"
+          class="form-control"
+          [required]="ressource.type !== 'Lien'"
+        />
+      </div>
+
+      <!-- Boutons -->
       <div class="form-actions">
         <button
           type="submit"

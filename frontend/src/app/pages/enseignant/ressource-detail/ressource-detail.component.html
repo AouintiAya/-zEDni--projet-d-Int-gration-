@@ -1,0 +1,30 @@
+<div class="detail-container" *ngIf="ressource">
+
+  <h2>{{ ressource.titre }}</h2>
+  <p>Type : <strong>{{ ressource.type }}</strong></p>
+
+  <!-- PDF -->
+  <div *ngIf="ressource.type === 'PDF'">
+    <iframe [src]="ressource.url | safeUrl" width="100%" height="600px"></iframe>
+  </div>
+
+  <!-- Vidéo YouTube -->
+  <div *ngIf="ressource.type === 'Vidéo'">
+    <iframe [src]="ressource.url | safeUrl"
+            width="100%" height="400px"
+            allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- Document Word -->
+  <div *ngIf="ressource.type === 'Document'">
+    <a [href]="ressource.url" download class="btn-download">Télécharger le document</a>
+  </div>
+
+  <!-- Lien externe (inutilisé ici car directement ouvert) -->
+  <div *ngIf="ressource.type === 'Lien'">
+    <p>Ceci est un lien externe.</p>
+    <a [href]="ressource.url" target="_blank">Ouvrir le lien</a>
+  </div>
+
+</div>
