@@ -33,7 +33,7 @@
       <tbody>
         <tr *ngFor="let course of filteredCourses" class="course-row">
   <td class="course-title-col">
-    <img [src]="'http://localhost:8080' + course.imageUrl" />
+    <img [src]="'http://localhost:9091' + course.imageUrl" />
 
     <!-- MODE NORMAL -->
     <div *ngIf="editingCourseId !== course.id">

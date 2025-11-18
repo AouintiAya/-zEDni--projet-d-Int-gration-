@@ -28,7 +28,7 @@
 
       <div class="course-image">
         <img
-          [src]="course.imageUrl || 'assets/default-course.jpg'"
+          [src]="'http://localhost:9091' + course.imageUrl"
           [alt]="course.titre"
         />
       </div>

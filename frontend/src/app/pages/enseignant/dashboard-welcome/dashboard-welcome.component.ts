@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { CoursDTO, CoursService } from 'src/app/services/coursService/cours.service';
+import { CoursDTO, CoursService,DashboardDTO } from 'src/app/services/coursService/cours.service';
 
 interface StatCard {
   icon: string;
@@ -24,16 +24,21 @@ export class DashboardWelcomeComponent implements OnInit {
   userName: string = 'Professeur';
   courses: CoursDTO[] = [];
   filteredCourses: CoursDTO[] = [];
+  statCards: any[] = [];
 
-  statCards: StatCard[] = [
-    { icon: '📘', title: 'Cours', value: 0, unit: '', color: '#3f51b5' },
-    { icon: '👥', title: 'Étudiants', value: 0, unit: '', color: '#009688' },
-  ];
-
+  loadDashboard() {
+    this.dashboardService.getDashboard().subscribe((data: DashboardDTO) => {
+      this.statCards = [
+        { title: 'Mes cours', value: data.totalCourses, unit: '', icon: '📚', color: '#4CAF50' },
+        { title: 'Étudiants inscrits', value: data.totalStudents, unit: '', icon: '👥', color: '#2196F3' },
+      ];
+    });
+  }
   constructor(
     private authService: AuthService,
     private router: Router,
-    private coursService: CoursService
+    private coursService: CoursService,
+    private dashboardService: CoursService
   ) {}
 
   ngOnInit(): void {
@@ -42,6 +47,8 @@ export class DashboardWelcomeComponent implements OnInit {
       this.userName = user.sub.split('@')[0];
     }
     this.loadCourses();
+    this.loadDashboard();
+
   }
 
   createCourse(): void {

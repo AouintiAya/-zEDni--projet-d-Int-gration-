@@ -8,10 +8,13 @@ export interface CoursDTO {
   titre: string;
   description: string;
   enseignantEmail: string;
-  ressources: any[];
+  ressources?: any[];
   imageUrl?: string; // optionnel, on peut utiliser une image par défaut
   etudiantsCount?: number; // nouveau champ pour le total
-
+}
+export interface DashboardDTO {
+  totalCourses: number;
+  totalStudents: number;
 }
 export interface ParticipationCoursDto {
   coursId: any;
@@ -45,7 +48,7 @@ export class CoursService {
     });
   }
   createCours(formData: FormData): Observable<any> {
-    const token = localStorage.getItem('jwtToken');
+    const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`, // <-- only Authorization
     });
@@ -111,5 +114,8 @@ export class CoursService {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
+  }
+  getDashboard(): Observable<DashboardDTO> {
+    return this.http.get<DashboardDTO>("http://localhost:9091/api/dashboard/enseignant");
   }
 }
