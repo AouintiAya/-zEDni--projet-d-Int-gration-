@@ -18,7 +18,7 @@ public interface CoursRest {
 
     @PreAuthorize("hasAuthority('ROLE_ENSEIGNANT')")
     @PostMapping(value = "/add", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    ResponseEntity<Cours> createCours(
+    ResponseEntity<CoursDTO> createCours(
             @RequestParam("titre") String titre,
             @RequestParam("description") String description,
             @RequestParam(value = "image", required = false) MultipartFile image,
@@ -39,7 +39,7 @@ public interface CoursRest {
 
     @PutMapping("/{id}/update")
     @PreAuthorize("hasAuthority('ROLE_ENSEIGNANT')")
-    ResponseEntity<Cours> updateCours(
+    ResponseEntity<CoursDTO> updateCours(
             @PathVariable Long id,
             @RequestParam(value = "titre", required = false) String titre,
             @RequestParam(value = "description", required = false) String description,

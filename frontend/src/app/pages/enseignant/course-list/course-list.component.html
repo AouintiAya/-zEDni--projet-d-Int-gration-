@@ -5,7 +5,7 @@
       <h1>Mes cours</h1>
       <p class="subtitle">Gérez et organisez tous vos cours</p>
     </div>
-    <button class="add-course-btn" (click)="goToCreateCourse()">+ Ajouter un cours</button>
+    <button class="add-course-btn" (click)="createCourse()">+ Ajouter un cours</button>
   </div>
 
   <!-- Search -->
@@ -25,54 +25,71 @@
       <thead>
         <tr>
           <th>Titre du cours</th>
-          <th>Étudiants</th>
-          <th>Note</th>
-          <th>Statut</th>
-          <th>Mise à jour</th>
+          <th>Nombre de ressources</th>
+          <th>Enseignant</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let course of filteredCourses" class="course-row">
-          <td class="course-title-col">
-            <img [src]="course.image" [alt]="course.title" class="course-thumb" />
-            <div>
-              <p class="course-title">{{ course.title }}</p>
-              <p class="course-desc">{{ course.description }}</p>
-            </div>
-          </td>
-          <td>{{ course.students }}</td>
-          <td>
-            <span class="rating">
-              <i class="fas fa-star"></i> {{ course.rating }}/5
-            </span>
-          </td>
-          <td>
-            <span class="status-badge" [style.background-color]="getStatusColor(course.status)">
-              {{ course.status }}
-            </span>
-          </td>
-          <td>{{ course.lastUpdated }}</td>
-          <td class="actions-col">
-            <button class="action-btn edit-btn" (click)="editCourse(course.id); $event.stopPropagation()" title="Éditer">
-              <i class="fas fa-edit"></i>
-            </button>
-            <button class="action-btn delete-btn" (click)="deleteCourse(course.id); $event.stopPropagation()" title="Supprimer">
-              <i class="fas fa-trash"></i>
-            </button>
-<button class="action-btn view-btn" 
-        (click)="goToDetail(course.id); $event.stopPropagation()" 
-        title="Voir détails">
-  <i class="fas fa-eye"></i>
-</button>
+  <td class="course-title-col">
+    <img [src]="'http://localhost:8080' + course.imageUrl" />
 
+    <!-- MODE NORMAL -->
+    <div *ngIf="editingCourseId !== course.id">
+      <p class="course-title">{{ course.titre }}</p>
+      <p class="course-desc">{{ course.description }}</p>
+    </div>
 
+    <!-- MODE EDIT -->
+    <div *ngIf="editingCourseId === course.id">
+      <input type="text" [(ngModel)]="editData.titre" placeholder="Titre du cours" />
+      <textarea [(ngModel)]="editData.description" placeholder="Description"></textarea>
+      <input type="file" (change)="onFileSelected($event)" />
+    </div>
+  </td>
 
-          </td>
-        </tr>
+  <td>{{ course.ressources?.length || 0 }}</td>
+  <td>{{ course.enseignantEmail }}</td>
+
+  <td class="actions-col">
+
+    <!-- Edit -->
+    <button class="action-btn edit-btn"
+      *ngIf="editingCourseId !== course.id"
+      (click)="startEditCourse(course)">
+      <i class="fas fa-edit"></i>
+    </button>
+
+    <!-- Save -->
+    <button class="action-btn save-btn"
+      *ngIf="editingCourseId === course.id"
+      (click)="updateCourse(course)">
+      <i class="fas fa-save"></i>
+    </button>
+
+    <!-- Cancel -->
+    <button class="action-btn cancel-btn"
+      *ngIf="editingCourseId === course.id"
+      (click)="cancelEditCourse()">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <!-- Delete -->
+    <button class="action-btn delete-btn" (click)="deleteCourse(course.id!)">
+      <i class="fas fa-trash"></i>
+    </button>
+
+  </td>
+</tr>
+
       </tbody>
     </table>
 
     <div *ngIf="filteredCourses.length === 0" class="empty-state">
       <i class="fas fa-inbox"></i>
-      <p>Aucun cours trouv
+      <p>Aucun cours trouvé</p>
+      <p class="empty-hint">Créez votre premier cours pour commencer</p>
+    </div>
+  </div>
+</div>

@@ -4,9 +4,8 @@
     <h1>Tableau de bord professeur</h1>
     <p>Bienvenue {{ userName }}</p>
   </div>
-  <button class="create-course-btn" (click)="createCourse()">+ Créer un cours</button>
+  <button class="create-course-btn" (click)="createCourse()">+ Ajouter un cours</button>
 </div>
-
 <!-- Statistics Cards -->
 <div class="stats-grid">
   <div *ngFor="let stat of statCards" class="stat-card" [style.border-left-color]="stat.color">
@@ -19,7 +18,6 @@
     </div>
   </div>
 </div>
-
 <!-- My Courses Section -->
 <div class="courses-section">
   <h2>Mes cours</h2>
@@ -27,26 +25,36 @@
 
   <div class="courses-grid">
     <div *ngFor="let course of filteredCourses" class="course-card">
+
       <div class="course-image">
-        <img [src]="course.image" [alt]="course.title" />
-        <span class="status-badge" [style.background-color]="getStatusColor(course.status)">
-          {{ course.status }}
-        </span>
+        <img
+          [src]="course.imageUrl || 'assets/default-course.jpg'"
+          [alt]="course.titre"
+        />
       </div>
+
       <div class="course-content">
-        <h4>{{ course.title }}</h4>
+        <h4>{{ course.titre }}</h4>
+
+        <p class="course-description">
+          {{ course.description }}
+        </p>
+
         <div class="course-stats">
           <div class="stat">
             <span class="icon">👥</span>
-            <span>{{ course.students }} étudiants</span>
-          </div>
+            <span>{{ course.etudiantsCount }} étudiants</span>
           <div class="stat">
-            <span class="icon">⭐</span>
-            <span>{{ course.rating }}/5</span>
+            <span class="icon">👨‍🏫</span>
+            <span>{{ course.enseignantEmail }}</span>
           </div>
         </div>
-        <button class="edit-btn">Gérer le cours</button>
+
+        <button class="edit-btn" (click)="goToCourse(course.id)">
+          Gérer le cours
+        </button>
       </div>
+
     </div>
   </div>
 

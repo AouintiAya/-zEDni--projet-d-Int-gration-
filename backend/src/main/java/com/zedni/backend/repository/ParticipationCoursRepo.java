@@ -14,4 +14,5 @@ public interface ParticipationCoursRepo extends JpaRepository<ParticipationCours
     List<ParticipationCours> findByCoursId(Long coursId);
 
     void deleteByEtudiantIdAndCoursId(Long etudiantId, Long coursId);
+
 }

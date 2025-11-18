@@ -11,4 +11,6 @@ public interface EnseignantRepo extends JpaRepository<Enseignant,Long> {
     Optional<Enseignant> findByUser(Users user);
     Optional<Enseignant> findByUserEmail(String email);
 
+
+
 }

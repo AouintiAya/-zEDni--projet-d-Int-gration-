@@ -34,7 +34,7 @@ public class CoursServiceImpl implements CoursService {
     private FileStorageService fileStorageService;
 
     @Override
-    public Cours createCours(String titre, String description, MultipartFile image, String email) throws IOException {
+    public CoursDTO createCours(String titre, String description, MultipartFile image, String email) throws IOException {
         // 1. Chercher le compte Users
         Users user = userRepo.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -55,7 +55,14 @@ public class CoursServiceImpl implements CoursService {
         cours.setEnseignant(enseignant);
 
         // 4. Sauvegarder
-        return coursRepo.save(cours);
+        coursRepo.save(cours);
+        return new CoursDTO(
+                cours.getId(),
+                cours.getTitre(),
+                cours.getDescription(),
+                enseignant.getEmail(),
+                cours.getImageUrl(),
+                new ArrayList<>());
     }
 
     @Transactional(readOnly = true)
@@ -69,7 +76,12 @@ public class CoursServiceImpl implements CoursService {
     private CoursDTO convertToDTO(Cours cours) {
         List<RessourceDTO> ressourceDTOs = cours.getRessources() != null
                 ? cours.getRessources().stream()
-                .map(r -> new RessourceDTO(r.getId(), r.getTitre(), r.getType(),r.getUrl(),r.getCours().getId()))
+                .map(r -> new RessourceDTO(
+                        r.getId(),
+                        r.getTitre(),
+                        r.getType(),
+                        r.getUrl(),
+                        r.getCours().getId()))
                 .collect(Collectors.toList())
                 : new ArrayList<>();
 
@@ -78,9 +90,11 @@ public class CoursServiceImpl implements CoursService {
                 cours.getTitre(),
                 cours.getDescription(),
                 cours.getEnseignant() != null ? cours.getEnseignant().getEmail() : null,
+                cours.getImageUrl(),                  // << CORRECT NOW
                 ressourceDTOs
         );
     }
+
     @Transactional(readOnly = true)
     @Override
     public CoursDTO getCoursByIdDTO(Long id) {
@@ -97,8 +111,9 @@ public class CoursServiceImpl implements CoursService {
         coursRepo.delete(cours);
     }
 
+    @Transactional
     @Override
-    public Cours updateCours(Long id, String titre, String description, MultipartFile image, String email) throws IOException {
+    public CoursDTO updateCours(Long id, String titre, String description, MultipartFile image, String email) throws IOException {
         Cours cours = coursRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cours non trouvé"));
 
@@ -125,7 +140,7 @@ public class CoursServiceImpl implements CoursService {
         }
         coursRepo.save(cours);
         System.out.println("Updating course ID: " + id);
-        return cours;
+        return convertToDTO(cours);
     }
 
     @Transactional(readOnly = true)

@@ -9,6 +9,15 @@ body {
   font-family: "Poppins", sans-serif;
   background: #f5f7fa;
 }
+.preview img {
+  width: 120px;        /* largeur */
+  height: auto;        /* conserve le ratio */
+  border-radius: 8px;  /* optionnel */
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  object-fit: cover;   /* garde une jolie coupe si l'image est large */
+}
+
 
 /* ========== CONTAINER PRINCIPAL ========== */
 .create-course-container {
