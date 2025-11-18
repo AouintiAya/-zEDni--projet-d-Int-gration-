@@ -26,8 +26,8 @@ public class CoursRestImpl implements CoursRest {
     private FileStorageService fileStorageService;
 
     @Override
-    public ResponseEntity<Cours> createCours(String titre, String description, MultipartFile image, Principal principal) throws IOException {
-        Cours cours = coursService.createCours(titre, description, image, principal.getName());
+    public ResponseEntity<CoursDTO> createCours(String titre, String description, MultipartFile image, Principal principal) throws IOException {
+        CoursDTO cours = coursService.createCours(titre, description, image, principal.getName());
         return ResponseEntity.ok(cours);
     }
 
@@ -54,8 +54,8 @@ public class CoursRestImpl implements CoursRest {
     }
 
     @Override
-    public ResponseEntity<Cours> updateCours(Long id, String titre, String description, MultipartFile image, Principal principal) throws IOException{
-            Cours cours=coursService.updateCours(id,titre,description,image,principal.getName());
+    public ResponseEntity<CoursDTO> updateCours(Long id, String titre, String description, MultipartFile image, Principal principal) throws IOException{
+            CoursDTO cours=coursService.updateCours(id,titre,description,image,principal.getName());
             return ResponseEntity.ok(cours);
     }
     @Override

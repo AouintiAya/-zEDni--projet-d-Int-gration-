@@ -1,7 +1,6 @@
 package com.zedni.backend.model;
 
 
-import com.zedni.backend.dto.StatutParticipation;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
