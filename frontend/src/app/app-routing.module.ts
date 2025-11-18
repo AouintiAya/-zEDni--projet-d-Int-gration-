@@ -6,6 +6,7 @@ import { ForgotPasswordComponent } from './pages/Authentification/forgot-passwor
 import { LoginComponent } from './pages/Authentification/login/login.component';
 import { RegisterComponent } from './pages/Authentification/register/register.component';
 import { DetailCoursComponent } from './pages/enseignant/course-details/course-details.component';
+import { CourseExamsComponent } from './pages/enseignant/course-exams/course-exams.component';
 import { CourseListComponent } from './pages/enseignant/course-list/course-list.component';
 import { CreateCourseComponent } from './pages/enseignant/create-course/create-course.component';
 import { TeacherDashboardComponent } from './pages/enseignant/dashboard-enseignant/dashboard-enseignant.component';
@@ -16,7 +17,6 @@ import { DashboardEtudiantComponent } from './pages/Etudiant/dashboard-etudiant/
 import { MesCoursComponent } from './pages/Etudiant/mescours/mescours.component';
 import { PageCoursEtudiantComponent } from './pages/Etudiant/page-cours-etudiant/page-cours-etudiant.component';
 import { ProfileComponent } from './pages/Etudiant/profileEtudiant/profile.component';
-
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -30,7 +30,8 @@ const routes: Routes = [
       { path: 'create-course', component: CreateCourseComponent },
       { path: 'mes-cours', component: CourseListComponent },
       { path: 'profil-enseignant', component: ProfilEnseignantComponent },
-      { path: 'detailCours/:id', component: DetailCoursComponent }
+      { path: 'detailCours/:id', component: DetailCoursComponent },
+      { path: 'courseExam/:id', component: CourseExamsComponent }
 
       
     ]
@@ -41,7 +42,9 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'cours', component: PageCoursEtudiantComponent },
   { path: 'coursdisponible', component: CoursDisponibleComponent },
-  { path: 'mescours', component: MesCoursComponent }
+  { path: 'mescours', component: MesCoursComponent },
+  
+  
 
 
 ];

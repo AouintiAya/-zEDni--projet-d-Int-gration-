@@ -23,6 +23,7 @@ import { DashboardEtudiantComponent } from './pages/Etudiant/dashboard-etudiant/
 import { MesCoursComponent } from './pages/Etudiant/mescours/mescours.component';
 import { PageCoursEtudiantComponent } from './pages/Etudiant/page-cours-etudiant/page-cours-etudiant.component';
 import { ProfileComponent } from './pages/Etudiant/profileEtudiant/profile.component';
+import { CourseExamsComponent } from './pages/enseignant/course-exams/course-exams.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { ProfileComponent } from './pages/Etudiant/profileEtudiant/profile.compo
     MesCoursComponent,
     CreateCourseComponent,
     DetailCoursComponent,
+    CourseExamsComponent,
   ],
   imports: [
     BrowserModule,

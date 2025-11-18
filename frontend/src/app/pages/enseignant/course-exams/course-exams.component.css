@@ -1,0 +1,177 @@
+/* Conteneur principal */
+.course-exams-container {
+  padding: 30px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f0f4f8;
+  color: #2c3e50;
+  min-height: 100vh;
+}
+
+/* Titre principal */
+.course-exams-container h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #1f4e79; /* bleu foncé */
+}
+
+/* Grid pour colonnes */
+.exams-page-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+}
+
+/* Liste des examens (colonne gauche) */
+.exams-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Carte examen */
+.exam-card {
+  background: #ffffff;
+  border-left: 6px solid #f1c40f; /* jaune doux */
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.exam-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+}
+
+.exam-card h4 {
+  font-size: 1.3rem;
+  color: #1f4e79; /* bleu foncé */
+  margin-bottom: 10px;
+}
+
+.exam-card p {
+  margin: 5px 0;
+  color: #34495e;
+}
+
+.exam-card a {
+  color: #3498db; /* bleu clair */
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.exam-card a:hover {
+  text-decoration: underline;
+}
+
+/* Boutons examen */
+.exam-card button {
+  margin-top: 12px;
+  padding: 8px 16px;
+  background-color: #1f4e79; /* bleu foncé */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.exam-card button:hover:not(:disabled) {
+  background-color: #16629c; /* bleu un peu plus clair */
+}
+
+.exam-card button:disabled {
+  background-color: #dcdde1; /* gris clair */
+  cursor: not-allowed;
+}
+
+/* Table participations */
+.table-participations {
+  width: 100%;
+  margin-top: 15px;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table-participations th,
+.table-participations td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid #e1e8ed;
+}
+
+.table-participations th {
+  background-color: #3498db; /* bleu clair */
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Formulaire ajout examen (colonne droite) */
+.add-exam {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+.add-exam-form h3 {
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  color: #1f4e79; /* bleu foncé */
+}
+
+.add-exam-form input {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border: 1px solid #dcdfe6;
+  border-radius: 8px;
+  transition: border 0.3s;
+}
+
+.add-exam-form input:focus {
+  border-color: #3498db; /* bleu clair */
+  outline: none;
+}
+
+.add-exam-form button {
+  padding: 10px 20px;
+  background-color: #f1c40f; /* jaune */
+  color: #1f4e79; /* bleu foncé texte */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.add-exam-form button:hover {
+  background-color: #d4ac0d; /* jaune un peu plus foncé */
+}
+
+/* Bouton retour */
+.btn-secondary {
+  margin-top: 40px;
+  padding: 10px 20px;
+  background-color: #3498db; /* bleu clair */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-secondary:hover {
+  background-color: #2c81c7; /* bleu plus foncé */
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .exams-page-grid {
+    grid-template-columns: 1fr;
+  }
+}
