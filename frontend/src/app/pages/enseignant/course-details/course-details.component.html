@@ -11,21 +11,45 @@
   <!-- Description -->
   <p class="course-description">{{ course.description }}</p>
   <!-- Liste des ressources -->
-  <app-ressource-list [courseId]="courseId"></app-ressource-list>
+  <div class="course-resources">
+    <p><strong>Ressource de cours :</strong></p>
 
+    <div *ngIf="ressources.length === 0">Aucune ressource disponible.</div>
 
-<!-- Infos complémentaires -->
+    <ul *ngIf="ressources.length > 0">
+      <li *ngFor="let r of ressources">
+        <strong>{{ r.titre }}</strong> ({{ r.type }})
+        <a *ngIf="r.type === 'LINK'" [href]="r.url" target="_blank">Voir</a>
+        <a
+          *ngIf="r.type === 'PDF' || r.type === 'VIDEO'"
+          [href]="'http://localhost:9091' + r.url"
+          target="_blank"
+          >Télécharger</a
+        >
+      </li>
+    </ul>
+  </div>
+
+  <!-- Infos complémentaires -->
   <div class="course-info">
     <p><strong>Enseignant :</strong> {{ course.enseignantEmail }}</p>
-    <p><strong>Nombre de ressources :</strong> {{ course.ressources?.length || 0 }}</p>
-    <p><strong>Nombre d’étudiants inscrits :</strong> {{ course.etudiantsCount || 0 }}</p>
+    <p>
+      <strong>Nombre de ressources :</strong>
+      {{ course.ressources?.length || 0 }}
+    </p>
+    <p>
+      <strong>Nombre d’étudiants inscrits :</strong>
+      {{ course.etudiantsCount || 0 }}
+    </p>
   </div>
 
   <!-- Boutons d’action -->
   <div class="actions-buttons">
     <button class="btn btn-primary" (click)="seeQuiz()">Voir Quiz</button>
     <button class="btn btn-secondary" (click)="seeExam()">Voir Examen</button>
-    <button class="btn btn-success" (click)="addResource()">Ajouter Ressource</button>
+    <button class="btn btn-success" (click)="addResource()">
+      Ajouter Ressource
+    </button>
     <button class="btn btn-light" (click)="goBack()">Retour à la liste</button>
   </div>
 </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CoursDTO, CoursService } from 'src/app/services/coursService/cours.service';
+import { CoursDTO, CoursService, RessourceDTO } from 'src/app/services/coursService/cours.service';
 
 @Component({
   selector: 'app-detail-cours',
@@ -11,13 +11,15 @@ export class DetailCoursComponent implements OnInit {
   courseId!: number;
   course?: CoursDTO;
   loading: boolean = true;
+  ressources: RessourceDTO[] = [];
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private coursService: CoursService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private coursService: CoursService
+  ) {}
 
   ngOnInit(): void {
-    // Récupérer l’ID du cours depuis la route
     const idParam = this.route.snapshot.paramMap.get('id');
     if (!idParam) {
       console.error('ID de cours manquant dans l’URL');
@@ -27,23 +29,29 @@ export class DetailCoursComponent implements OnInit {
 
     this.courseId = +idParam;
     this.loadCourse();
+    this.loadRessources(); // <-- appeler ici
   }
 
   loadCourse(): void {
-    // Charger tous les cours de l'enseignant puis trouver celui correspondant à l'ID
-    this.coursService.getMyCours().subscribe({
-      next: (courses) => {
-        this.course = courses.find(c => c.id === this.courseId);
-        if (!this.course) {
-          console.error(`Cours non trouvé pour l’ID: ${this.courseId}`);
-          this.router.navigate(['/dashboard-enseignant/mes-cours']);
-        }
+    this.coursService.getCoursById(this.courseId).subscribe({
+      next: (res) => {
+        this.course = res;
         this.loading = false;
       },
       error: (err) => {
-        console.error('Erreur lors du chargement des cours:', err);
+        console.error('Erreur lors du chargement du cours:', err);
         this.loading = false;
       }
+    });
+  }
+
+  loadRessources(): void {
+    this.coursService.getRessourcesByCours(this.courseId).subscribe({
+      next: (res) => {
+        this.ressources = res; // <-- stocker ici
+        console.log('Ressources chargées:', this.ressources);
+      },
+      error: (err) => console.error('Erreur lors du chargement des ressources:', err)
     });
   }
 

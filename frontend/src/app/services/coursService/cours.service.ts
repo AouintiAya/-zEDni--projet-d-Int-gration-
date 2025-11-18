@@ -16,6 +16,14 @@ export interface DashboardDTO {
   totalCourses: number;
   totalStudents: number;
 }
+export interface RessourceDTO {
+  id: number;
+  titre: string;
+  type: string;
+  url: string;
+  coursId: number;
+}
+
 export interface ParticipationCoursDto {
   coursId: any;
   titreCours: any;
@@ -118,4 +126,11 @@ export class CoursService {
   getDashboard(): Observable<DashboardDTO> {
     return this.http.get<DashboardDTO>("http://localhost:9091/api/dashboard/enseignant");
   }
+  getRessourcesByCours(coursId: number) {
+  const token = localStorage.getItem('token');
+  return this.http.get<RessourceDTO[]>(`http://localhost:9091/api/ressource/cours/${coursId}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+}
+
 }
