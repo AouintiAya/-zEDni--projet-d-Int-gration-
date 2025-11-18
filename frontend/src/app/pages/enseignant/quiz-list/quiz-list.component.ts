@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; // déjà importé
+import { ActivatedRoute, Router } from '@angular/router';
 
-// Définition des types
 interface Question {
   texte: string;
   reponseCorrecte: string;
@@ -9,6 +8,7 @@ interface Question {
 
 interface Quiz {
   id: number;
+  courseId: number; // <-- ajouter courseId
   titre: string;
   questions: Question[];
 }
@@ -20,18 +20,22 @@ interface Quiz {
 })
 export class QuizListComponent implements OnInit {
 
-  quizzes: Quiz[] = [];             // Liste de tous les quizzes
-  selectedQuiz: Quiz | null = null; // Quiz sélectionné pour modification
-  editMode: boolean = false;        // Formulaire d'édition ouvert
+  quizzes: Quiz[] = [];             // Quizzes filtrés pour le cours
+  selectedQuiz: Quiz | null = null;
+  editMode: boolean = false;
+  courseId!: number;
 
-  // 🔹 Injection du Router ici
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    // Données statiques
-    this.quizzes = [
+    // Récupérer l'ID du cours depuis la route
+    this.courseId = Number(this.route.snapshot.paramMap.get('courseId'));
+
+    // Quizzes statiques avec courseId
+    const allQuizzes: Quiz[] = [
       {
         id: 1,
+        courseId: 1,
         titre: 'Quiz Mathématiques',
         questions: [
           { texte: '2 + 2 = ?', reponseCorrecte: '4' },
@@ -40,36 +44,45 @@ export class QuizListComponent implements OnInit {
       },
       {
         id: 2,
+        courseId: 2,
         titre: 'Quiz Physique',
         questions: [
           { texte: 'Force = masse * ?', reponseCorrecte: 'accélération' },
           { texte: 'Vitesse de la lumière ?', reponseCorrecte: '3e8 m/s' }
         ]
+      },
+      {
+        id: 3,
+        courseId: 1,
+        titre: 'Quiz Algèbre',
+        questions: [
+          { texte: 'x + 3 = 7 ?', reponseCorrecte: '4' }
+        ]
       }
     ];
+
+    // Filtrer uniquement les quizzes du cours
+    this.quizzes = allQuizzes.filter(q => q.courseId === this.courseId);
   }
 
   viewParticipations(quiz: Quiz) {
-    // Naviguer vers la page participations avec l'id du quiz
-    this.router.navigate(['/participations', quiz.id]);
+    this.router.navigate([`/dashboard-enseignant/quiz-list/participations/${quiz.id}`]);
   }
 
   modifyQuiz(quiz: Quiz) {
     this.selectedQuiz = {
       id: quiz.id,
+      courseId: quiz.courseId,
       titre: quiz.titre,
-      questions: quiz.questions.map((q: Question) => ({ ...q }))
+      questions: quiz.questions.map(q => ({ ...q }))
     };
     this.editMode = true;
   }
 
   saveQuiz() {
     if (!this.selectedQuiz) return;
-
     const index = this.quizzes.findIndex(q => q.id === this.selectedQuiz!.id);
-    if (index !== -1) {
-      this.quizzes[index] = { ...this.selectedQuiz };
-    }
+    if (index !== -1) this.quizzes[index] = { ...this.selectedQuiz };
     this.cancelEdit();
   }
 
@@ -83,14 +96,10 @@ export class QuizListComponent implements OnInit {
   }
 
   addQuestion() {
-    if (this.selectedQuiz) {
-      this.selectedQuiz.questions.push({ texte: '', reponseCorrecte: '' });
-    }
+    if (this.selectedQuiz) this.selectedQuiz.questions.push({ texte: '', reponseCorrecte: '' });
   }
 
   removeQuestion(i: number) {
-    if (this.selectedQuiz) {
-      this.selectedQuiz.questions.splice(i, 1);
-    }
+    if (this.selectedQuiz) this.selectedQuiz.questions.splice(i, 1);
   }
 }

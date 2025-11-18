@@ -33,9 +33,9 @@ const routes: Routes = [
       { path: 'create-course', component: CreateCourseComponent },
       { path: 'mes-cours', component: CourseListComponent },
       { path: 'profil-enseignant', component: ProfilEnseignantComponent },
-      { path: 'detailCours/:id', component: DetailCoursComponent }
+      { path: 'detailCours/:id', component: DetailCoursComponent },
       { path: 'create-quiz', component: CreateQuizComponent },
-      { path: 'quiz-list', component: QuizListComponent },
+      { path: 'quiz-list/:courseId', component: QuizListComponent },
       { path: 'quiz-list/participations/:quizId', component: ParticipationListComponent },
 
 

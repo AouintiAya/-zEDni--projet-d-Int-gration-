@@ -45,10 +45,13 @@ export class DetailCoursComponent implements OnInit {
   }
 
   // 🔹 Boutons d’action
-  addQuiz() {
-    console.log(`Ajouter quiz pour le cours ${this.courseId}`);
-    // ici tu peux rediriger vers une page création quiz
-  }
+  seeQuiz() {
+  console.log(`Voir quiz pour le cours ${this.courseId}`);
+  this.router.navigate([`/dashboard-enseignant/quiz-list`, this.courseId]);
+}
+
+
+
 
   addExam() {
     console.log(`Ajouter examen pour le cours ${this.courseId}`);
