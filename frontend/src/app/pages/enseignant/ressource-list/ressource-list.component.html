@@ -1,32 +1,44 @@
-
-<div *ngIf="ressources.length === 0" class="empty-ressources">
+<!-- Message si aucune ressource -->
+<div *ngIf="!loading && ressources.length === 0" class="empty-ressources">
   Aucune ressource disponible
 </div>
 
-<div class="ressources-grid">
+<!-- Grille des ressources -->
+<div *ngIf="!loading && ressources.length > 0" class="ressources-grid">
   <div class="ressource-card" *ngFor="let r of ressources" (click)="openResource(r)">
+
     <div class="ressource-icon">
-      <!-- Icônes selon le type -->
+
+      <!-- PDF -->
       <svg *ngIf="r.type === 'PDF'" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
         <path d="M6 2h9l5 5v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/>
       </svg>
-      <svg *ngIf="r.type === 'Vidéo'" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+
+      <!-- VIDEO -->
+      <svg *ngIf="r.type === 'VIDEO'" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
         <path d="M10 8l6 4-6 4V8z"/>
         <path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
       </svg>
-      <svg *ngIf="r.type === 'Lien'" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+
+      <!-- LIEN -->
+      <svg *ngIf="r.type === 'LIEN'" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
         <path d="M3.9 12a5 5 0 0 1 7.07-7.07l1.41 1.41-1.41 1.41a3 3 0 1 0 4.24 4.24l1.41-1.41 1.41 1.41A5 5 0 0 1 12.1 21a5 5 0 0 1-8.2-9z"/>
       </svg>
-      <svg *ngIf="r.type === 'Document'" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+
+      <!-- DOCUMENT -->
+      <svg *ngIf="r.type === 'DOCUMENT'" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
         <path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
       </svg>
+
     </div>
+
     <div class="ressource-content">
       <div class="ressource-title">{{ r.titre }}</div>
       <div class="ressource-info">
-        <span *ngIf="r.fileName">{{ r.fileName }}</span>
-        <span *ngIf="r.url && r.type === 'Lien'">Lien externe</span>
+        <span *ngIf="r.type === 'LIEN'">Lien externe</span>
+        <span *ngIf="r.type !== 'LIEN'">{{ r.url | slice:0:25 }}...</span>
       </div>
     </div>
+
   </div>
 </div>

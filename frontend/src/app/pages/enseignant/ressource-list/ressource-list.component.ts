@@ -1,49 +1,97 @@
-import { Component, Input, OnChanges } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { CoursService } from 'src/app/services/coursService/cours.service';
 
-interface Ressource {
+export interface RessourceDTO {
   id: number;
-  courseId: number;   // 🔹 ajouter cette ligne
   titre: string;
-  type: string; // PDF, Vidéo, Lien, Document
-  url?: string;      // pour lien externe ou PDF/vidéo accessible
-  fileName?: string; // pour fichier uploadé depuis le PC
+  type: string;
+  url: string;
+  coursId: number;
 }
-
 
 @Component({
   selector: 'app-ressource-list',
   templateUrl: './ressource-list.component.html',
-  styleUrls: ['./ressource-list.component.css']
+  styleUrls: ['./ressource-list.component.css'],
 })
-export class RessourceListComponent implements OnChanges {
-
+export class RessourceListComponent implements OnInit, OnChanges {
   @Input() courseId!: number;
-  ressources: Ressource[] = [];
+  ressources: RessourceDTO[] = [];
+  loading = false;
 
-  // Liste complète de toutes les ressources
-  allRessources: Ressource[] = [
-  { id: 1, courseId: 1, titre: 'Chapitre 1 - Intro', type: 'PDF', url: 'assets/docs/ch1.pdf' },
-  { id: 2, courseId: 1, titre: 'Vidéo Démo', type: 'Vidéo', url: 'https://youtu.be/demo' },
-  { id: 3, courseId: 2, titre: 'Document Support', type: 'Document', fileName: 'support.docx' },
-  { id: 4, courseId: 1, titre: 'Fichier PDF cours', type: 'PDF', fileName: 'cours2.pdf' }
-];
+  constructor(private coursService: CoursService) {}
 
-
-  
-  constructor(private router: Router) {}
+  ngOnInit(): void {
+    if (this.courseId) this.loadRessources();
+  }
 
   ngOnChanges(): void {
-  if (this.courseId) {
-    this.ressources = this.allRessources.filter(r => r.courseId === this.courseId);
+    if (this.courseId) this.loadRessources();
   }
-}
+  openResource(r: RessourceDTO): void {
+    try {
+      console.log('Ouverture ressource:', r);
 
-openResource(r: Ressource) {
-  this.router.navigate(['/dashboard-enseignant/ressource', r.id]);
-}
+      // Si c'est un lien externe, on l'ouvre directement.
+      if (r.type === 'LIEN') {
+        // si l'URL n'a pas le protocole, ajoute http://
+        const link = r.url.startsWith('http') ? r.url : `http://${r.url}`;
+        window.open(link, '_blank');
+        return;
+      }
 
+      // Pour les fichiers (PDF, VIDEO, DOCUMENT), on construit l'URL complète côté serveur.
+      // Ajuste la base si nécessaire.
+      const base = 'http://localhost:9091';
+      const fileUrl = r.url.startsWith('http') ? r.url : `${base}${r.url}`;
 
+      // PDF : ouvrir dans un nouvel onglet (le navigateur affichera le PDF si possible)
+      if (r.type === 'PDF') {
+        window.open(fileUrl, '_blank');
+        return;
+      }
 
+      // VIDEO : ouvrir dans un nouvel onglet (ou rediriger vers une page player dédiée)
+      if (r.type === 'VIDEO') {
+        // Option 1 : ouvrir directement le fichier vidéo (le navigateur pourra le lire)
+        window.open(fileUrl, '_blank');
+        return;
+      }
 
+      // DOCUMENT ou autres types : forcer le téléchargement
+      // Crée un <a> temporaire pour forcer le download si le serveur renvoie Content-Disposition
+      const a = document.createElement('a');
+      a.href = fileUrl;
+      a.target = '_blank';
+      // si tu veux forcer le téléchargement, décommenter la ligne suivante :
+      // a.download = r.titre || 'download';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } catch (err) {
+      console.error("Erreur lors de l'ouverture de la ressource", err);
+      alert(
+        "Impossible d'ouvrir la ressource. Voir la console pour plus de détails."
+      );
+    }
+  }
+
+  loadRessources() {
+    this.loading = true;
+
+    console.log('📡 Chargement des ressources pour cours ID =', this.courseId);
+
+    this.coursService.getRessourcesByCours(this.courseId).subscribe({
+      next: (res) => {
+        console.log('📥 Ressources reçues :', res);
+
+        this.ressources = res;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('❌ Erreur de récupération ressources :', err);
+        this.loading = false;
+      },
+    });
+  }
 }

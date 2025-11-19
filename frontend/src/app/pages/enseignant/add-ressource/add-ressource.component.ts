@@ -43,20 +43,20 @@ export class AddRessourceComponent implements OnInit {
         coursId: this.courseId
       };
       this.resService.createLink(req).subscribe({
-        next: () => this.router.navigate(['/dashboard-enseignant/course-details', this.courseId]),
+        next: () => this.router.navigate(['/dashboard-enseignant/detailCours', this.courseId]),
         error: err => console.error(err)
       });
     } else {
       if (!this.ressource.file) return;
       this.resService.uploadFile(this.ressource.file, this.ressource.titre, this.ressource.type, this.courseId)
         .subscribe({
-          next: () => this.router.navigate(['/dashboard-enseignant/course-details', this.courseId]),
+          next: () => this.router.navigate(['/dashboard-enseignant/detailCours', this.courseId]),
           error: err => console.error(err)
         });
     }
   }
   goBack() {
-    this.router.navigate(['/dashboard-enseignant/course-details', this.courseId]);
+    this.router.navigate(['/dashboard-enseignant/detailCours', this.courseId]);
   }
 
   removeFile() {

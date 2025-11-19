@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ExamenDTO, ExamenService, ParticipationExamenDTO } from 'src/app/services/ExamenService/examen.service';
+import { forkJoin } from 'rxjs';
+import {
+  ExamenDTO,
+  ExamenService,
+  ParticipationExamenDTO
+} from 'src/app/services/ExamenService/examen.service';
+import { CoursService, CoursDTO } from 'src/app/services/coursService/cours.service';
 
 @Component({
   selector: 'app-course-exams',
@@ -11,92 +17,94 @@ export class CourseExamsComponent implements OnInit {
 
   courseId!: number;
   courseTitle: string = '';
+  course!: CoursDTO;
+  loading = true;
+
   examens: ExamenDTO[] = [];
   participations: ParticipationExamenDTO[] = [];
   selectedExamenId: number | null = null;
 
   newExamTitre: string = '';
-  selectedFile: File | null = null;
+  newExamUrl: string = '';
 
-  constructor(private route: ActivatedRoute, private router: Router, private examenService: ExamenService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private examenService: ExamenService,
+    private courseService: CoursService
+  ) {}
 
   ngOnInit(): void {
     this.courseId = Number(this.route.snapshot.paramMap.get('id'));
-    this.courseTitle = `Examen du cours ${this.courseId}`;
-    this.loadExamens();
-  }
 
-  loadExamens() {
-    this.examenService.getExamensByCours(this.courseId).subscribe({
-      next: res => {
-        console.log('Examens récupérés:', res);
-        this.examens = res;
+    // Charger cours et examens en parallèle
+    forkJoin({
+      course: this.courseService.getCoursById(this.courseId),
+      examens: this.examenService.getExamensByCours(this.courseId)
+    }).subscribe({
+      next: ({ course, examens }) => {
+        this.course = course;
+        this.courseTitle = course.titre;
+        this.examens = examens;
+        this.loading = false;
       },
       error: err => {
-        console.error('Erreur récupération examens:', err);
+        console.error('Erreur lors du chargement:', err);
+        this.loading = false;
       }
     });
   }
 
-  selectExamen(examenId: number) {
+  selectExamen(examenId: number): void {
     this.selectedExamenId = examenId;
-    console.log('Examen sélectionné:', examenId);
-
     this.examenService.getParticipationsByExamen(examenId).subscribe({
-      next: res => {
-        console.log('Participations récupérées:', res);
-        this.participations = res;
-      },
-      error: err => {
-        console.error('Erreur récupération participations:', err);
-      }
+      next: res => this.participations = res,
+      error: err => console.error(err)
     });
   }
 
-  onFileSelected(event: any) {
-    if (event.target.files && event.target.files.length > 0) {
-      this.selectedFile = event.target.files[0];
-      console.log('Fichier sélectionné:', this.selectedFile);
+  addExamen(): void {
+    if (!this.newExamTitre || !this.newExamUrl) {
+      console.error('Titre ou URL manquant.');
+      return;
     }
-  }
 
-  addExamen() {
-    if (!this.newExamTitre || !this.selectedFile) return;
+    const examen: ExamenDTO = {
+      titre: this.newExamTitre,
+      url: this.newExamUrl,
+      idCours: this.courseId
+    };
 
-    const formData = new FormData();
-    formData.append('titre', this.newExamTitre);
-    formData.append('file', this.selectedFile);
-
-    this.examenService.addExamen(formData).subscribe({
+    this.examenService.saveExamen(examen).subscribe({
       next: res => {
-        console.log('Examen ajouté avec succès:', res);
         this.examens.push(res);
         this.newExamTitre = '';
-        this.selectedFile = null;
+        this.newExamUrl = '';
       },
-      error: err => {
-        console.error('Erreur ajout examen:', err);
-      }
+      error: err => console.error(err)
     });
   }
 
-  gradeParticipation(participationId: number) {
-    const note = prompt('Entrer la note:');
-    if (!note) return;
+  gradeParticipation(participationId: number): void {
+    const noteInput = prompt('Entrer la note :');
+    if (!noteInput?.trim()) return;
 
-    const request = { participationId, note: Number(note) };
+    const request = {
+      participationId,
+      note: Number(noteInput)
+    };
+
     this.examenService.gradeParticipation(request).subscribe({
-      next: res => {
-        console.log('Participation notée:', res);
-        this.selectExamen(this.selectedExamenId!); // recharger participations
+      next: () => {
+        if (this.selectedExamenId) {
+          this.selectExamen(this.selectedExamenId);
+        }
       },
-      error: err => {
-        console.error('Erreur notation:', err);
-      }
+      error: err => console.error(err)
     });
   }
 
-  goBack() {
+  goBack(): void {
     this.router.navigate(['/dashboard-enseignant/mes-cours']);
   }
 }

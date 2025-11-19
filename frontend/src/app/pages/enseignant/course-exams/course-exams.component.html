@@ -1,18 +1,25 @@
-<div class="course-exams-container">
-  <h2>Examen du cours: {{ courseTitle }}</h2>
+<div class="course-exams-container" *ngIf="!loading">
+  <h2>Examen du cours : {{ courseTitle }}</h2>
 
   <div class="exams-page-grid">
+
     <!-- Colonne gauche : Liste des examens -->
     <div class="exams-list">
+
       <div *ngFor="let exam of examens" class="exam-card">
+
         <h4>{{ exam.titre }}</h4>
-        <p>Corrigé: {{ exam.corrige ? 'Oui' : 'Non' }}</p>
+
+        <!-- Lien fichier -->
         <p *ngIf="exam.url">
           <a [href]="exam.url" target="_blank">Voir le fichier</a>
         </p>
-        <button (click)="selectExamen(exam.id)">Voir participations</button>
 
-        <table *ngIf="selectedExamenId === exam.id && participations.length > 0" class="table-participations">
+        <button (click)="selectExamen(exam.id!)">Voir participations</button>
+
+        <!-- Tableau participations -->
+        <table *ngIf="selectedExamenId === exam.id && participations.length > 0"
+               class="table-participations">
           <thead>
             <tr>
               <th>Étudiant</th>
@@ -22,41 +29,73 @@
               <th>Action</th>
             </tr>
           </thead>
+
           <tbody>
             <tr *ngFor="let p of participations">
               <td>{{ p.student.nom }}</td>
+
               <td>
-                <a *ngIf="p.urlSoumission" [href]="p.urlSoumission" target="_blank">Voir</a>
+                <a *ngIf="p.urlSoumission" [href]="p.urlSoumission" target="_blank">
+                  Voir
+                </a>
                 <span *ngIf="!p.urlSoumission">-</span>
               </td>
+
               <td>{{ p.note ?? '-' }}</td>
               <td>{{ p.corrige ? 'Oui' : 'Non' }}</td>
+
               <td>
-                <button [disabled]="p.corrige" (click)="gradeParticipation(p.id)">Noter</button>
+                <button (click)="gradeParticipation(p.id)" [disabled]="p.corrige">
+                  Noter
+                </button>
               </td>
             </tr>
           </tbody>
         </table>
 
+        <!-- Aucun résultat -->
         <div *ngIf="selectedExamenId === exam.id && participations.length === 0">
           <p>Aucune participation pour cet examen.</p>
         </div>
+
       </div>
     </div>
 
     <!-- Colonne droite : Formulaire ajout examen -->
     <div class="add-exam">
+
       <form class="add-exam-form" (ngSubmit)="addExamen()">
         <h3>Ajouter un nouvel examen</h3>
-        <input type="text" placeholder="Titre de l'examen" [(ngModel)]="newExamTitre" name="titre" required />
 
-        <!-- Upload -->
-        <input type="file" (change)="onFileSelected($event)" accept=".pdf" />
+        <!-- Titre -->
+        <input
+          type="text"
+          placeholder="Titre de l'examen"
+          [(ngModel)]="newExamTitre"
+          name="titre"
+          required
+        />
 
-        <button type="submit" [disabled]="!selectedFile">Ajouter</button>
+        <!-- URL -->
+        <input
+          type="text"
+          placeholder="URL du fichier PDF"
+          [(ngModel)]="newExamUrl"
+          name="url"
+          required
+        />
+
+        <button type="submit">Ajouter</button>
       </form>
+
     </div>
+
   </div>
 
   <button class="btn-secondary" (click)="goBack()">Retour aux cours</button>
+</div>
+
+<!-- Loading -->
+<div *ngIf="loading" class="loading-state">
+  <p>Chargement du cours...</p>
 </div>

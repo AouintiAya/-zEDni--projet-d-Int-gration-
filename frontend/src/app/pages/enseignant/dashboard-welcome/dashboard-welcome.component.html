@@ -67,15 +67,11 @@
           <div class="course-image-wrapper">
             <div class="course-image">
               <img
-                [src]="course.imageUrl || '/placeholder.svg?height=200&width=400'"
+                [src]="'http://localhost:9091' + course.imageUrl"
                 [alt]="course.titre"
                 class="course-img"
               />
               <div class="course-overlay"></div>
-            </div>
-            <div class="course-badge">
-              <span class="badge-icon">✨</span>
-              <span class="badge-text">Actif</span>
             </div>
           </div>
 

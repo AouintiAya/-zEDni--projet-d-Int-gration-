@@ -46,6 +46,7 @@ export class CoursService {
     return this.http.get<CoursDTO[]>(`${this.apiUrl}/all`);
   }
 
+
   getCoursById(id: number): Observable<CoursDTO> {
     const token = localStorage.getItem('token');
     if (!token) {

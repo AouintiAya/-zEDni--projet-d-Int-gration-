@@ -12,7 +12,11 @@
   border-radius: 12px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
-
+.image-cours{
+  height: 150px;
+  width: 150px;
+  border-radius: 6px;
+}
 .courses-header h1 {
   color: #1a3b5f;
   font-size: 2rem;
