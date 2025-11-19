@@ -44,10 +44,7 @@ const routes: Routes = [
       { path: 'detailCours/:id', component: DetailCoursComponent },
       { path: 'add-ressource/:id', component: AddRessourceComponent },
       { path: 'ressource/:id', component: RessourceDetailComponent },
-
-
-      // QUIZ
-      { path: 'create-quiz', component: CreateQuizComponent },
+      { path: 'create-quiz/:idCours', component: CreateQuizComponent },
       { path: 'quiz-list/:courseId', component: QuizListComponent },
       { path: 'quiz-list/participations/:quizId', component: ParticipationListComponent },
 

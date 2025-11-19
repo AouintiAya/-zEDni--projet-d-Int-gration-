@@ -1,64 +1,147 @@
-<!-- Header Section -->
-<div class="header-section">
-  <div class="header-content">
-    <h1>Tableau de bord professeur</h1>
-    <p>Bienvenue {{ userName }}</p>
-  </div>
-  <button class="create-course-btn" (click)="createCourse()">+ Ajouter un cours</button>
-</div>
-<!-- Statistics Cards -->
-<div class="stats-grid">
-  <div *ngFor="let stat of statCards" class="stat-card" [style.border-left-color]="stat.color">
-    <div class="stat-icon">{{ stat.icon }}</div>
-    <div class="stat-content">
-      <p class="stat-label">{{ stat.title }}</p>
-      <h4 class="stat-value">
-        {{ stat.value }}<span class="stat-unit">{{ stat.unit }}</span>
-      </h4>
+<!-- Main Wrapper -->
+<div class="dashboard-wrapper">
+  <!-- Hero Section with Welcome Banner -->
+  <div class="hero-section">
+    <div class="hero-background"></div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">Bienvenue, {{ userName }}! 👋</h1>
+        <p class="hero-subtitle">Gérez vos cours et suivez l'engagement de vos étudiants en un seul endroit</p>
+      </div>
+      <button class="btn-create-course" (click)="createCourse()">
+        <span class="btn-icon">+</span>
+        <span>Créer un nouveau cours</span>
+      </button>
     </div>
   </div>
-</div>
-<!-- My Courses Section -->
-<div class="courses-section">
-  <h2>Mes cours</h2>
-  <p class="courses-subtitle">Gérez vos cours et suivez leurs performances</p>
 
-  <div class="courses-grid">
-    <div *ngFor="let course of filteredCourses" class="course-card">
-
-      <div class="course-image">
-        <img
-          [src]="'http://localhost:9091' + course.imageUrl"
-          [alt]="course.titre"
-        />
+  <!-- Main Container -->
+  <div class="dashboard-container">
+    <!-- Statistics Section -->
+    <section class="stats-section">
+      <div class="section-header">
+        <h2>Aperçu rapide</h2>
+        <p>Vos statistiques pédagogiques</p>
       </div>
 
-      <div class="course-content">
-        <h4>{{ course.titre }}</h4>
+      <div class="stats-grid">
+        <div *ngFor="let stat of statCards" class="stat-card" [style.--stat-color]="stat.color">
+          <div class="stat-card-inner">
+            <div class="stat-icon">{{ stat.icon }}</div>
+            <div class="stat-info">
+              <p class="stat-label">{{ stat.title }}</p>
+              <h3 class="stat-value">
+                {{ stat.value }}<span class="stat-unit">{{ stat.unit }}</span>
+              </h3>
+            </div>
+          </div>
+          <div class="stat-card-accent"></div>
+        </div>
+      </div>
+    </section>
 
-        <p class="course-description">
-          {{ course.description }}
-        </p>
+    <!-- Courses Section -->
+    <section class="courses-section">
+      <div class="section-header">
+        <h2>Mes cours</h2>
+        <p>Gérez et suivez vos cours pédagogiques</p>
+      </div>
 
-        <div class="course-stats">
-          <div class="stat">
-            <span class="icon">👥</span>
-            <span>{{ course.etudiantsCount }} étudiants</span>
-          <div class="stat">
-            <span class="icon">👨‍🏫</span>
-            <span>{{ course.enseignantEmail }}</span>
+      <!-- Empty State -->
+      <div *ngIf="filteredCourses.length === 0" class="empty-state">
+        <div class="empty-state-content">
+          <div class="empty-icon">📚</div>
+          <h3>Aucun cours trouvé</h3>
+          <p>Commencez par créer votre premier cours pour engager vos étudiants</p>
+          <button class="btn-primary" (click)="createCourse()">
+            <span class="btn-icon">+</span>
+            <span>Créer mon premier cours</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Courses Grid -->
+      <div *ngIf="filteredCourses.length > 0" class="courses-grid">
+        <div *ngFor="let course of filteredCourses" class="course-card">
+          <!-- Course Image Section -->
+          <div class="course-image-wrapper">
+            <div class="course-image">
+              <img
+                [src]="course.imageUrl || '/placeholder.svg?height=200&width=400'"
+                [alt]="course.titre"
+                class="course-img"
+              />
+              <div class="course-overlay"></div>
+            </div>
+            <div class="course-badge">
+              <span class="badge-icon">✨</span>
+              <span class="badge-text">Actif</span>
+            </div>
+          </div>
+
+          <!-- Course Content Section -->
+          <div class="course-body">
+            <!-- Title -->
+            <h3 class="course-title">{{ course.titre }}</h3>
+
+            <!-- Description -->
+            <p class="course-description">
+              {{ course.description | slice:0:100 }}{{ course.description.length > 100 ? '...' : '' }}
+            </p>
+
+            <!-- Course Stats -->
+            <div class="course-stats">
+              <div class="stat-item">
+                <span class="stat-icon-small">👥</span>
+                <div class="stat-text">
+                  <span class="stat-number">{{ course.etudiantsCount }}</span>
+                  <span class="stat-name">Étudiants</span>
+                </div>
+              </div>
+              <div class="stat-item">
+                <span class="stat-icon-small">👨‍🏫</span>
+                <div class="stat-text">
+                  <span class="stat-number">{{ course.enseignantEmail.split('@')[0] }}</span>
+                  <span class="stat-name">Professeur</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Button -->
+            <button class="btn-manage" (click)="goToCourse(course.id)">
+              <span>Gérer le cours</span>
+              <span class="arrow-icon">→</span>
+            </button>
           </div>
         </div>
-
-        <button class="edit-btn" (click)="goToCourse(course.id)">
-          Gérer le cours
-        </button>
       </div>
+    </section>
 
-    </div>
-  </div>
-
-  <div *ngIf="filteredCourses.length === 0" class="empty-state">
-    <p>Aucun cours trouvé pour votre recherche</p>
+    <!-- Quick Actions Section -->
+    <section class="quick-actions-section" *ngIf="filteredCourses.length > 0">
+      <div class="section-header">
+        <h2>Actions rapides</h2>
+      </div>
+      <div class="actions-grid">
+        <div class="action-card">
+          <div class="action-icon">📋</div>
+          <h4>Créer un cours</h4>
+          <p>Lancez un nouveau cours</p>
+          <button class="action-btn" (click)="createCourse()">Commencer</button>
+        </div>
+        <div class="action-card">
+          <div class="action-icon">📊</div>
+          <h4>Voir les statistiques</h4>
+          <p>Analysez l'engagement</p>
+          <button class="action-btn">Analyser</button>
+        </div>
+        <div class="action-card">
+          <div class="action-icon">💬</div>
+          <h4>Messages</h4>
+          <p>Communiquez avec les étudiants</p>
+          <button class="action-btn">Consulter</button>
+        </div>
+      </div>
+    </section>
   </div>
 </div>

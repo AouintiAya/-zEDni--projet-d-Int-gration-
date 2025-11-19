@@ -1,143 +1,481 @@
-/* ========== RESET ========== */
+/* ========== CREATE COURSE IMPROVED STYLES ========== */
+
+/* ========== VARIABLES & RESET ========== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  font-family: "Poppins", sans-serif;
-  background: #f5f7fa;
-}
-.preview img {
-  width: 120px;        /* largeur */
-  height: auto;        /* conserve le ratio */
-  border-radius: 8px;  /* optionnel */
-  margin-top: 10px;
-  border: 1px solid #ccc;
-  object-fit: cover;   /* garde une jolie coupe si l'image est large */
+/* ========== PAGE WRAPPER ========== */
+.create-course-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+  padding-bottom: 3rem;
 }
 
-
-/* ========== CONTAINER PRINCIPAL ========== */
-.create-course-container {
-  max-width: 600px;
-  margin: 3rem auto;
-  padding: 2rem;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-/* ========== HEADER ========== */
-.header-section {
-  text-align: center;
+/* ========== HEADER SECTION ========== */
+.page-header {
+  background: white;
+  padding: 2.5rem 2rem;
+  border-bottom: 1px solid #e5e5e5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   margin-bottom: 2rem;
 }
 
-.header-section h1 {
-  font-size: 2rem;
-  color: #1a3b5f;
-  font-weight: 600;
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* ========== FORMULAIRE ========== */
-.form-card form {
+.header-title h1 {
+  color: #1a3b5f;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
+}
+
+.header-title .subtitle {
+  color: #545454;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* ========== MAIN CONTAINER ========== */
+.create-course-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.form-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* ========== FORM SECTION ========== */
+.form-section {
+  background: white;
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f0f0f0;
+}
+
+.course-form {
   display: flex;
   flex-direction: column;
-  gap: 1.8rem;
+  gap: 2rem;
 }
 
-/* ========== FORM GROUP ========== */
+/* ========== FORM GROUPS ========== */
 .form-group {
   display: flex;
   flex-direction: column;
+  gap: 0.75rem;
 }
 
-label {
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-  color: #333;
+.form-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #1a3b5f;
+  font-size: 0.95rem;
+}
+
+.label-text {
+  display: block;
+}
+
+.label-hint {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: #2d9cdb;
 }
 
 .required {
   color: #e74c3c;
+  font-weight: 700;
 }
 
-/* ========== INPUTS ET TEXTAREA ========== */
-input, textarea {
-  padding: 0.65rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
+/* ========== INPUTS ========== */
+.form-input,
+.form-textarea {
+  padding: 0.85rem 1.1rem;
+  border: 2px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: "Poppins", sans-serif;
+  transition: all 0.3s ease;
+  background: #fafbfc;
+  color: #1a3b5f;
 }
 
-input:focus, textarea:focus {
-  border-color: #2d9cdb;
+.form-input:hover,
+.form-textarea:hover {
+  border-color: #d0d0d0;
+  background: white;
+}
+
+.form-input:focus,
+.form-textarea:focus {
   outline: none;
+  border-color: #2d9cdb;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(45, 156, 219, 0.1);
 }
 
-input.invalid, textarea.invalid {
+.form-input.error,
+.form-textarea.error {
   border-color: #e74c3c;
 }
 
-/* ========== MESSAGES D'ERREUR ========== */
-.error {
+.form-input.error:focus,
+.form-textarea.error:focus {
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 150px;
+  line-height: 1.5;
+}
+
+/* ========== ERROR MESSAGES ========== */
+.error-message {
   color: #e74c3c;
   font-size: 0.85rem;
-  margin-top: 0.3rem;
-}
-
-/* ========== BOUTON SUBMIT ========== */
-button {
-  padding: 0.8rem 1rem;
-  background: #2d9cdb;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
   font-weight: 500;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== IMAGE UPLOAD ========== */
+.image-upload-group {
+  gap: 1rem;
+}
+
+.file-input-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.file-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
   cursor: pointer;
-  transition: background 0.3s ease;
 }
 
-button:hover:not(:disabled) {
-  background: #1a3b5f;
+
+.file-input-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  border: 2px dashed #2d9cdb;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(45, 156, 219, 0.05) 0%, rgba(26, 59, 95, 0.02) 100%);
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-button:disabled {
-  background: #aacde1;
+.file-input:hover + .file-input-label {
+  border-color: #1a3b5f;
+  background: linear-gradient(135deg, rgba(45, 156, 219, 0.1) 0%, rgba(26, 59, 95, 0.05) 100%);
+}
+
+.upload-icon {
+  width: 40px;
+  height: 40px;
+  color: #2d9cdb;
+  stroke-width: 1.5;
+}
+
+.upload-text {
+  font-weight: 600;
+  color: #1a3b5f;
+  font-size: 0.95rem;
+}
+
+.upload-hint {
+  color: #545454;
+  font-size: 0.85rem;
+}
+
+/* ========== PREVIEW SECTION ========== */
+.preview-section {
+  border: 2px solid #2d9cdb;
+  border-radius: 8px;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(45, 156, 219, 0.05) 0%, rgba(26, 59, 95, 0.02) 100%);
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.preview-header h4 {
+  color: #1a3b5f;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.remove-btn:hover {
+  background: rgba(231, 76, 60, 0.1);
+}
+
+.preview-container {
+  overflow: hidden;
+  border-radius: 6px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 300px;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-height: 300px;
+}
+
+/* ========== BUTTONS ========== */
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn {
+  padding: 0.95rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-family: "Poppins", sans-serif;
+}
+
+.btn-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.btn-icon.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #2d9cdb, #1a3b5f);
+  color: white;
+  box-shadow: 0 4px 12px rgba(45, 156, 219, 0.3);
+  flex: 1;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(45, 156, 219, 0.4);
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
   cursor: not-allowed;
 }
 
-/* ========== SUCCESS MESSAGE ========== */
-.success-message {
-  color: #27ae60;
-  font-weight: 500;
-  margin-top: 1rem;
-  text-align: center;
+.btn-secondary {
+  background: #f5f7fa;
+  color: #1a3b5f;
+  border: 1px solid #e5e5e5;
 }
 
-/* ========== ERROR MESSAGE GÉNÉRAL ========== */
-.general-error {
-  color: #e74c3c;
-  font-weight: 500;
-  margin-top: 1rem;
-  text-align: center;
+.btn-secondary:hover {
+  background: #e9ecef;
+  border-color: #2d9cdb;
+}
+
+/* ========== INFO SECTION ========== */
+.info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f0f0f0;
+  border-left: 4px solid #2d9cdb;
+  transition: all 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(45, 156, 219, 0.15);
+}
+
+.info-card.success-card {
+  border-left-color: #27ae60;
+}
+
+.info-icon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.info-card h3 {
+  color: #1a3b5f;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.tips-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tips-list li {
+  color: #545454;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.tips-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #2d9cdb;
+  font-weight: 700;
+}
+
+.info-card p {
+  color: #545454;
+  font-size: 0.85rem;
+  line-height: 1.6;
 }
 
 /* ========== RESPONSIVE ========== */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .create-course-container {
-    margin: 2rem 1rem;
+    padding: 0 1.5rem;
+  }
+
+  .form-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .form-section {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    padding: 1.5rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .header-title h1 {
+    font-size: 1.5rem;
+  }
+
+  .create-course-container {
+    padding: 0 1rem;
+  }
+
+  .form-section {
     padding: 1.5rem;
   }
 
-  .header-section h1 {
-    font-size: 1.6rem;
+  .form-actions {
+    flex-direction: column;
   }
 
-  input, textarea {
-    font-size: 0.95rem;
+  .btn {
+    width: 100%;
+  }
+
+  .info-card {
+    order: -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header {
+    padding: 1.5rem 1rem;
+  }
+
+  .header-title h1 {
+    font-size: 1.25rem;
+  }
+
+  .form-section {
+    padding: 1.25rem;
+  }
+
+  .file-input-label {
+    padding: 1.5rem;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 0.8rem 1.5rem;
   }
 }

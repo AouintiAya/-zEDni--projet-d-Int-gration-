@@ -1,27 +1,105 @@
-<h3>Participations du Quiz: {{ quiz?.titre }}</h3>
+<div class="participation-wrapper">
+  <!-- Header -->
+  <div class="page-header">
+    <button class="btn-back" (click)="goBackToQuizList()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M19 12H5M12 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Retour
+    </button>
+    
+    <div class="header-content" *ngIf="quiz">
+      <h1>Participations - {{ quiz.titre }}</h1>
+      <p class="subtitle">Consultez les réponses et les notes des étudiants</p>
+      
+      <div class="header-stats">
+        <div class="stat-item">
+          <span class="stat-label">Total d'étudiants</span>
+          <span class="stat-value">{{ participations.length }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Moyenne</span>
+          <span class="stat-value">{{ getAverageScore() | number: '1.1-1' }}/10</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<!-- Bouton retour -->
-<div class="back-btn-container">
-  <button class="btn-back" (click)="goBackToQuizList()">
-    ← Retour à la liste des quiz
-  </button>
+  <!-- Main Content -->
+  <div class="content-container">
+    
+    <!-- Participations Table -->
+    <div class="table-section" *ngIf="participations.length > 0; else emptyState">
+      <div class="table-header">
+        <h2>Résultats des participations</h2>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="participation-table">
+          <thead>
+            <tr>
+              <th>Étudiant</th>
+              <th>Réponses fournies</th>
+              <th>Note obtenue</th>
+              <th>Corrigé</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of participations" class="participation-row">
+              <td class="student-name">
+                <div class="student-badge">
+                  <span class="student-initial">{{ p.studentId.charAt(0) }}</span>
+                  {{ p.studentId }}
+                </div>
+              </td>
+              <td class="responses-cell">
+                <span class="responses-text">{{ p.reponses }}</span>
+              </td>
+              <td class="score-cell">
+                <span class="score-badge" [class.score-high]="p.note >= 7" [class.score-medium]="p.note >= 5 && p.note < 7" [class.score-low]="p.note < 5">
+                  {{ p.note }}/10
+                </span>
+              </td>
+              <td class="correct-cell">
+                <span class="correct-text">{{ p.corrige }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Statistics Section -->
+      <div class="statistics-section">
+        <h3>Statistiques</h3>
+        <div class="stats-grid">
+          <div class="stats-card">
+            <div class="stats-label">Excellentes notes</div>
+            <div class="stats-value">{{ getHighScoresCount() }}</div>
+            <div class="stats-description">(8-10)</div>
+          </div>
+          <div class="stats-card">
+            <div class="stats-label">Bonnes notes</div>
+            <div class="stats-value">{{ getMediumScoresCount() }}</div>
+            <div class="stats-description">(5-7)</div>
+          </div>
+          <div class="stats-card">
+            <div class="stats-label">Notes faibles</div>
+            <div class="stats-value">{{ getLowScoresCount() }}</div>
+            <div class="stats-description">(&lt; 5)</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Empty State -->
+    <ng-template #emptyState>
+      <div class="empty-state">
+        <div class="empty-icon">📊</div>
+        <h3>Aucune participation</h3>
+        <p>Les étudiants n'ont pas encore participé à ce quiz.</p>
+      </div>
+    </ng-template>
+
+  </div>
 </div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Étudiant</th>
-      <th>Réponses</th>
-      <th>Note</th>
-      <th>Corrigé</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let p of participations">
-      <td>{{ p.studentId }}</td>
-      <td>{{ p.reponses }}</td>
-      <td>{{ p.note }}</td>
-      <td>{{ p.corrige }}</td>
-    </tr>
-  </tbody>
-</table>

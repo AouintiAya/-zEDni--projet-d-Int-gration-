@@ -1,54 +1,143 @@
-<div class="create-course-container">
-  <div class="header-section">
-    <h1>Créer un nouveau cours</h1>
+<!-- create-course.component.html (Improved Design) -->
+<div class="create-course-wrapper">
+  <!-- Header Section with Navigation -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="header-title">
+        <h1>Créer un nouveau cours</h1>
+        <p class="subtitle">Ajoutez un nouveau cours à votre catalogue pédagogique</p>
+      </div>
+    </div>
   </div>
 
-  <div class="content-wrapper">
-    <div class="form-card">
-      <form [formGroup]="coursForm" (ngSubmit)="onSubmit()">
-
-        <!-- Titre -->
-        <div class="form-group">
-          <label for="titre">Titre du cours <span class="required">*</span></label>
-          <input
-            id="titre"
-            type="text"
-            formControlName="titre"
-            placeholder="Ex: Introduction à Angular"
-          />
-        </div>
-
-        <!-- Description -->
-        <div class="form-group">
-          <label for="description">Description <span class="required">*</span></label>
-          <textarea
-            id="description"
-            formControlName="description"
-            placeholder="Décrivez le contenu du cours"
-          ></textarea>
-        </div>
-
-        <!-- Image Upload -->
-        <div class="form-group">
-          <label for="imageFile">Image du cours</label>
-          <input
-            type="file"
-            id="imageFile"
-            (change)="onFileSelected($event)"
-            accept="image/*"
-          />
-          <div class="preview" *ngIf="selectedFile">
-            <p>Prévisualisation :</p>
-            <img [src]="selectedFilePreview" alt="Prévisualisation de l'image" />
+  <!-- Main Content -->
+  <div class="create-course-container">
+    <div class="form-wrapper">
+      <!-- Left Section - Form -->
+      <div class="form-section">
+        <form [formGroup]="coursForm" (ngSubmit)="onSubmit()" class="course-form">
+          
+          <!-- Titre Section -->
+          <div class="form-group">
+            <label for="titre" class="form-label">
+              <span class="label-text">Titre du cours</span>
+              <span class="required">*</span>
+            </label>
+            <input
+              id="titre"
+              type="text"
+              formControlName="titre"
+              placeholder="Ex: Introduction à Angular"
+              class="form-input"
+              [class.error]="coursForm.get('titre')?.invalid && coursForm.get('titre')?.touched"
+            />
+            <div *ngIf="coursForm.get('titre')?.invalid && coursForm.get('titre')?.touched" class="error-message">
+              <span *ngIf="coursForm.get('titre')?.errors?.['required']">Le titre est requis</span>
+              <span *ngIf="coursForm.get('titre')?.errors?.['minlength']">Au moins 3 caractères</span>
+            </div>
           </div>
+
+          <!-- Description Section -->
+          <div class="form-group">
+            <label for="description" class="form-label">
+              <span class="label-text">Description</span>
+              <span class="required">*</span>
+            </label>
+            <textarea
+              id="description"
+              formControlName="description"
+              placeholder="Décrivez le contenu, les objectifs et les prérequis du cours..."
+              class="form-textarea"
+              rows="6"
+              [class.error]="coursForm.get('description')?.invalid && coursForm.get('description')?.touched"
+            ></textarea>
+            <div *ngIf="coursForm.get('description')?.invalid && coursForm.get('description')?.touched" class="error-message">
+              <span *ngIf="coursForm.get('description')?.errors?.['required']">La description est requise</span>
+              <span *ngIf="coursForm.get('description')?.errors?.['minlength']">Au moins 10 caractères</span>
+            </div>
+          </div>
+
+          <!-- Image Upload Section -->
+          <div class="form-group image-upload-group">
+            <label for="imageFile" class="form-label">
+              <span class="label-text">Image du cours</span>
+              <span class="label-hint">(Facultatif)</span>
+            </label>
+            <div class="file-input-wrapper">
+              <input
+                type="file"
+                id="imageFile"
+                (change)="onFileSelected($event)"
+                accept="image/*"
+                class="file-input"
+              />
+              <div class="file-input-label">
+                <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M12 2v20m10-10H2" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span class="upload-text">Cliquez pour ajouter une image</span>
+                <span class="upload-hint">PNG, JPG ou GIF (max 5MB)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Image Preview Section -->
+          <div *ngIf="selectedFile" class="preview-section">
+            <div class="preview-header">
+              <h4>Prévisualisation de l'image</h4>
+              <button type="button" class="remove-btn" (click)="removeImage()">Supprimer</button>
+            </div>
+            <div class="preview-container">
+              <img [src]="selectedFilePreview" alt="Prévisualisation du cours" class="preview-image" />
+            </div>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+              <span *ngIf="!isSubmitting">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+                Créer le cours
+              </span>
+              <span *ngIf="isSubmitting">
+                <svg class="btn-icon spinner" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                Création en cours...
+              </span>
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="resetForm()">Annuler</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Right Section - Info Panel -->
+      <div class="info-section">
+        <div class="info-card">
+          <div class="info-icon">📚</div>
+          <h3>Conseils pour créer un bon cours</h3>
+          <ul class="tips-list">
+            <li><strong>Titre clair:</strong> Utilisez un titre descriptif et concis</li>
+            <li><strong>Description détaillée:</strong> Expliquez les objectifs du cours</li>
+            <li><strong>Image attrayante:</strong> Utilisez une image de qualité qui représente le contenu</li>
+            <li><strong>Contenu structuré:</strong> Organisez le contenu par modules et leçons</li>
+          </ul>
         </div>
 
-        <!-- Submit -->
-        <button type="submit" [disabled]="isSubmitting">
-          <span *ngIf="!isSubmitting">Créer le cours</span>
-          <span *ngIf="isSubmitting">Création en cours...</span>
-        </button>
-      </form>
+        <div class="info-card">
+          <div class="info-icon">✨</div>
+          <h3>Engagement étudiant</h3>
+          <p>Un cours bien présenté avec une image attrayante et une description claire augmente l'engagement des étudiants de 40%.</p>
+        </div>
+
+        <div class="info-card success-card">
+          <div class="info-icon">🎯</div>
+          <h3>Prêt à publier?</h3>
+          <p>Après la création, vous pourrez ajouter des modules, des leçons et des ressources à votre cours.</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>

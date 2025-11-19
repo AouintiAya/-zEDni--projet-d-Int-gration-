@@ -1,3 +1,4 @@
+// create-course.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CoursService } from 'src/app/services/coursService/cours.service';
@@ -40,6 +41,19 @@ export class CreateCourseComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
+  // <CHANGE> Added removeImage method to clear selected file
+  removeImage() {
+    this.selectedFile = null;
+    this.selectedFilePreview = null;
+  }
+
+  // <CHANGE> Added resetForm method to clear form
+  resetForm() {
+    this.coursForm.reset();
+    this.selectedFile = null;
+    this.selectedFilePreview = null;
+  }
+
   onSubmit() {
     if (this.coursForm.invalid) {
       this.coursForm.markAllAsTouched();
@@ -59,9 +73,7 @@ export class CreateCourseComponent implements OnInit {
       next: (res) => {
         alert('Cours créé avec succès !');
 
-        this.coursForm.reset();
-        this.selectedFile = null;
-        this.selectedFilePreview = null;
+        this.resetForm();
         this.isSubmitting = false;
       },
       error: (err) => {
