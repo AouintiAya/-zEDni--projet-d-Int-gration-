@@ -128,12 +128,13 @@
     </div>
 
     <!-- Resources Section -->
-    <div class="resources-section">
-      <h2 class="section-title">Ressources du cours</h2>
-      <div class="resources-container">
-        <app-ressource-list [courseId]="courseId"></app-ressource-list>
-      </div>
+  <div class="resources-section" #resourcesSection>
+    <h2 class="section-title">Ressources du cours</h2>
+    <div class="resources-container">
+      <app-ressource-list [courseId]="courseId"></app-ressource-list>
     </div>
+  </div>
+
 
     <!-- Action Buttons Section -->
     <div class="actions-section">

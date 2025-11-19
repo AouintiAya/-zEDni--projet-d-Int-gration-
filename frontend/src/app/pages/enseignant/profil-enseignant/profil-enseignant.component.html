@@ -1,45 +1,124 @@
-<div class="dashboard-page">
+<div class="profile-wrapper">
+  <!-- Header Section -->
+  <div class="profile-header">
+    <div class="header-content">
+      <h1>Mon Profil</h1>
+      <p class="header-subtitle">Gérez vos informations personnelles</p>
+    </div>
+  </div>
 
-  <div class="dashboard-content">
+  <!-- Main Content -->
+  <div class="profile-container">
+    <p *ngIf="message" class="success-message">
+      <svg class="success-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+      </svg>
+      {{ message }}
+    </p>
 
-    <!-- ===== Contenu Profil ===== -->
-    <main class="main-section">
-
-      <div class="profile-container">
-        <h2>Mon Profil</h2>
-
-        <p *ngIf="message" class="success">{{ message }}</p>
-
-        <form [formGroup]="profileForm">
-          <div class="form-group">
-            <label>Nom d'utilisateur :</label>
-            <input type="text" formControlName="username" [readonly]="!isEditing" />
-          </div>
-
-          <div class="form-group">
-            <label>Email :</label>
-            <input type="email" formControlName="email" [readonly]="!isEditing" />
-          </div>
-
-          <div class="form-group">
-            <label>Téléphone :</label>
-            <input type="text" formControlName="phone" [readonly]="!isEditing" />
-          </div>
-
-          <div class="form-group">
-            <label>Rôle :</label>
-            <input type="text" formControlName="role" readonly />
-          </div>
-
-          <div class="buttons">
-            <button *ngIf="!isEditing" type="button" (click)="enableEdit()">Modifier</button>
-            <button *ngIf="isEditing" type="button" (click)="saveProfile()">Enregistrer</button>
-            <button *ngIf="isEditing" type="button" class="cancel" (click)="cancelEdit()">Annuler</button>
-          </div>
-        </form>
+    <form [formGroup]="profileForm" class="profile-form">
+      <!-- Username Field -->
+      <div class="form-group">
+        <label for="username" class="form-label">
+          <span class="label-icon">👤</span>
+          Nom d'utilisateur
+        </label>
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          [readonly]="!isEditing"
+          class="form-input"
+          [class.editing]="isEditing"
+        />
       </div>
 
-    </main>
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email" class="form-label">
+          <span class="label-icon">✉️</span>
+          Email
+        </label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          [readonly]="!isEditing"
+          class="form-input"
+          [class.editing]="isEditing"
+        />
+      </div>
 
+      <!-- Phone Field -->
+      <div class="form-group">
+        <label for="phone" class="form-label">
+          <span class="label-icon">📱</span>
+          Téléphone
+        </label>
+        <input
+          id="phone"
+          type="text"
+          formControlName="phone"
+          [readonly]="!isEditing"
+          class="form-input"
+          [class.editing]="isEditing"
+        />
+      </div>
+
+      <!-- Role Field (Read-only) -->
+      <div class="form-group">
+        <label for="role" class="form-label">
+          <span class="label-icon">🎓</span>
+          Rôle
+        </label>
+        <input
+          id="role"
+          type="text"
+          formControlName="role"
+          readonly
+          class="form-input readonly-input"
+        />
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="form-buttons">
+        <button
+          *ngIf="!isEditing"
+          type="button"
+          (click)="enableEdit()"
+          class="btn btn-primary"
+        >
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/>
+            <path d="M20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+          </svg>
+          Modifier
+        </button>
+
+        <button
+          *ngIf="isEditing"
+          type="button"
+          (click)="saveProfile()"
+          class="btn btn-save"
+        >
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/>
+          </svg>
+          Enregistrer
+        </button>
+
+        <button
+          *ngIf="isEditing"
+          type="button"
+          (click)="cancelEdit()"
+          class="btn btn-cancel"
+        >
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+          </svg>
+          Annuler
+        </button>
+      </div>
+    </form>
   </div>
 </div>

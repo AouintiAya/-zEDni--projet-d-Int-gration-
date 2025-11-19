@@ -1,98 +1,184 @@
-<div class="courses-container">
-  <!-- Header -->
-  <div class="courses-header">
-    <div>
-      <h1>Mes cours</h1>
-      <p class="subtitle">Gérez et organisez tous vos cours</p>
+<div class="courses-wrapper">
+  <!-- Header Section -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="header-title">
+        <h1>Mes cours</h1>
+        <p class="subtitle">Gérez et organisez tous vos cours pédagogiques</p>
+      </div>
+      <button class="add-course-btn" (click)="createCourse()">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+        </svg>
+        Ajouter un cours
+      </button>
     </div>
-    <button class="add-course-btn" (click)="createCourse()">+ Ajouter un cours</button>
   </div>
 
-  <!-- Search -->
-  <div class="search-section">
-    <input
-      type="text"
-      placeholder="Rechercher un cours..."
-      [(ngModel)]="searchQuery"
-      (input)="onSearch()"
-      class="search-input"
-    />
-  </div>
-
-  <!-- Courses Table -->
-  <div class="courses-table-wrapper">
-    <table class="courses-table" *ngIf="filteredCourses.length > 0">
-      <thead>
-        <tr>
-          <th>Titre du cours</th>
-          <th>Nombre de ressources</th>
-          <th>Enseignant</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let course of filteredCourses" class="course-row">
-  <td class="course-title-col">
-    <img class="image-cours" [src]="'http://localhost:9091' + course.imageUrl" />
-
-    <!-- MODE NORMAL -->
-    <div *ngIf="editingCourseId !== course.id">
-      <p class="course-title">{{ course.titre }}</p>
-      <p class="course-desc">{{ course.description }}</p>
+  <!-- Main Container -->
+  <div class="courses-container">
+    <!-- Search Section -->
+    <div class="search-section">
+      <div class="search-wrapper">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        <input
+          type="text"
+          placeholder="Rechercher un cours..."
+          [(ngModel)]="searchQuery"
+          (input)="onSearch()"
+          class="search-input"
+        />
+      </div>
     </div>
 
-    <!-- MODE EDIT -->
-    <div *ngIf="editingCourseId === course.id">
-      <input type="text" [(ngModel)]="editData.titre" placeholder="Titre du cours" />
-      <textarea [(ngModel)]="editData.description" placeholder="Description"></textarea>
-      <input type="file" (change)="onFileSelected($event)" />
-    </div>
-  </td>
+    <!-- Courses Table -->
+    <div class="courses-table-wrapper">
+      <div *ngIf="filteredCourses.length > 0" class="table-responsive">
+        <table class="courses-table">
+          <thead>
+            <tr>
+              <th>Cours</th>
+              <th>Ressources</th>
+              <th>Enseignant</th>
+              <th class="actions-header">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let course of filteredCourses" class="course-row">
+              <!-- Course Info Column -->
+              <td class="course-info-col">
+                <div class="course-info">
+                  <img [src]="'http://localhost:9091' + course.imageUrl" alt="{{ course.titre }}" class="course-image" />
+                  <div class="course-details">
+                    <!-- View Mode -->
+                    <div *ngIf="editingCourseId !== course.id" class="course-text">
+                      <p class="course-title">{{ course.titre }}</p>
+                      <p class="course-desc">{{ course.description | slice:0:80 }}{{ course.description.length > 80 ? '...' : '' }}</p>
+                    </div>
+                    <!-- Edit Mode -->
+                    <div *ngIf="editingCourseId === course.id" class="edit-form">
+                      <input 
+                        type="text" 
+                        [(ngModel)]="editData.titre" 
+                        placeholder="Titre du cours"
+                        class="form-input"
+                      />
+                      <textarea 
+                        [(ngModel)]="editData.description" 
+                        placeholder="Description"
+                        class="form-textarea"
+                      ></textarea>
+                      <div class="file-input-wrapper">
+                        <label class="file-label">
+                          <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+                          <span>Changer l'image</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
 
-  <td>{{ course.ressources?.length || 0 }}</td>
-  <td>{{ course.enseignantEmail }}</td>
+              <!-- Resources Count -->
+              <td class="resources-col">
+                <span class="badge">{{ course.ressources?.length || 0 }}</span>
+              </td>
 
-  <td class="actions-col">
- <!-- View Details -->
-  <button class="action-btn view-btn" (click)="viewCourse(course.id!)">
-    <i class="fas fa-eye"></i>
-  </button>
-    <!-- Edit -->
-    <button class="action-btn edit-btn"
-      *ngIf="editingCourseId !== course.id"
-      (click)="startEditCourse(course)">
-      <i class="fas fa-edit"></i>
-    </button>
+              <!-- Teacher Email -->
+              <td class="teacher-col">
+                <p class="teacher-email">{{ course.enseignantEmail }}</p>
+              </td>
 
-    <!-- Save -->
-    <button class="action-btn save-btn"
-      *ngIf="editingCourseId === course.id"
-      (click)="updateCourse(course)">
-      <i class="fas fa-save"></i>
-    </button>
+              <!-- Actions -->
+              <td class="actions-col">
+                <!-- View Button -->
+                <button 
+                  class="action-btn view-btn" 
+                  (click)="viewCourse(course.id!)"
+                  title="Voir les détails"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </button>
 
-    <!-- Cancel -->
-    <button class="action-btn cancel-btn"
-      *ngIf="editingCourseId === course.id"
-      (click)="cancelEditCourse()">
-      <i class="fas fa-times"></i>
-    </button>
+                <!-- Edit Button -->
+                <button 
+                  *ngIf="editingCourseId !== course.id"
+                  class="action-btn edit-btn" 
+                  (click)="startEditCourse(course)"
+                  title="Modifier"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                  </svg>
+                </button>
 
-    <!-- Delete -->
-    <button class="action-btn delete-btn" (click)="deleteCourse(course.id!)">
-      <i class="fas fa-trash"></i>
-    </button>
+                <!-- Save Button -->
+                <button 
+                  *ngIf="editingCourseId === course.id"
+                  class="action-btn save-btn" 
+                  (click)="updateCourse(course)"
+                  title="Enregistrer"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+                  </svg>
+                </button>
 
-  </td>
-</tr>
+                <!-- Cancel Button -->
+                <button 
+                  *ngIf="editingCourseId === course.id"
+                  class="action-btn cancel-btn" 
+                  (click)="cancelEditCourse()"
+                  title="Annuler"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                  </svg>
+                </button>
 
-      </tbody>
-    </table>
+                <!-- Delete Button -->
+                <button 
+                  class="action-btn delete-btn" 
+                  (click)="deleteCourse(course.id!)"
+                  title="Supprimer"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                  </svg>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-    <div *ngIf="filteredCourses.length === 0" class="empty-state">
-      <i class="fas fa-inbox"></i>
-      <p>Aucun cours trouvé</p>
-      <p class="empty-hint">Créez votre premier cours pour commencer</p>
+      <!-- Empty State -->
+      <div *ngIf="filteredCourses.length === 0" class="empty-state">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H12"></path>
+            <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H19a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-2.5a2.5 2.5 0 0 0-2.5 2.5v.5"></path>
+            <path d="M8 2v4"></path>
+            <path d="M16 2v4"></path>
+          </svg>
+        </div>
+        <h3>Aucun cours trouvé</h3>
+        <p *ngIf="searchQuery" class="empty-hint">Essayez une autre recherche</p>
+        <p *ngIf="!searchQuery" class="empty-hint">Créez votre premier cours pour commencer</p>
+      </div>
     </div>
   </div>
 </div>

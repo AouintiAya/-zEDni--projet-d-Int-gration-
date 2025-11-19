@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursDTO, CoursService, RessourceDTO } from 'src/app/services/coursService/cours.service';
+
+
 
 @Component({
   selector: 'app-detail-cours',
@@ -13,6 +15,10 @@ export class DetailCoursComponent implements OnInit {
   course?: CoursDTO;
   loading: boolean = true;
   ressources: RessourceDTO[] = [];
+
+  @ViewChild('resourcesSection', { static: false }) resourcesSection!: ElementRef;
+  
+
 
   constructor(
     private route: ActivatedRoute,
@@ -71,9 +77,11 @@ export class DetailCoursComponent implements OnInit {
      ========================== */
 
   addQuiz(): void {
-    if (!this.course) return;
-    this.router.navigate([`/dashboard-enseignant/create-quiz`, this.course.id]);
-  }
+  if (!this.course) return;
+  this.router.navigate([`/dashboard-enseignant/create-quiz`, this.course.id]); 
+  // -> Angular prend le dernier segment comme paramètre idCours automatiquement
+}
+
 
   seeQuiz(): void {
     if (!this.course) return;
@@ -95,10 +103,17 @@ export class DetailCoursComponent implements OnInit {
     this.router.navigate([`/dashboard-enseignant/add-ressource`, this.course.id]);
   }
 
-  seeResource(): void {
-    if (!this.course) return;
-    this.router.navigate([`/dashboard-enseignant/ressources`, this.course.id]);
-  }
+ seeResource(): void {
+  if (!this.resourcesSection) return;
+
+  // Scroll après rendu du DOM
+  requestAnimationFrame(() => {
+    this.resourcesSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+}
+
+
+
 
   /* ==========================
      RETOUR

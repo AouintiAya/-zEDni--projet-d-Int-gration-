@@ -12,7 +12,7 @@ export class CreateQuizComponent implements OnInit {
   quizForm!: FormGroup;
   questions: any[] = [];
   isSubmitting: boolean = false;
-  courseId: number | null = null;
+  courseId!: number;
 
   constructor(
     private fb: FormBuilder,
@@ -21,25 +21,26 @@ export class CreateQuizComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Get courseId from route
-    this.courseId = +this.route.snapshot.paramMap.get('id')!;
-    
-    this.quizForm = this.fb.group({
-      titre: ['', [Validators.required, Validators.minLength(3)]]
-    });
-
-    // Initialize with at least one question
-    this.addQuestion();
+  const idParam = this.route.snapshot.paramMap.get('idCours'); // <-- ici
+  if (!idParam) {
+    console.error('ID du cours manquant dans la route');
+    this.router.navigate(['/dashboard-enseignant/mes-cours']);
+    return;
   }
+  this.courseId = +idParam;
+
+  this.quizForm = this.fb.group({
+    titre: ['', [Validators.required, Validators.minLength(3)]]
+  });
+
+  this.addQuestion();
+}
+
 
   goBack(): void {
-  if (this.courseId) {
-    this.router.navigate(['/dashboard-enseignant/detailCours', this.courseId]);
-  } else {
-    // fallback au cas où aucun ID n’est fourni
-    this.router.navigate(['/dashboard-enseignant/mes-cours']);
+    // Retour vers la page de détail du cours
+    this.router.navigate([`/dashboard-enseignant/detailCours/${this.courseId}`]);
   }
-}
 
   addQuestion(): void {
     this.questions.push({ texte: '', reponseCorrecte: '' });
@@ -63,7 +64,6 @@ export class CreateQuizComponent implements OnInit {
       return;
     }
 
-    // Validate all questions have content
     const validQuestions = this.questions.every(q => q.texte && q.reponseCorrecte);
     if (!validQuestions) {
       alert('Veuillez remplir toutes les questions et réponses');
@@ -74,19 +74,20 @@ export class CreateQuizComponent implements OnInit {
 
     const quiz = {
       id: new Date().getTime(),
+      courseId: this.courseId, // garder le lien avec le cours
       titre: this.quizForm.value.titre,
-      questions: this.questions,
-      participations: []
+      questions: this.questions
     };
 
     console.log('Quiz créé:', quiz);
-    
-    // Simulate API call
+
+    // Simuler appel API
     setTimeout(() => {
-      alert('Quiz créé avec succès!');
+      alert('Quiz créé avec succès !');
       this.resetForm();
       this.isSubmitting = false;
-      this.router.navigate(['/dashboard-enseignant/detail-cours', this.courseId]);
+      // Redirection vers le détail du cours
+      this.router.navigate([`/dashboard-enseignant/detailCours/${this.courseId}`]);
     }, 1000);
   }
 }

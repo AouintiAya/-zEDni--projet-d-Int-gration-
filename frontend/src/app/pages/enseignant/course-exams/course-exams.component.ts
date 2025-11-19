@@ -61,6 +61,12 @@ export class CourseExamsComponent implements OnInit {
   }
 
   goBack(): void {
+  if (this.courseId) {
+    this.router.navigate([`/dashboard-enseignant/detailCours/${this.courseId}`]);
+  } else {
+    // fallback si courseId absent
     this.router.navigate(['/dashboard-enseignant/mes-cours']);
   }
+}
+
 }
