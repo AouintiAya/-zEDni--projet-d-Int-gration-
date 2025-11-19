@@ -31,6 +31,7 @@ import { AddRessourceComponent } from './pages/enseignant/add-ressource/add-ress
 import { RessourceListComponent } from './pages/enseignant/ressource-list/ressource-list.component';
 import { RessourceDetailComponent } from './pages/enseignant/ressource-detail/ressource-detail.component';
 import { SafeUrlPipe } from './safe-url.pipe';
+import { ExamListComponent } from './pages/enseignant/exam-list/exam-list.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { SafeUrlPipe } from './safe-url.pipe';
     RessourceListComponent,
     RessourceDetailComponent,
     SafeUrlPipe,
+    ExamListComponent,
   ],
   imports: [
     BrowserModule,

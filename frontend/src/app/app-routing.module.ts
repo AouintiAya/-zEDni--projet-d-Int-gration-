@@ -24,6 +24,8 @@ import { QuizListComponent } from './pages/enseignant/quiz-list/quiz-list.compon
 import { ParticipationListComponent } from './pages/enseignant/participation-list/participation-list.component';
 import { AddRessourceComponent } from './pages/enseignant/add-ressource/add-ressource.component';
 import { RessourceDetailComponent } from './pages/enseignant/ressource-detail/ressource-detail.component';
+import { ExamListComponent } from './pages/enseignant/exam-list/exam-list.component';
+import { RessourceListComponent } from './pages/enseignant/ressource-list/ressource-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -37,6 +39,8 @@ const routes: Routes = [
     path: 'dashboard-enseignant',
     component: TeacherDashboardComponent,
     children: [
+      { path: 'cours/:id/examens', component: ExamListComponent },
+      { path: 'cours/:id/ressources', component: RessourceListComponent },
       { path: '', component: DashboardWelcomeComponent },
       { path: 'create-course', component: CreateCourseComponent },
       { path: 'mes-cours', component: CourseListComponent },

@@ -1,0 +1,28 @@
+.exam-container {
+  padding: 20px;
+}
+
+.exam-list {
+  list-style: none;
+  padding: 0;
+}
+
+.exam-item {
+  background: #f3f3f3;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+.loading {
+  color: #007bff;
+}
+
+.error {
+  color: red;
+}
+
+.empty {
+  color: #555;
+  font-style: italic;
+}

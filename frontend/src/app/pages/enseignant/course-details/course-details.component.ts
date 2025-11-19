@@ -1,16 +1,19 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CoursDTO, CoursService, RessourceDTO } from 'src/app/services/coursService/cours.service';
+import {
+  CoursDTO,
+  CoursService,
+  RessourceDTO,
+} from 'src/app/services/coursService/cours.service';
 
 
 
 @Component({
   selector: 'app-detail-cours',
   templateUrl: './course-details.component.html',
-  styleUrls: ['./course-details.component.css']
+  styleUrls: ['./course-details.component.css'],
 })
 export class DetailCoursComponent implements OnInit {
-  
   courseId!: number;
   course?: CoursDTO;
   loading: boolean = true;
@@ -53,7 +56,7 @@ export class DetailCoursComponent implements OnInit {
       error: (err) => {
         console.error('Erreur lors du chargement du cours :', err);
         this.loading = false;
-      }
+      },
     });
   }
 
@@ -68,7 +71,7 @@ export class DetailCoursComponent implements OnInit {
       },
       error: (err) => {
         console.error('Erreur lors du chargement des ressources :', err);
-      }
+      },
     });
   }
 
@@ -92,32 +95,26 @@ export class DetailCoursComponent implements OnInit {
     if (!this.course) return;
     this.router.navigate([`/dashboard-enseignant/courseExam`, this.course.id]);
   }
-
-  seeExam(): void {
-    if (!this.course) return;
-    this.router.navigate([`/dashboard-enseignant/courseExam`, this.course.id]);
+  openExams(courseId: number) {
+    this.router.navigate(['/dashboard-enseignant/cours', courseId, 'examens']);
   }
 
   addResource(): void {
     if (!this.course) return;
-    this.router.navigate([`/dashboard-enseignant/add-ressource`, this.course.id]);
+    this.router.navigate([
+      `/dashboard-enseignant/add-ressource`,
+      this.course.id,
+    ]);
   }
 
- seeResource(): void {
-  if (!this.resourcesSection) return;
-
-  // Scroll après rendu du DOM
-  requestAnimationFrame(() => {
-    this.resourcesSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-}
-
-
-
+  seeResource(courseId: number): void {
+    if (!this.course) return;
+    this.router.navigate([`/dashboard-enseignant/cours`, this.courseId,'ressources']);
+  }
 
   /* ==========================
-     RETOUR
-     ========================== */
+    RETOUR
+  ========================== */
   goBack(): void {
     this.router.navigate(['/dashboard-enseignant/mes-cours']);
   }
