@@ -1,177 +1,149 @@
-/* Conteneur principal */
+/* ========== VARIABLES & RESET ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========== PAGE WRAPPER ========== */
 .course-exams-container {
-  padding: 30px;
-  font-family: 'Poppins', sans-serif;
-  background-color: #f0f4f8;
-  color: #2c3e50;
   min-height: 100vh;
-}
-
-/* Titre principal */
-.course-exams-container h2 {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 40px;
-  color: #1f4e79; /* bleu foncé */
-}
-
-/* Grid pour colonnes */
-.exams-page-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 30px;
-}
-
-/* Liste des examens (colonne gauche) */
-.exams-list {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+  padding: 3rem 2rem;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: center;
 }
 
-/* Carte examen */
-.exam-card {
-  background: #ffffff;
-  border-left: 6px solid #f1c40f; /* jaune doux */
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
+/* ========== HEADER ========== */
+.course-exams-container h2 {
+  color: #1a3b5f;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
-.exam-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
-}
-
-.exam-card h4 {
-  font-size: 1.3rem;
-  color: #1f4e79; /* bleu foncé */
-  margin-bottom: 10px;
-}
-
-.exam-card p {
-  margin: 5px 0;
-  color: #34495e;
-}
-
-.exam-card a {
-  color: #3498db; /* bleu clair */
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.exam-card a:hover {
-  text-decoration: underline;
-}
-
-/* Boutons examen */
-.exam-card button {
-  margin-top: 12px;
-  padding: 8px 16px;
-  background-color: #1f4e79; /* bleu foncé */
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.exam-card button:hover:not(:disabled) {
-  background-color: #16629c; /* bleu un peu plus clair */
-}
-
-.exam-card button:disabled {
-  background-color: #dcdde1; /* gris clair */
-  cursor: not-allowed;
-}
-
-/* Table participations */
-.table-participations {
-  width: 100%;
-  margin-top: 15px;
-  border-collapse: collapse;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.table-participations th,
-.table-participations td {
-  padding: 10px 12px;
-  text-align: left;
-  border-bottom: 1px solid #e1e8ed;
-}
-
-.table-participations th {
-  background-color: #3498db; /* bleu clair */
-  color: #fff;
-  font-weight: 600;
-}
-
-/* Formulaire ajout examen (colonne droite) */
+/* ========== ADD EXAM FORM ========== */
 .add-exam {
-  background-color: #ffffff;
-  padding: 25px;
+  width: 100%;
+  max-width: 500px;
+  background: white;
   border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  padding: 2.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f0f0f0;
+  margin-bottom: 2rem;
 }
 
-.add-exam-form h3 {
-  font-size: 1.4rem;
-  margin-bottom: 20px;
-  color: #1f4e79; /* bleu foncé */
+.add-exam h3 {
+  color: #1a3b5f;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.add-exam-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .add-exam-form input {
-  display: block;
-  width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 15px;
-  border: 1px solid #dcdfe6;
+  padding: 0.85rem 1rem;
+  border: 2px solid #e5e5e5;
   border-radius: 8px;
-  transition: border 0.3s;
+  font-size: 0.95rem;
+  font-family: "Poppins", sans-serif;
+  transition: all 0.3s ease;
+  background: #fafbfc;
+  color: #1a3b5f;
+}
+
+.add-exam-form input:hover {
+  border-color: #d0d0d0;
+  background: white;
 }
 
 .add-exam-form input:focus {
-  border-color: #3498db; /* bleu clair */
   outline: none;
+  border-color: #2d9cdb;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(45, 156, 219, 0.1);
 }
 
-.add-exam-form button {
-  padding: 10px 20px;
-  background-color: #f1c40f; /* jaune */
-  color: #1f4e79; /* bleu foncé texte */
+/* ========== BUTTONS ========== */
+button {
+  padding: 0.95rem 2rem;
   border: none;
   border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
   cursor: pointer;
-  font-weight: 500;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
+  font-family: "Poppins", sans-serif;
 }
 
-.add-exam-form button:hover {
-  background-color: #d4ac0d; /* jaune un peu plus foncé */
+button[type="submit"] {
+  background: linear-gradient(135deg, #2d9cdb, #1a3b5f);
+  color: white;
+  box-shadow: 0 4px 12px rgba(45, 156, 219, 0.3);
 }
 
-/* Bouton retour */
+button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(45, 156, 219, 0.4);
+}
+
 .btn-secondary {
-  margin-top: 40px;
-  padding: 10px 20px;
-  background-color: #3498db; /* bleu clair */
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s;
+  background: #f5f7fa;
+  color: #1a3b5f;
+  border: 1px solid #e5e5e5;
+  margin-top: 1rem;
 }
 
 .btn-secondary:hover {
-  background-color: #2c81c7; /* bleu plus foncé */
+  background: #e9ecef;
+  border-color: #2d9cdb;
 }
 
-/* Responsive */
-@media (max-width: 900px) {
-  .exams-page-grid {
-    grid-template-columns: 1fr;
+/* ========== LOADING STATE ========== */
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  color: #1a3b5f;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .course-exams-container {
+    padding: 2rem 1rem;
+  }
+
+  .add-exam {
+    padding: 2rem;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .course-exams-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .add-exam {
+    padding: 1.5rem;
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 0.8rem 1.5rem;
   }
 }
