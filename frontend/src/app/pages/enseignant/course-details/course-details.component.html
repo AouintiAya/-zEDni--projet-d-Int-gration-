@@ -139,67 +139,73 @@
     <div class="actions-section">
       <h2 class="section-title">Gestion du cours</h2>
       <div class="actions-buttons">
-        <button class="btn btn-primary" (click)="addQuiz()">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <circle cx="12" cy="12" r="10" />
-            <line x1="12" y1="8" x2="12" y2="16" />
-            <line x1="8" y1="12" x2="16" y2="12" />
-          </svg>
-          Créer un Quiz
-        </button>
-        <button class="btn btn-primary" (click)="seeQuiz()">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path
-              d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"
-            />
-          </svg>
-          Voir les Quiz
-        </button>
-        <button class="btn btn-secondary" (click)="addResource()">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <circle cx="12" cy="12" r="10" />
-            <line x1="12" y1="8" x2="12" y2="16" />
-            <line x1="8" y1="12" x2="16" y2="12" />
-          </svg>
-          Ajouter Ressource
-        </button>
-        <button class="btn btn-secondary" (click)="seeExam()">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path
-              d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"
-            />
-          </svg>
-          Voir Examens
-        </button>
-      </div>
+
+  <!-- Première ligne : Créer Quiz / Créer Examen / Ajouter Ressource -->
+  <div class="button-row">
+
+    <!-- 1) Créer Quiz -->
+    <button class="btn btn-primary" (click)="addQuiz()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="8" x2="12" y2="16" />
+        <line x1="8" y1="12" x2="16" y2="12" />
+      </svg>
+      Créer un Quiz
+    </button>
+
+    <!-- 2) Créer Examen -->
+    <button class="btn btn-primary" (click)="addExam()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="8" x2="12" y2="16" />
+        <line x1="8" y1="12" x2="16" y2="12" />
+      </svg>
+      Créer Examen
+    </button>
+
+    <!-- 3) Ajouter Ressource -->
+    <button class="btn btn-primary" (click)="addResource()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="8" x2="12" y2="16" />
+        <line x1="8" y1="12" x2="16" y2="12" />
+      </svg>
+      Ajouter Ressource
+    </button>
+
+  </div>
+
+  <!-- Deuxième ligne : Voir Quiz / Voir Examen / Voir Ressource -->
+  <div class="button-row">
+
+    <!-- 4) Voir Quiz -->
+    <button class="btn btn-secondary" (click)="seeQuiz()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+      </svg>
+      Voir les Quiz
+    </button>
+
+    <!-- 5) Voir Examen -->
+    <button class="btn btn-secondary" (click)="seeExam()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+      </svg>
+      Voir Examen
+    </button>
+
+    <!-- 6) Voir Ressource -->
+    <button class="btn btn-secondary" (click)="seeResource()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+      </svg>
+      Voir Ressource
+    </button>
+
+  </div>
+
+</div>
+
     </div>
   </div>
 </div>

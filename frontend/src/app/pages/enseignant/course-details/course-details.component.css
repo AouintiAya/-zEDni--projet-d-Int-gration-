@@ -233,11 +233,18 @@
   border: 1px solid #f0f0f0;
 }
 
+/* ======= NOUVELLE VERSION : 2 LIGNES / 3 COLONNES ======= */
 .actions-buttons {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
   margin-top: 1.5rem;
+}
+
+.button-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
 }
 
 /* ========== BUTTONS ========== */
@@ -304,12 +311,8 @@
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .loading-state p {
@@ -360,13 +363,14 @@
   .section-title {
     font-size: 1.2rem;
   }
-
-  .actions-buttons {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  }
 }
 
 @media (max-width: 768px) {
+
+  .button-row {
+    grid-template-columns: 1fr;
+  }
+
   .hero-header {
     height: 240px;
     padding: 1rem;
@@ -403,10 +407,6 @@
 
   .stat-value {
     font-size: 1.5rem;
-  }
-
-  .actions-buttons {
-    grid-template-columns: 1fr;
   }
 
   .btn {
