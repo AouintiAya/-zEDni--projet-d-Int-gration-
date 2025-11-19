@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 export interface ExamenDTO {
   id?: number;
@@ -51,14 +50,6 @@ export class ExamenService {
     return this.http.post<ExamenDTO>(`${this.apiUrl}/save`, examen, { headers: this.getHeaders() });
   }
 
-  /** Récupérer tous les examens d’un cours */
-  getExamensByCours(idCours: number): Observable<ExamenDTO[]> {
-    return this.http.get<ExamenDTO[]>(`${this.apiUrl}`, { headers: this.getHeaders() })
-      .pipe(
-        map(exams => exams.filter(exam => exam.idCours === idCours))
-      );
-  }
-
   /** Récupérer les participations d’un examen */
   getParticipationsByExamen(examId: number): Observable<ParticipationExamenDTO[]> {
     return this.http.get<ParticipationExamenDTO[]>(`${this.apiUrl}/${examId}/participations`, {
@@ -72,4 +63,11 @@ export class ExamenService {
       headers: this.getHeaders()
     });
   }
+  /** Récupérer les examens d’un cours */
+getExamensByCours(idCours: number): Observable<ExamenDTO[]> {
+  return this.http.get<ExamenDTO[]>(`${this.apiUrl}/cours/${idCours}`, {
+    headers: this.getHeaders()
+  });
+}
+
 }

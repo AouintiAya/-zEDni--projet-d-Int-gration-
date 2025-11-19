@@ -97,4 +97,16 @@ public class ExamenRestImpl implements ExamenRest {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @Override
+public ResponseEntity<List<ExamenDTO>> getExamensByCoursId(Long coursId) {
+    try {
+        List<ExamenDTO> examens = examenService.getExamensByCoursId(coursId);
+        return new ResponseEntity<>(examens, HttpStatus.OK);
+    } catch (RuntimeException e) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    } catch (Exception e) {
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+
 }

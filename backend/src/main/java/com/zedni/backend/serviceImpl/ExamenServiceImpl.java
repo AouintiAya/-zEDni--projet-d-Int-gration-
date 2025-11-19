@@ -1,7 +1,18 @@
 package com.zedni.backend.serviceImpl;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.zedni.backend.dto.Cours.CoursDTO;
-import com.zedni.backend.dto.Examen.*;
+import com.zedni.backend.dto.Examen.ExamenDTO;
+import com.zedni.backend.dto.Examen.ExamenNotationRequest;
+import com.zedni.backend.dto.Examen.ExamenResponseDTO;
+import com.zedni.backend.dto.Examen.ExamenSubmissionRequest;
+import com.zedni.backend.dto.Examen.ParticipationExamenDTO;
 import com.zedni.backend.dto.Person.EtudiantDTO;
 import com.zedni.backend.model.Cours;
 import com.zedni.backend.model.Examen;
@@ -12,12 +23,6 @@ import com.zedni.backend.repository.ExamenRepo;
 import com.zedni.backend.repository.ParticipationExamenRepo;
 import com.zedni.backend.repository.UserRepo;
 import com.zedni.backend.service.ExamenService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ExamenServiceImpl implements ExamenService {
@@ -175,5 +180,12 @@ public class ExamenServiceImpl implements ExamenService {
         return examen;
     }
 
+@Override
+public List<ExamenDTO> getExamensByCoursId(Long coursId) {
+    List<Examen> examens = examenRepo.findByCoursId(coursId);
+    return examens.stream()
+            .map(this::toExamenDTO)
+            .collect(Collectors.toList());
+}
 
 }
