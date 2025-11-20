@@ -12,20 +12,23 @@ import { CreateCourseComponent } from './pages/enseignant/create-course/create-c
 import { TeacherDashboardComponent } from './pages/enseignant/dashboard-enseignant/dashboard-enseignant.component';
 import { DashboardWelcomeComponent } from './pages/enseignant/dashboard-welcome/dashboard-welcome.component';
 import { ProfilEnseignantComponent } from './pages/enseignant/profil-enseignant/profil-enseignant.component';
-import { CourseDetailsComponent } from './pages/Etudiant/course-details/course-details.component';
 import { CoursDisponibleComponent } from './pages/Etudiant/cours-disponible/cours-disponible.component';
+import { CourseDetailsComponent } from './pages/Etudiant/course-details/course-details.component';
 import { DashboardEtudiantComponent } from './pages/Etudiant/dashboard-etudiant/dashboard-etudiant.component';
 import { MesCoursComponent } from './pages/Etudiant/mescours/mescours.component';
 import { PageCoursEtudiantComponent } from './pages/Etudiant/page-cours-etudiant/page-cours-etudiant.component';
 import { ProfileComponent } from './pages/Etudiant/profileEtudiant/profile.component';
 
-import { CreateQuizComponent } from './pages/enseignant/create-quiz/create-quiz.component';
-import { QuizListComponent } from './pages/enseignant/quiz-list/quiz-list.component';
-import { ParticipationListComponent } from './pages/enseignant/participation-list/participation-list.component';
 import { AddRessourceComponent } from './pages/enseignant/add-ressource/add-ressource.component';
-import { RessourceDetailComponent } from './pages/enseignant/ressource-detail/ressource-detail.component';
+import { CreateQuizComponent } from './pages/enseignant/create-quiz/create-quiz.component';
 import { ExamListComponent } from './pages/enseignant/exam-list/exam-list.component';
+import { ParticipationListComponent } from './pages/enseignant/participation-list/participation-list.component';
+import { QuizListComponent } from './pages/enseignant/quiz-list/quiz-list.component';
+import { RessourceDetailComponent } from './pages/enseignant/ressource-detail/ressource-detail.component';
 import { RessourceListComponent } from './pages/enseignant/ressource-list/ressource-list.component';
+import { ExamenListComponent } from './pages/Etudiant/examen-list/examen-list.component';
+import { ListQuizComponent } from './pages/Etudiant/list-quiz/list-quiz.component';
+import { RessourcesListEtudiantComponent } from './pages/Etudiant/ressources-list-etudiant/ressources-list-etudiant.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -64,7 +67,10 @@ const routes: Routes = [
   { path: 'cours', component: PageCoursEtudiantComponent },
   { path: 'coursdisponible', component: CoursDisponibleComponent },
   { path: 'mescours', component: MesCoursComponent },
-  { path: 'courses/:id', component: CourseDetailsComponent }
+  { path: 'courses/:id', component: CourseDetailsComponent },
+  {path: 'cours/:id/ressourcesEtudiant', component:RessourcesListEtudiantComponent},
+  {path: 'cours/:id/ListQuizEtudiant', component:ListQuizComponent},
+  {path: 'cours/:id/ExamenListEtudiant', component:ExamenListComponent}
 
 
 
