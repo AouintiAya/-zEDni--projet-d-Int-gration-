@@ -1,25 +1,6 @@
 <div class="courses-page">
-  <aside [class.closed]="!isSidebarOpen" class="sidebar">
-    <div class="sidebar-toggle" (click)="toggleSidebar()">
-      <span>{{ isSidebarOpen ? '<' : '>' }}</span>
-    </div>
-
-    <div class="menu-items">
-      <div
-        class="menu-item"
-        *ngFor="let item of menuItems"
-        [class.active]="activeItem === item.name"
-        (click)="setActiveItem(item.name, item.route)"
-      >
-        <i [class]="item.icon" [style.color]="item.color"></i>
-        <span class="menu-text" *ngIf="isSidebarOpen">{{ item.name }}</span>
-      </div>
-    </div>
-  </aside>
-
   <main class="courses-container">
     <h1 class="title">Mes Cours</h1>
-
     <div class="search-bar">
       <input type="text" placeholder="Rechercher un cours..." [(ngModel)]="searchTerm">
     </div>

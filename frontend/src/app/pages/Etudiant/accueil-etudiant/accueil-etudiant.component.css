@@ -1,0 +1,189 @@
+/* ====== Main Section ====== */
+.main-section {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  background: #f5f7fa;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ====== Welcome Section ====== */
+.welcome-section {
+  margin-bottom: 2.5rem;
+}
+
+.welcome-section h2 {
+  color: #1a3b5f;
+  font-size: 2rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.welcome-section p {
+  color: #545454;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* ====== Stats Section ====== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 1.75rem;
+  border-radius: 12px;
+  border-left: 4px solid #2d9cdb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  min-width: 60px;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-label {
+  color: #545454;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.stat-value {
+  color: #1a3b5f;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.stat-unit {
+  font-size: 1rem;
+  color: #2d9cdb;
+  font-weight: 600;
+  margin-left: 0.5rem;
+}
+
+/* ====== Courses Section ====== */
+.courses-section {
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  color: #1a3b5f;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+/* Grille responsive */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Carte de cours */
+.course-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+/* Image du cours */
+.course-header img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+/* Corps de la carte */
+.course-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.course-body h4 {
+  color: #1a3b5f;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.course-body p {
+  color: #555;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.date-inscription {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* Étoiles d’évaluation */
+.course-rating {
+  color: #f2c94c;
+  margin: 0.5rem 0;
+}
+
+/* Bouton */
+.btn-access {
+  width: 100%;
+  padding: 0.8rem;
+  background: linear-gradient(135deg, #2d9cdb, #1a3b5f);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.btn-access:hover {
+  transform: scale(1.03);
+  background: linear-gradient(135deg, #1a3b5f, #2d9cdb);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .courses-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .courses-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .welcome-section h2 {
+    font-size: 1.5rem;
+  }
+}

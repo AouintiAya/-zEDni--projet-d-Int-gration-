@@ -49,7 +49,8 @@ export class ExamenListComponent implements OnInit {
 
   goBack(): void {
     // Retour vers la page de détail du cours
-    this.router.navigate([`/courses/${this.courseId}`]);
+    this.router.navigate([`/dashboard-etudiant/courses/${this.courseId}`]);
+
   }
 }
 

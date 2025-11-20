@@ -36,6 +36,9 @@ import { SafeUrlPipe } from './safe-url.pipe';
 import { ListQuizComponent } from './pages/Etudiant/list-quiz/list-quiz.component';
 import { ExamenListComponent } from './pages/Etudiant/examen-list/examen-list.component';
 
+import { AccueilEtudiantComponent } from './pages/Etudiant/accueil-etudiant/accueil-etudiant.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,6 +68,7 @@ import { ExamenListComponent } from './pages/Etudiant/examen-list/examen-list.co
     RessourcesListEtudiantComponent,
     ListQuizComponent,
     ExamenListComponent,
+    AccueilEtudiantComponent,
   ],
   imports: [
     BrowserModule,

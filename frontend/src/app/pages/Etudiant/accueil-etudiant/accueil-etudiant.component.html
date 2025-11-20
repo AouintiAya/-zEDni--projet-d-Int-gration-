@@ -1,0 +1,34 @@
+<div class="welcome-section">
+  <h2>Bienvenue, {{ userName }}! 👋</h2>
+  <p>Consultez vos cours et vos progressions d'apprentissage</p>
+</div>
+
+<div class="stats-grid">
+  <div *ngFor="let stat of statCards" class="stat-card" [style.border-left-color]="stat.color">
+    <div class="stat-icon">{{ stat.icon }}</div>
+    <div class="stat-content">
+      <p class="stat-label">{{ stat.title }}</p>
+      <h4 class="stat-value">{{ stat.value }}<span class="stat-unit">{{ stat.unit }}</span></h4>
+    </div>
+  </div>
+</div>
+
+<div class="courses-section">
+  <h3 class="section-title">Mes Cours</h3>
+  <div class="courses-grid">
+    <div class="course-card" *ngFor="let course of filteredMyCourses()">
+      <div class="course-header">
+        <img [src]="course.imageUrl || 'assets/images/python.jpg'" [alt]="course.titre" />
+      </div>
+      <div class="course-body">
+        <h4>{{ course.titre }}</h4>
+        <p>{{ course.description }}</p>
+        <p class="date-inscription">Inscrit le: {{ course.dateInscription | date:'dd/MM/yyyy HH:mm' }}</p>
+        <div class="course-rating">
+          <span class="star" *ngFor="let s of [1,2,3,4,5]">★</span>
+        </div>
+        <button class="btn-access" (click)="openCourse(course)">Voir le cours</button>
+      </div>
+    </div>
+  </div>
+</div>

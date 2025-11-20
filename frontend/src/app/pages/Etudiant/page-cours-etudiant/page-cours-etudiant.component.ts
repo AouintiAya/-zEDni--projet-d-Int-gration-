@@ -8,15 +8,6 @@ import { Router } from '@angular/router';
 })
 export class PageCoursEtudiantComponent implements OnInit {
 
-  isSidebarOpen = false;
-  activeItem = 'Cours';
-
-  menuItems = [
-    { name: 'Tableau de bord', icon: 'fa-solid fa-home', color: '#1a3b5f', route: '/dashboard-etudiant' },
-    { name: 'Cours', icon: 'fa-solid fa-book', color: '#1a3b5f', route: '/cours' },
-    { name: 'Profil', icon: 'fa-solid fa-user', color: '#1a3b5f', route: '/profile' },
-  ];
-
   constructor(private router: Router) {}
 
   ngOnInit(): void {
@@ -24,21 +15,10 @@ export class PageCoursEtudiantComponent implements OnInit {
   }
 
   goToMyCourses() {
-    this.router.navigate(['/mescours']);
+    this.router.navigate(['/dashboard-etudiant/mescours']);
   }
 
   goToAvailableCourses() {
-    this.router.navigate(['/coursdisponible']);
-  }
-
-  toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
-  }
-
-  setActiveItem(itemName: string, route: string): void {
-    this.activeItem = itemName;
-    if (route) {
-      this.router.navigate([route]);
-    }
+    this.router.navigate(['/dashboard-etudiant/coursdisponible']);
   }
 }

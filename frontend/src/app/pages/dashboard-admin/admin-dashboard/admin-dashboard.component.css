@@ -1,20 +1,12 @@
-/* ========== RESET ========== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* (copie tout le CSS que tu as donné en remplaçant .teacher-dashboard par .admin-dashboard) */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: "Poppins", sans-serif; }
 
-body {
-  font-family: "Poppins", sans-serif;
-}
-
-/* ========== GLOBAL CONTAINER ========== */
-.dashboard-etudiant {
+.admin-dashboard {
   min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
 }
 
 /* ========== DASHBOARD CONTENT ========== */
@@ -22,7 +14,7 @@ body {
   display: flex;
   width: 100%;
   flex: 1;
-  overflow: hidden; /* Pas de scroll sur le flex parent */
+  overflow: hidden;
 }
 
 /* ========== SIDEBAR ========== */
@@ -31,7 +23,7 @@ body {
   background: #fff;
   border-right: 1px solid #e5e5e5;
   padding-top: 1rem;
-  overflow-y: auto; /* scroll si sidebar dépasse la hauteur */
+  overflow-y: auto;
   position: relative;
   transition: width 0.3s ease-in-out;
   min-height: 100vh;
@@ -41,7 +33,7 @@ body {
   width: 70px;
 }
 
-/* Toggle button */
+/* Sidebar toggle button */
 .sidebar-toggle {
   position: absolute;
   top: 5px;
@@ -62,7 +54,7 @@ body {
   z-index: 10;
 }
 
-.sidebar.closed .sidebar-toggle i {
+.sidebar.closed .sidebar-toggle {
   transform: rotate(180deg);
 }
 
@@ -100,7 +92,7 @@ body {
   font-weight: 600;
 }
 
-/* Quand sidebar fermé */
+/* Quand la sidebar est fermée */
 .sidebar.closed .menu-item {
   justify-content: center;
   padding: 0.9rem 0;
@@ -136,7 +128,7 @@ body {
   padding: 2rem;
   transition: margin-left 0.3s ease;
   width: 100%;
-  overflow-y: auto; /* scroll principal pour tout le contenu */
+  overflow-y: auto;
 }
 
 /* ========== RESPONSIVE ========== */
