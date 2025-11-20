@@ -105,7 +105,7 @@
 
             <!-- Action Button -->
             <button class="btn-manage" (click)="goToCourse(course.id)">
-              <span>Gérer le cours</span>
+              <span>Voir le cours</span>
               <span class="arrow-icon">→</span>
             </button>
           </div>
@@ -113,31 +113,4 @@
       </div>
     </section>
 
-    <!-- Quick Actions Section -->
-    <section class="quick-actions-section" *ngIf="filteredCourses.length > 0">
-      <div class="section-header">
-        <h2>Actions rapides</h2>
-      </div>
-      <div class="actions-grid">
-        <div class="action-card">
-          <div class="action-icon">📋</div>
-          <h4>Créer un cours</h4>
-          <p>Lancez un nouveau cours</p>
-          <button class="action-btn" (click)="createCourse()">Commencer</button>
-        </div>
-        <div class="action-card">
-          <div class="action-icon">📊</div>
-          <h4>Voir les statistiques</h4>
-          <p>Analysez l'engagement</p>
-          <button class="action-btn">Analyser</button>
-        </div>
-        <div class="action-card">
-          <div class="action-icon">💬</div>
-          <h4>Messages</h4>
-          <p>Communiquez avec les étudiants</p>
-          <button class="action-btn">Consulter</button>
-        </div>
-      </div>
-    </section>
-  </div>
-</div>
+    

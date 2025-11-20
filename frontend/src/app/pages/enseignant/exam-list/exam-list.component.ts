@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute ,Router} from '@angular/router';
 import { ExamenDTO, ExamenService } from 'src/app/services/ExamenService/examen.service';
+
 
 @Component({
   selector: 'app-exam-list',
@@ -14,8 +15,12 @@ export class ExamListComponent implements OnInit {
   loading = true;
   error = '';
 
-  constructor(private examenService: ExamenService,
-              private route: ActivatedRoute) {}
+  constructor(
+    private examenService: ExamenService,
+    private route: ActivatedRoute,
+    private router: Router
+    
+    ) {}
 
   ngOnInit(): void {
     this.courseId = Number(this.route.snapshot.paramMap.get('id'));
@@ -40,5 +45,10 @@ export class ExamListComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  goBack(): void {
+    // Retour vers la page de détail du cours
+    this.router.navigate([`/dashboard-enseignant/detailCours/${this.courseId}`]);
   }
 }

@@ -1,19 +1,80 @@
+<!-- Complete redesign with professional header, cards layout, and improved states -->
 <div class="exam-container">
-
-  <h2>Liste des examens du cours</h2>
-
-  <div *ngIf="loading" class="loading">Chargement...</div>
-
-  <div *ngIf="error" class="error">{{ error }}</div>
-
-  <div *ngIf="!loading && examens.length === 0" class="empty">
-    Aucun examen trouvé pour ce cours.
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <button class="btn-back" (click)="goBack()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Retour
+      </button>
+      <div class="header-title">
+        <h1>Liste des examens</h1>
+        <p class="subtitle">Accédez à tous les examens et ressources d'évaluation</p>
+      </div>
+    </div>
   </div>
 
-  <ul *ngIf="!loading && examens.length > 0" class="exam-list">
-    <li *ngFor="let exam of examens" class="exam-item">
-      <h3>{{ exam.titre }}</h3>
-      <p *ngIf="exam.url"><a [href]="exam.url" target="_blank">Voir examen</a></p>
-    </li>
-  </ul>
+  <!-- Main Content -->
+  <div class="exams-content">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Chargement des examens...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !loading" class="error-state">
+      <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <p>{{ error }}</p>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loading && !error && examens.length === 0" class="empty-state">
+      <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+        <line x1="2" y1="17" x2="22" y2="17"></line>
+        <line x1="6" y1="21" x2="18" y2="21"></line>
+      </svg>
+      <h3>Aucun examen trouvé</h3>
+      <p>Il n'y a pas encore d'examens pour ce cours.</p>
+    </div>
+
+    <!-- Exams Grid -->
+    <div *ngIf="!loading && !error && examens.length > 0" class="exams-grid">
+      <div *ngFor="let exam of examens; let i = index" class="exam-card">
+        <div class="exam-card-header">
+          <div class="exam-number">{{ i + 1 }}</div>
+          <h3 class="exam-title">{{ exam.titre }}</h3>
+        </div>
+        
+        <div class="exam-card-body">
+          <p class="exam-description">Examen du cours</p>
+        </div>
+
+        <div class="exam-card-footer">
+          <a *ngIf="exam.url" 
+             [href]="exam.url" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             class="exam-link">
+            <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            Voir l'examen
+          </a>
+          <span *ngIf="!exam.url" class="exam-unavailable">
+            Non disponible
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

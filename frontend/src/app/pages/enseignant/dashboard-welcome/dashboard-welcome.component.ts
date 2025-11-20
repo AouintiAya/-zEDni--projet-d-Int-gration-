@@ -83,6 +83,7 @@ export class DashboardWelcomeComponent implements OnInit {
   }
 
   goToCourse(id: number): void {
-    this.router.navigate(['/dashboard-enseignant/course', id]);
-  }
+  this.router.navigate([`/dashboard-enseignant/detailCours/${id}`]);
+}
+
 }

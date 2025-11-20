@@ -1,6 +1,7 @@
 // create-course.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute ,Router} from '@angular/router';
 import { CoursService } from 'src/app/services/coursService/cours.service';
 
 @Component({
@@ -15,7 +16,12 @@ export class CreateCourseComponent implements OnInit {
   selectedFilePreview: string | ArrayBuffer | null = null;
   isSubmitting: boolean = false;
 
-  constructor(private fb: FormBuilder, private coursService: CoursService) {}
+  constructor(
+    private fb: FormBuilder, 
+    private coursService: CoursService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.coursForm = this.fb.group({
@@ -83,4 +89,9 @@ export class CreateCourseComponent implements OnInit {
       }
     });
   }
+
+  goBack(): void {
+  this.router.navigate(['/dashboard-enseignant/mes-cours']);
+}
+
 }
