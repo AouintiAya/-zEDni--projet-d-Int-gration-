@@ -104,7 +104,7 @@ export class QuizListComponent implements OnInit {
   }
 
   goBackToCourses() {
-    // Redirige vers la liste des cours
-    this.router.navigate(['/dashboard-enseignant/mes-cours']);
+    // Redirige vers la page de détail du cours actuel
+    this.router.navigate([`/dashboard-enseignant/detailCours/${this.courseId}`]);
   }
 }
