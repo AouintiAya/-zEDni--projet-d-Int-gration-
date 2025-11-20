@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CoursService, CoursDTO } from '../../../services/coursService/cours.service';
+import { CoursDTO, CoursService } from '../../../services/coursService/cours.service';
 
 @Component({
   selector: 'app-course-details',
@@ -10,15 +10,7 @@ import { CoursService, CoursDTO } from '../../../services/coursService/cours.ser
 export class CourseDetailsComponent implements OnInit {
   courseId!: number;
   course?: CoursDTO;
-isearchTerm = '';
-  isSidebarOpen = false;
-  activeItem = 'Cours';
-
-  menuItems = [
-    { name: 'Tableau de bord', icon: 'fa-solid fa-home', color: '#1a3b5f', route: '/dashboard-etudiant' },
-    { name: 'Cours', icon: 'fa-solid fa-book', color: '#1a3b5f', route: '/cours' },
-    { name: 'Profil', icon: 'fa-solid fa-user', color: '#1a3b5f', route: '/profile' },
-  ];
+  loading: boolean = true;
 
   constructor(private route: ActivatedRoute, private router: Router, private coursService: CoursService) {}
 
@@ -28,17 +20,35 @@ isearchTerm = '';
   }
 
   loadCourse() {
+    this.loading = true;
     this.coursService.getCoursById(this.courseId).subscribe({
-      next: (data) => this.course = data,
-      error: (err) => console.error('Erreur chargement cours:', err)
+      next: (data) => {
+        this.course = data;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Erreur chargement cours:', err);
+        this.loading = false;
+      }
     });
   }
-   toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
+
+  // Méthodes pour les boutons étudiants
+  seeQuiz(courseId: number) {
+    this.router.navigate(['/cours', courseId, 'ListQuizEtudiant']);
   }
 
-  setActiveItem(name: string, route: string) {
-    this.activeItem = name;
-    this.router.navigate([route]);
+  openExams(courseId: number) {
+    this.router.navigate(['/cours', courseId, 'ExamenListEtudiant']);
+  }
+
+seeResource(courseId: number) {
+  this.router.navigate(['/cours', courseId, 'ressourcesEtudiant']);
+}
+
+
+
+  goBack() {
+    this.router.navigate(['/mescours']);
   }
 }

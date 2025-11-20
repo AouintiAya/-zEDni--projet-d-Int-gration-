@@ -1,45 +1,82 @@
-<div class="main-container">
-  <!-- Sidebar -->
-  <aside [class.closed]="!isSidebarOpen" class="sidebar">
-    <div class="sidebar-toggle" (click)="toggleSidebar()">
-      <span>{{ isSidebarOpen ? '<' : '>' }}</span>
-    </div>
+<div class="course-details-wrapper" *ngIf="!loading && course">
+  <!-- Hero Header Section -->
+  <div class="hero-header">
+    <div
+      class="hero-background"
+      [style.backgroundImage]="'url(http://localhost:9091' + course.imageUrl + ')'"
+    ></div>
+    <div class="hero-overlay"></div>
+    <button class="btn-back" (click)="goBack()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7" />
+      </svg>
+      Retour
+    </button>
+  </div>
 
-    <div class="menu-items">
-      <div
-        class="menu-item"
-        *ngFor="let item of menuItems"
-        [class.active]="activeItem === item.name"
-        (click)="setActiveItem(item.name, item.route)"
-      >
-        <i [class]="item.icon" [style.color]="item.color"></i>
-        <span class="menu-text" *ngIf="isSidebarOpen">{{ item.name }}</span>
-      </div>
-    </div>
-  </aside>
-
-  <!-- Contenu principal -->
-  <div class="content-wrapper">
-    <div class="course-details" *ngIf="course">
-      <img class="course-image"
-           [src]="course.imageUrl || 'assets/images/python.jpg'"
-           [alt]="course.titre">
-
-      <div class="course-content">
-        <h1>{{ course.titre }}</h1>
-        <p class="description">{{ course.description || 'Aucune description disponible.' }}</p>
-        <div class="stars">⭐️⭐️⭐️⭐️☆</div>
-        <h3>Ressources :</h3>
-        <ul>
-          <li *ngFor="let r of course.ressources || []">
-            {{ r.nom }} – <a [href]="r.url" target="_blank">Télécharger</a>
-          </li>
-        </ul>
+  <!-- Main Content Container -->
+  <div class="course-details-container">
+    <!-- Course Header Section -->
+    <div class="course-header-section">
+      <div class="course-title-group">
+        <h1 class="course-title">{{ course.titre }}</h1>
+        <div class="course-meta">
+          <span class="meta-item">
+            <strong>Enseignant:</strong> {{ course.enseignantEmail }}
+          </span>
+          <span class="meta-item">
+            <strong>Ressources:</strong> {{ course.ressources?.length || 0 }}
+          </span>
+        </div>
       </div>
     </div>
 
-    <div *ngIf="!course">
-      <p>Chargement des détails du cours...</p>
+    <!-- Description Section -->
+    <div class="description-section">
+      <h2 class="section-title">À propos du cours</h2>
+      <p class="course-description">{{ course.description }}</p>
+    </div>
+
+    <!-- Course Stats Section -->
+    <div class="stats-section">
+      <div class="stat-card">
+        <div class="stat-label">Ressources</div>
+        <div class="stat-value">{{ course.ressources?.length || 0 }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Quiz disponibles</div>
+        <div class="stat-value">-</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Examens disponibles</div>
+        <div class="stat-value">-</div>
+      </div>
+    </div>
+
+
+
+<!-- Action Buttons Section -->
+<div class="actions-section">
+  <h2 class="section-title">Accès rapide</h2>
+  <div class="actions-buttons">
+    <div class="button-row">
+      <button class="btn btn-primary" (click)="seeQuiz(course.id)">Voir Quiz</button>
+      <button class="btn btn-primary" (click)="openExams(course.id)">Voir Examen</button>
+      <button class="btn btn-primary" (click)="seeResource(course.id)">Voir Ressource</button>
     </div>
   </div>
+</div>
+
+
+<!-- Loading State -->
+<div *ngIf="loading" class="loading-state">
+  <div class="spinner"></div>
+  <p>Chargement du cours...</p>
+</div>
+
+<!-- Empty State -->
+<div *ngIf="!loading && !course" class="empty-state">
+  <h2>Cours introuvable</h2>
+  <p>Le cours demandé n'existe pas ou a été supprimé.</p>
+  <button class="btn btn-primary" (click)="goBack()">Retour à la liste</button>
 </div>

@@ -1,0 +1,174 @@
+<div class="quiz-list-wrapper">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-top">
+      <button class="btn-back" (click)="goBackToCourses()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M19 12H5M12 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Retour
+      </button>
+    </div>
+    <div class="header-content">
+      <h1>Liste des Quiz</h1>
+      <p class="subtitle">Gérez les quiz et les participations des étudiants</p>
+    </div>
+    <div class="header-stats">
+      <div class="stat-card">
+        <div class="stat-value">{{ quizzes.length }}</div>
+        <div class="stat-label">Quiz créés</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content-container">
+    
+    <!-- Quiz List Table -->
+    <div class="quiz-table-section" *ngIf="quizzes.length > 0; else emptyState">
+      <div class="table-header">
+        <h2>Mes Quiz</h2>
+      </div>
+      
+      <div class="table-wrapper">
+        <table class="quiz-table">
+          <thead>
+            <tr>
+              <th>Titre du quiz</th>
+              <th>Questions</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let quiz of quizzes" class="quiz-row">
+              <td class="title-cell">
+                <div class="quiz-title">
+                  <span class="quiz-icon">📝</span>
+                  {{ quiz.titre }}
+                </div>
+              </td>
+              <td class="questions-cell">
+                <span class="question-badge">{{ quiz.questions.length }} questions</span>
+              </td>
+              <td class="actions-cell">
+                <button class="btn-action btn-participation" (click)="viewParticipations(quiz)" title="Voir les participations">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                  </svg>
+                  Participations
+                </button>
+                <button class="btn-action btn-edit" (click)="modifyQuiz(quiz)" title="Modifier le quiz">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/>
+                    <path d="M20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                  </svg>
+                  Modifier
+                </button>
+                <button class="btn-action btn-delete" (click)="deleteQuiz(quiz)" title="Supprimer le quiz">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-9l-1 1H5v2h14V4z"/>
+                  </svg>
+                  Supprimer
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Edit Form -->
+    <div *ngIf="editMode && selectedQuiz" class="edit-form-section">
+      <div class="edit-form-card">
+        <div class="form-header">
+          <h2>Modifier le Quiz</h2>
+          <button class="btn-close" (click)="cancelEdit()">✕</button>
+        </div>
+
+        <form class="edit-form">
+          <!-- Quiz Title -->
+          <div class="form-group">
+            <label class="form-label">Titre du Quiz</label>
+            <input 
+              type="text" 
+              [(ngModel)]="selectedQuiz.titre"
+              name="titre"
+              class="form-input"
+              placeholder="Ex: Quiz Mathématiques"
+            />
+          </div>
+
+          <!-- Questions -->
+          <div class="questions-section">
+            <h3>Questions</h3>
+            
+            <div *ngFor="let q of selectedQuiz.questions; let i = index" class="question-card">
+              <div class="question-header">
+                <span class="question-number">Question {{ i + 1 }}</span>
+                <button type="button" class="btn-remove" (click)="removeQuestion(i)">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                  </svg>
+                </button>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Texte de la question</label>
+                <input 
+                  type="text"
+                  [(ngModel)]="q.texte"
+                  [name]="'texte_' + i"
+                  class="form-input"
+                  placeholder="Saisissez la question"
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Réponse correcte</label>
+                <input 
+                  type="text"
+                  [(ngModel)]="q.reponseCorrecte"
+                  [name]="'reponse_' + i"
+                  class="form-input"
+                  placeholder="Saisissez la réponse correcte"
+                />
+              </div>
+            </div>
+
+            <button type="button" class="btn-add-question" (click)="addQuestion()">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+              </svg>
+              Ajouter une question
+            </button>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="form-actions">
+            <button type="button" class="btn btn-save" (click)="saveQuiz()">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/>
+              </svg>
+              Sauvegarder
+            </button>
+            <button type="button" class="btn btn-cancel" (click)="cancelEdit()">
+              Annuler
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Empty State -->
+  <ng-template #emptyState>
+    <div class="empty-state">
+      <div class="empty-icon">📚</div>
+      <h3>Aucun quiz créé</h3>
+      <p>Vous n'avez pas encore créé de quiz pour ce cours.</p>
+      <p class="empty-hint">Créez votre premier quiz pour évaluer vos étudiants.</p>
+    </div>
+  </ng-template>
+
+</div>
