@@ -51,7 +51,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/uploads/**").permitAll()  // 👈 VERY IMPORTANT
-                        .requestMatchers("/api/examen/cours/**").hasRole("ENSEIGNANT") // ou permitAll() pour tester
+                        .requestMatchers("/api/examen/cours/**").permitAll() // ou permitAll() pour tester
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

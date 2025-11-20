@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { CoursService } from 'src/app/services/coursService/cours.service';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 export interface RessourceDTO {
   id: number;
@@ -19,9 +20,10 @@ export class RessourceListComponent implements OnInit, OnChanges {
   ressources: RessourceDTO[] = [];
   loading = false;
 
-  constructor(private coursService: CoursService) {}
+  constructor(private coursService: CoursService,private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.courseId = +this.route.snapshot.paramMap.get('id')!;
     if (this.courseId) this.loadRessources();
   }
 

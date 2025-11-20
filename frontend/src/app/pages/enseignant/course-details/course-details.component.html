@@ -122,19 +122,10 @@
         </div>
         <div class="stat-content">
           <div class="stat-label">Examens disponibles</div>
-          <div class="stat-value">-</div>
+          <div class="stat-value">{{ examsCount }}</div>
         </div>
       </div>
     </div>
-
-    <!-- Resources Section -->
-  <div class="resources-section" #resourcesSection>
-    <h2 class="section-title">Ressources du cours</h2>
-    <div class="resources-container">
-      <app-ressource-list [courseId]="courseId"></app-ressource-list>
-    </div>
-  </div>
-
 
     <!-- Action Buttons Section -->
     <div class="actions-section">
