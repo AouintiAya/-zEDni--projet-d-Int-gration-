@@ -1,0 +1,29 @@
+<div class="admin-dashboard">
+  <div class="dashboard-content">
+    <!-- Sidebar -->
+    <aside [class.closed]="!isSidebarOpen" class="sidebar">
+      <div class="sidebar-toggle" (click)="toggleSidebar()">
+        <span>{{ isSidebarOpen ? '<' : '>' }}</span>
+      </div>
+
+      <div class="menu-items">
+        <a
+          [routerLink]="item.route"
+          class="menu-item"
+          *ngFor="let item of menuItems"
+          [class.active]="activeItem === item.name"
+          (click)="setActiveItem(item.name)"
+        >
+          <i [class]="item.icon" [style.color]="item.color"></i>
+          <span class="menu-text" *ngIf="isSidebarOpen">{{ item.name }}</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
+

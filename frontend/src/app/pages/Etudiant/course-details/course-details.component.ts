@@ -11,8 +11,16 @@ export class CourseDetailsComponent implements OnInit {
   courseId!: number;
   course?: CoursDTO;
   loading: boolean = true;
+  previousUrl: string = '/dashboard-etudiant/mescours'; // <-- Déclaration obligatoire
 
-  constructor(private route: ActivatedRoute, private router: Router, private coursService: CoursService) {}
+  constructor(private route: ActivatedRoute, private router: Router, private coursService: CoursService) {
+    // Récupérer la route précédente si possible
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.previousNavigation) {
+      this.previousUrl = navigation.previousNavigation.finalUrl?.toString() || this.previousUrl;
+    }
+  }
+
 
   ngOnInit(): void {
     this.courseId = Number(this.route.snapshot.paramMap.get('id'));
@@ -33,22 +41,20 @@ export class CourseDetailsComponent implements OnInit {
     });
   }
 
-  // Méthodes pour les boutons étudiants
   seeQuiz(courseId: number) {
-    this.router.navigate(['/cours', courseId, 'ListQuizEtudiant']);
+    this.router.navigate(['/dashboard-etudiant/cours', courseId, 'ListQuizEtudiant']);
   }
 
   openExams(courseId: number) {
-    this.router.navigate(['/cours', courseId, 'ExamenListEtudiant']);
+    this.router.navigate(['/dashboard-etudiant/cours', courseId, 'ExamenListEtudiant']);
   }
 
-seeResource(courseId: number) {
-  this.router.navigate(['/cours', courseId, 'ressourcesEtudiant']);
-}
-
-
+  seeResource(courseId: number) {
+    this.router.navigate(['/dashboard-etudiant/cours', courseId, 'ressourcesEtudiant']);
+  }
 
   goBack() {
-    this.router.navigate(['/mescours']);
+    this.router.navigateByUrl(this.previousUrl);
+
   }
 }

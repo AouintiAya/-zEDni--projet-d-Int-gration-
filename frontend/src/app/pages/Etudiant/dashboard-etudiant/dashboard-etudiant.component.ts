@@ -1,18 +1,21 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd, Event as RouterEvent } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
-import {
-  CoursService,
-  ParticipationCoursDto,
-  CoursDTO,
-} from '../../../services/coursService/cours.service';
+
+interface MenuItem {
+  name: string;
+  icon: string;
+  color: string;
+  route: string;
+}
 
 interface StatCard {
   icon: string;
   title: string;
-  value: string | number;
-  unit: string;
-  color: string;
+  value: number;
+  unit?: string;
+  color?: string;
 }
 
 @Component({
@@ -20,19 +23,10 @@ interface StatCard {
   templateUrl: './dashboard-etudiant.component.html',
   styleUrls: ['./dashboard-etudiant.component.css'],
 })
-export class DashboardEtudiantComponent {
-  searchTerm: string = '';
-  constructor(
-    private router: Router,
-    private authService: AuthService,
-    private coursService: CoursService
-  ) {}
-  courses: CoursDTO[] = [];
-
-  userName: string = 'Utilisateur';
-  searchQuery = '';
+export class DashboardEtudiantComponent implements OnInit {
   isSidebarOpen = false;
   activeItem: string = 'Tableau de bord';
+  userName: string = 'Utilisateur';
 
 statCards: StatCard[] = [
   {
@@ -58,27 +52,30 @@ statCards: StatCard[] = [
   }
 ];
 
-
-  menuItems = [
-    {
-      name: 'Tableau de bord',
-      icon: 'fa-solid fa-home',
-      color: '#1a3b5f',
-      route: '/dashboard',
-    },
-    {
-      name: 'Cours',
-      icon: 'fa-solid fa-book',
-      color: '#1a3b5f',
-      route: '/cours',
-    },
-    {
-      name: 'Profil',
-      icon: 'fa-solid fa-user',
-      color: '#1a3b5f',
-      route: '/profile',
-    },
+  menuItems: MenuItem[] = [
+    { name: 'Tableau de bord', icon: 'fa-solid fa-home', color: '#1a3b5f', route: '/dashboard-etudiant' },
+    { name: 'Cours', icon: 'fa-solid fa-book', color: '#1a3b5f', route: '/dashboard-etudiant/cours' },
+    { name: 'Profil', icon: 'fa-solid fa-user', color: '#1a3b5f', route: '/dashboard-etudiant/profile' },
   ];
+  myCourses: any[] = []; // Remplir avec les cours de l'étudiant
+  constructor(private router: Router, private authService: AuthService) {}
+
+  ngOnInit(): void {
+    const user = this.authService.getUserInfo();
+    if (user) this.userName = user.sub.split('@')[0];
+
+    // 🔥 Active automatiquement le menu selon la route
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        const currentRoute = event.urlAfterRedirects;
+
+        const active = this.menuItems.find(item => item.route === currentRoute);
+        if (active) {
+          this.activeItem = active.name;
+        }
+      });
+  }
 
   toggleSidebar(): void {
     this.isSidebarOpen = !this.isSidebarOpen;
@@ -86,82 +83,19 @@ statCards: StatCard[] = [
 
   setActiveItem(itemName: string, route: string): void {
     this.activeItem = itemName;
-
-    if (route && route !== '#') {
-      this.router.navigate([route]);
-    }
+    if (route) this.router.navigate([route]);
   }
 
   logout(): void {
     this.router.navigate(['/login']);
   }
-
-  ngOnInit(): void {
-    const user = this.authService.getUserInfo();
-    if (user) {
-      this.userName = user.sub.split('@')[0];
-    }
-    // Charger les cours
-    this.loadMyCourses();
-  }
-
   filteredMyCourses() {
-    return this.courses.filter((c) =>
-      c.titre.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
-  }
-  numberOfCourses: number = 0; // stocke le nombre de cours
-
-  loadMyCourses() {
-  this.coursService.getMyCourses().subscribe({
-    next: (data: ParticipationCoursDto[]) => {
-
-      // 1️⃣ Convertir les participations en CoursDTO
-      this.courses = data.map((p) => ({
-        id: p.coursId,
-        titre: p.titreCours,
-        description: '',
-        enseignantEmail: '',
-        dateInscription: p.dateInscription,
-        ressources: [],
-        imageUrl: '',
-      }));
-
-      // 2️⃣ Nombre de cours
-      this.numberOfCourses = this.courses.length;
-
-      // 3️⃣ Mise à jour de la stat card
-      const coursStat = this.statCards.find(
-        (s) => s.title === 'Cours inscrits'
-      );
-      if (coursStat) {
-        coursStat.value = this.numberOfCourses;
-      }
-
-      // 4️⃣ Récupérer les images et descriptions par ID cours
-      data.forEach((p, index) => {
-        this.coursService.getCoursById(p.coursId).subscribe({
-          next: (coursComplet: CoursDTO) => {
-            this.courses[index].imageUrl = coursComplet.imageUrl;
-            this.courses[index].description = coursComplet.description;
-            this.courses[index].enseignantEmail = coursComplet.enseignantEmail;
-          },
-          error: (err) =>
-            console.error(
-              `Erreur récupération cours ${p.coursId} :`,
-              err
-            ),
-        });
-      });
-
-    },
-
-    error: (err) => console.error('Erreur chargement cours:', err),
-  });
+  // Si tu as un tableau myCourses provenant du backend
+  return this.myCourses || [];
 }
 
-  openCourse(course: CoursDTO) {
-    // redirige vers /courses/<id du cours>
-    this.router.navigate(['/courses', course.id]);
-  }
+openCourse(course: any) {
+  this.router.navigate(['/dashboard-etudiant/cours', course.id]);
+}
+
 }

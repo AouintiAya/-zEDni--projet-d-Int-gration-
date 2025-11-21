@@ -35,7 +35,8 @@ export class ListQuizComponent implements OnInit {
  
    ngOnInit(): void {
      // Récupérer l'ID du cours depuis la route
-     this.courseId = Number(this.route.snapshot.paramMap.get('courseId'));
+     this.courseId = Number(this.route.snapshot.paramMap.get('id'));
+
  
      // Quizzes statiques avec courseId
      const allQuizzes: Quiz[] = [
@@ -109,10 +110,14 @@ export class ListQuizComponent implements OnInit {
      if (this.selectedQuiz) this.selectedQuiz.questions.splice(i, 1);
    }
  
-   goBackToCourses() {
-     // Redirige vers la page de détail du cours actuel
-     this.router.navigate([`/courses/${this.courseId}`]);
-   }
+
+  goBackToCourses() {
+    this.router.navigate(['/dashboard-etudiant/cours']);
+  }
+
+
+
+
  
    
  }

@@ -1,9 +1,9 @@
-<div class="dashboard-page">
+<div class="dashboard-etudiant">
   <div class="dashboard-content">
     <!-- Sidebar -->
-    <aside [class.closed]="!isSidebarOpen" class="sidebar">
+    <aside class="sidebar" [class.closed]="!isSidebarOpen">
       <div class="sidebar-toggle" (click)="toggleSidebar()">
-        <span>{{ isSidebarOpen ? "<" : ">" }}</span>
+        <i class="fa-solid fa-angle-left"></i>
       </div>
 
       <div class="menu-items">
@@ -14,7 +14,7 @@
           (click)="setActiveItem(item.name, item.route)"
         >
           <i [class]="item.icon" [style.color]="item.color"></i>
-          <span class="menu-text" *ngIf="isSidebarOpen">{{ item.name }}</span>
+          <span class="menu-text">{{ item.name }}</span>
         </div>
       </div>
     </aside>
@@ -22,9 +22,10 @@
     <!-- Main Section -->
     <main class="main-section">
       <div class="welcome-section">
-        <h2>Bienvenue, {{ userName }}! 👋</h2>
+        <h2>Bienvenue, {{ userName }}!</h2>
         <p>Consultez vos cours et vos progressions d'apprentissage</p>
       </div>
+
       <!-- Statistics Cards -->
       <div class="stats-grid">
         <div
@@ -47,23 +48,15 @@
         <h3 class="section-title">Mes Cours</h3>
         <div class="courses-grid">
           <div class="course-card" *ngFor="let course of filteredMyCourses()">
-            <!-- Image -->
             <div class="course-header">
-              <img
-                [src]="'http://localhost:9091' + course.imageUrl"
-                [alt]="course.titre"
-              />
+              <img [src]="'http://localhost:9091' + course.imageUrl" [alt]="course.titre" />
             </div>
-
-            <!-- Contenu -->
             <div class="course-body">
               <h4>{{ course.titre }}</h4>
               <p>{{ course.description }}</p>
               <p class="date-inscription">
-                Inscrit le:
-                {{ course.dateInscription | date : "dd/MM/yyyy HH:mm" }}
+                Inscrit le: {{ course.dateInscription | date : "dd/MM/yyyy HH:mm" }}
               </p>
-              <!-- Bouton -->
               <button class="btn-access" (click)="openCourse(course)">
                 Voir le cours
               </button>
@@ -71,6 +64,9 @@
           </div>
         </div>
       </div>
+
+      <!-- Router Outlet -->
+      <router-outlet></router-outlet>
     </main>
   </div>
 </div>
