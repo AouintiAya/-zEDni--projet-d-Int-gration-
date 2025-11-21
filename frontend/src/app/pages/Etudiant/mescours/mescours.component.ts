@@ -30,20 +30,33 @@ export class MesCoursComponent implements OnInit {
  loadMyCourses() {
   this.coursService.getMyCourses().subscribe({
     next: (data: ParticipationCoursDto[]) => {
-      // Convertir les participations en CoursDTO pour l'affichage
+
+      // 1️⃣ mapping initial
       this.courses = data.map(p => ({
-        id: p.coursId,          // <-- utiliser l'id réel du cours
+        id: p.coursId,
         titre: p.titreCours,
-        description: '',        // à compléter côté backend si tu veux la description complète
-        enseignantEmail: '',    // ou récupérer depuis backend si disponible
+        description: '',
+        enseignantEmail: '',
         dateInscription: p.dateInscription,
         ressources: [],
-        imageUrl: ''            // ou récupérer depuis backend si disponible
+        imageUrl: ''
       }));
+
+      // 2️⃣ charger les infos manquantes du cours (image + description)
+      data.forEach((p, index) => {
+        this.coursService.getCoursById(p.coursId).subscribe({
+          next: (coursComplet) => {
+            this.courses[index].imageUrl = coursComplet.imageUrl;
+            this.courses[index].description = coursComplet.description;
+          }
+        });
+      });
+
     },
     error: (err) => console.error('Erreur chargement cours:', err)
   });
 }
+
 
 
   toggleSidebar() {

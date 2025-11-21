@@ -1,11 +1,9 @@
 <div class="dashboard-page">
-
   <div class="dashboard-content">
-   <!-- Sidebar -->
-  <aside [class.closed]="!isSidebarOpen" class="sidebar">
-
+    <!-- Sidebar -->
+    <aside [class.closed]="!isSidebarOpen" class="sidebar">
       <div class="sidebar-toggle" (click)="toggleSidebar()">
-        <span>{{ isSidebarOpen ? '<' : '>' }}</span>
+        <span>{{ isSidebarOpen ? "<" : ">" }}</span>
       </div>
 
       <div class="menu-items">
@@ -19,10 +17,7 @@
           <span class="menu-text" *ngIf="isSidebarOpen">{{ item.name }}</span>
         </div>
       </div>
-
     </aside>
-
-
 
     <!-- Main Section -->
     <main class="main-section">
@@ -30,46 +25,52 @@
         <h2>Bienvenue, {{ userName }}! 👋</h2>
         <p>Consultez vos cours et vos progressions d'apprentissage</p>
       </div>
-       <!-- Statistics Cards -->
-    <div class="stats-grid">
-      <div *ngFor="let stat of statCards" class="stat-card" [style.border-left-color]="stat.color">
-        <div class="stat-icon">{{ stat.icon }}</div>
-        <div class="stat-content">
-          <p class="stat-label">{{ stat.title }}</p>
-          <h4 class="stat-value">
-            {{ stat.value }}<span class="stat-unit">{{ stat.unit }}</span>
-          </h4>
+      <!-- Statistics Cards -->
+      <div class="stats-grid">
+        <div
+          *ngFor="let stat of statCards"
+          class="stat-card"
+          [style.border-left-color]="stat.color"
+        >
+          <div class="stat-icon">{{ stat.icon }}</div>
+          <div class="stat-content">
+            <p class="stat-label">{{ stat.title }}</p>
+            <h4 class="stat-value">
+              {{ stat.value }}<span class="stat-unit">{{ stat.unit }}</span>
+            </h4>
+          </div>
         </div>
       </div>
-    </div>
 
-<!-- Courses Grid -->
-<div class="courses-section">
-  <h3 class="section-title">Mes Cours</h3>
-  <div class="courses-grid">
-    <div class="course-card" *ngFor="let course of filteredMyCourses()">
-      <!-- Image -->
-      <div class="course-header">
-        <img [src]="course.imageUrl || 'assets/images/python.jpg'" [alt]="course.titre" />
-      </div>
+      <!-- Courses Grid -->
+      <div class="courses-section">
+        <h3 class="section-title">Mes Cours</h3>
+        <div class="courses-grid">
+          <div class="course-card" *ngFor="let course of filteredMyCourses()">
+            <!-- Image -->
+            <div class="course-header">
+              <img
+                [src]="'http://localhost:9091' + course.imageUrl"
+                [alt]="course.titre"
+              />
+            </div>
 
-      <!-- Contenu -->
-      <div class="course-body">
-        <h4>{{ course.titre }}</h4>
-        <p>{{ course.description }}</p>
-        <p class="date-inscription">Inscrit le: {{ course.dateInscription | date:'dd/MM/yyyy HH:mm' }}</p>
-
-        <!-- Évaluation -->
-        <div class="course-rating">
-          <span class="star" *ngFor="let s of [1,2,3,4,5]">★</span>
+            <!-- Contenu -->
+            <div class="course-body">
+              <h4>{{ course.titre }}</h4>
+              <p>{{ course.description }}</p>
+              <p class="date-inscription">
+                Inscrit le:
+                {{ course.dateInscription | date : "dd/MM/yyyy HH:mm" }}
+              </p>
+              <!-- Bouton -->
+              <button class="btn-access" (click)="openCourse(course)">
+                Voir le cours
+              </button>
+            </div>
+          </div>
         </div>
-
-        <!-- Bouton -->
-        <button class="btn-access" (click)="openCourse(course)">Voir le cours</button>
       </div>
-    </div>
-  </div>
-</div>
     </main>
   </div>
 </div>

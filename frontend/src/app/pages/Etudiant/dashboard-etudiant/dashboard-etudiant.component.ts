@@ -34,29 +34,30 @@ export class DashboardEtudiantComponent {
   isSidebarOpen = false;
   activeItem: string = 'Tableau de bord';
 
-  statCards: StatCard[] = [
-    {
-      icon: '📚',
-      title: 'Cours inscrits',
-      value: 0,
-      unit: 'cours',
-      color: '#2d9cdb',
-    },
-    {
-      icon: '📊',
-      title: 'Progression moyenne',
-      value: 65,
-      unit: '%',
-      color: '#f2c94c',
-    },
-    {
-      icon: '⏱️',
-      title: "Temps d'apprentissage",
-      value: 42,
-      unit: 'h',
-      color: '#1a3b5f',
-    },
-  ];
+statCards: StatCard[] = [
+  {
+    icon: '📚',
+    title: 'Cours inscrits',
+    value: 0,
+    unit: 'cours',
+    color: '#1a73e8',
+  },
+  {
+    icon: '📝',
+    title: 'Quiz complétés',
+    value: 0,
+    unit: 'quiz',
+    color: '#fbbc04',
+  },
+  {
+    icon: '🎓',
+    title: 'Examens réussis',
+    value: 0,
+    unit: 'examens',
+    color: '#34a853',
+  }
+];
+
 
   menuItems = [
     {
@@ -112,30 +113,53 @@ export class DashboardEtudiantComponent {
   numberOfCourses: number = 0; // stocke le nombre de cours
 
   loadMyCourses() {
-    this.coursService.getMyCourses().subscribe({
-      next: (data: ParticipationCoursDto[]) => {
-        // Convertir les participations en CoursDTO pour l'affichage
-        this.courses = data.map((p) => ({
-          id: p.coursId, // <-- utiliser l'id réel du cours
-          titre: p.titreCours,
-          description: '', // à compléter côté backend si tu veux la description complète
-          enseignantEmail: '', // ou récupérer depuis backend si disponible
-          dateInscription: p.dateInscription,
-          ressources: [],
-          imageUrl: '', // ou récupérer depuis backend si disponible
-        }));
-        this.numberOfCourses = this.courses.length; // Met à jour le nombre de cours
-        // Mettre à jour la statCard "Cours inscrits"
-        const coursStat = this.statCards.find(
-          (s) => s.title === 'Cours inscrits'
-        );
-        if (coursStat) {
-          coursStat.value = this.numberOfCourses;
-        }
-      },
-      error: (err) => console.error('Erreur chargement cours:', err),
-    });
-  }
+  this.coursService.getMyCourses().subscribe({
+    next: (data: ParticipationCoursDto[]) => {
+
+      // 1️⃣ Convertir les participations en CoursDTO
+      this.courses = data.map((p) => ({
+        id: p.coursId,
+        titre: p.titreCours,
+        description: '',
+        enseignantEmail: '',
+        dateInscription: p.dateInscription,
+        ressources: [],
+        imageUrl: '',
+      }));
+
+      // 2️⃣ Nombre de cours
+      this.numberOfCourses = this.courses.length;
+
+      // 3️⃣ Mise à jour de la stat card
+      const coursStat = this.statCards.find(
+        (s) => s.title === 'Cours inscrits'
+      );
+      if (coursStat) {
+        coursStat.value = this.numberOfCourses;
+      }
+
+      // 4️⃣ Récupérer les images et descriptions par ID cours
+      data.forEach((p, index) => {
+        this.coursService.getCoursById(p.coursId).subscribe({
+          next: (coursComplet: CoursDTO) => {
+            this.courses[index].imageUrl = coursComplet.imageUrl;
+            this.courses[index].description = coursComplet.description;
+            this.courses[index].enseignantEmail = coursComplet.enseignantEmail;
+          },
+          error: (err) =>
+            console.error(
+              `Erreur récupération cours ${p.coursId} :`,
+              err
+            ),
+        });
+      });
+
+    },
+
+    error: (err) => console.error('Erreur chargement cours:', err),
+  });
+}
+
   openCourse(course: CoursDTO) {
     // redirige vers /courses/<id du cours>
     this.router.navigate(['/courses', course.id]);

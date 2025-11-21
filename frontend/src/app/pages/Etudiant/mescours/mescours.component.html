@@ -1,7 +1,7 @@
 <div class="courses-page">
   <aside [class.closed]="!isSidebarOpen" class="sidebar">
     <div class="sidebar-toggle" (click)="toggleSidebar()">
-      <span>{{ isSidebarOpen ? '<' : '>' }}</span>
+      <span>{{ isSidebarOpen ? "<" : ">" }}</span>
     </div>
 
     <div class="menu-items">
@@ -21,22 +21,26 @@
     <h1 class="title">Mes Cours</h1>
 
     <div class="search-bar">
-      <input type="text" placeholder="Rechercher un cours..." [(ngModel)]="searchTerm">
+      <input
+        type="text"
+        placeholder="Rechercher un cours..."
+        [(ngModel)]="searchTerm"
+      />
     </div>
 
     <div class="cards-wrapper">
       <div class="course-card" *ngFor="let course of filteredMyCourses()">
         <div class="icon">
-          <img [src]="'url(http://localhost:9091' + course.imageUrl + ')'" [alt]="course.titre" />
+          <img
+            [src]="'http://localhost:9091' + course.imageUrl"
+            [alt]="course.titre"
+          />
         </div>
         <h2>{{ course.titre }}</h2>
         <p>{{ course.description }}</p>
-        <p class="date-inscription">Inscrit le: {{ course.dateInscription | date:'dd/MM/yyyy HH:mm' }}</p>
-
-        <div class="rating">
-          <span class="star" *ngFor="let s of [1,2,3,4,5]">★</span>
-        </div>
-
+        <p class="date-inscription">
+          Inscrit le: {{ course.dateInscription | date : "dd/MM/yyyy HH:mm" }}
+        </p>
         <button (click)="openCourse(course)">Voir le cours</button>
       </div>
     </div>
