@@ -35,11 +35,8 @@ export class ListQuizComponent implements OnInit {
  
    ngOnInit(): void {
      // Récupérer l'ID du cours depuis la route
-<<<<<<< HEAD
-     this.courseId = Number(this.route.snapshot.paramMap.get('courseId'));
-=======
      this.courseId = Number(this.route.snapshot.paramMap.get('id'));
->>>>>>> ba84438 (Dashboard étudiant et admin: corrections menu actif, goBack et mise à jour des composants)
+
  
      // Quizzes statiques avec courseId
      const allQuizzes: Quiz[] = [
