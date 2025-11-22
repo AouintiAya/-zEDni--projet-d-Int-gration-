@@ -1,0 +1,374 @@
+/* ========== VARIABLES & RESET ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:host {
+  --primary-dark: #1a3b5f;
+  --primary-light: #2d9cdb;
+  --accent-yellow: #f2c94c;
+  --bg-main: #f5f7fa;
+  --bg-light: #ffffff;
+  --text-dark: #1a3b5f;
+  --text-muted: #545454;
+  --border-light: #e5e5e5;
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --transition: all 0.3s ease;
+}
+
+.admin-wrapper {
+  background: var(--bg-main);
+  min-height: 100vh;
+}
+
+/* ========== HERO SECTION ========== */
+.hero-section {
+  position: relative;
+  padding: 3.5rem 2rem;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+  color: white;
+  overflow: hidden;
+}
+
+.hero-background {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 40%, rgba(242, 201, 76, 0.15), transparent 60%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1), transparent 60%);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.hero-title {
+  font-size: 2.6rem;
+  font-weight: 800;
+}
+
+.hero-subtitle {
+  opacity: 0.9;
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+}
+
+/* ========== MAIN CONTAINER ========== */
+.admin-container {
+  max-width: 1200px;
+  margin: -2rem auto 0;
+  padding: 0 2rem 3rem;
+  position: relative;
+  z-index: 20;
+}
+
+/* ========== FILTERS SECTION ========== */
+.filters-section {
+  background: var(--bg-light);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 2rem;
+}
+
+.filters-content {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 200px;
+}
+
+.filter-label {
+  font-weight: 600;
+  color: var(--text-dark);
+  font-size: 0.9rem;
+}
+
+.filter-input,
+.filter-select {
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--border-light);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: var(--transition);
+  background: white;
+  color: var(--text-dark);
+}
+
+.filter-input:hover,
+.filter-select:hover {
+  border-color: var(--primary-light);
+}
+
+.filter-input:focus,
+.filter-select:focus {
+  outline: none;
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 3px rgba(45, 156, 219, 0.1);
+}
+
+/* Added button for adding new course */
+.btn-add-course {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 12px rgba(45, 156, 219, 0.3);
+}
+
+.btn-add-course:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(45, 156, 219, 0.4);
+}
+
+.btn-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* ========== TABLE SECTION ========== */
+.courses-table-section {
+  background: var(--bg-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.courses-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.courses-table thead {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+  color: white;
+}
+
+.courses-table thead th {
+  padding: 1.2rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
+
+.courses-table tbody tr {
+  border-bottom: 1px solid var(--border-light);
+  transition: var(--transition);
+}
+
+.courses-table tbody tr:hover {
+  background: linear-gradient(90deg, rgba(45, 156, 219, 0.05), transparent);
+}
+
+.courses-table tbody td {
+  padding: 1.2rem;
+  color: var(--text-muted);
+}
+
+.cell-title {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* Added status badge styling */
+.status-badge {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-en\ attente {
+  background: rgba(242, 201, 76, 0.15);
+  color: #d79e00;
+}
+
+.status-validé {
+  background: rgba(76, 175, 80, 0.15);
+  color: #388e3c;
+}
+
+.status-rejeté {
+  background: rgba(244, 67, 54, 0.15);
+  color: #c62828;
+}
+
+/* Added action buttons styling */
+.cell-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.btn-action {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-action svg {
+  width: 18px;
+  height: 18px;
+}
+
+.btn-validate {
+  background: rgba(76, 175, 80, 0.1);
+  color: #388e3c;
+}
+
+.btn-validate:hover {
+  background: rgba(76, 175, 80, 0.2);
+}
+
+.btn-reject {
+  background: rgba(244, 67, 54, 0.1);
+  color: #c62828;
+}
+
+.btn-reject:hover {
+  background: rgba(244, 67, 54, 0.2);
+}
+
+.btn-view {
+  background: rgba(33, 150, 243, 0.1);
+  color: #1976d2;
+}
+
+.btn-view:hover {
+  background: rgba(33, 150, 243, 0.2);
+}
+
+.btn-edit {
+  background: rgba(45, 156, 219, 0.1);
+  color: var(--primary-light);
+}
+
+.btn-edit:hover {
+  background: rgba(45, 156, 219, 0.2);
+}
+
+.btn-delete {
+  background: rgba(244, 67, 54, 0.1);
+  color: #c62828;
+}
+
+.btn-delete:hover {
+  background: rgba(244, 67, 54, 0.2);
+}
+
+/* ========== EMPTY STATE ========== */
+.empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: var(--text-muted);
+}
+
+.empty-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1rem;
+  opacity: 0.3;
+  stroke: var(--primary-light);
+}
+
+.empty-state h3 {
+  color: var(--text-dark);
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  font-size: 0.95rem;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 1.8rem;
+  }
+
+  .filters-content {
+    flex-direction: column;
+  }
+
+  .filter-group {
+    width: 100%;
+  }
+
+  .btn-add-course {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .courses-table {
+    font-size: 0.85rem;
+  }
+
+  .courses-table thead th {
+    padding: 0.8rem;
+  }
+
+  .courses-table tbody td {
+    padding: 0.8rem;
+  }
+
+  .cell-actions {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-container {
+    padding: 0 1rem 2rem;
+  }
+
+  .filters-section {
+    padding: 1.5rem;
+  }
+
+  .courses-table thead {
+    font-size: 0.8rem;
+  }
+
+  .btn-action {
+    width: 32px;
+    height: 32px;
+  }
+}

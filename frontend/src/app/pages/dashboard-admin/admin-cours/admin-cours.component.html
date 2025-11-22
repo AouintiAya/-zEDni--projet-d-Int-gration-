@@ -1,0 +1,134 @@
+<div class="admin-wrapper">
+  <!-- HERO SECTION -->
+  <div class="hero-section">
+    <div class="hero-background"></div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">Gestion des Cours</h1>
+        <p class="hero-subtitle">Validez, modifiez et gérez tous les cours de votre plateforme</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTAINER -->
+  <div class="admin-container">
+    
+    <!-- FILTERS SECTION -->
+    <section class="filters-section">
+      <div class="filters-content">
+        <div class="filter-group">
+          <label for="filterEnseignant" class="filter-label">Enseignant</label>
+          <input 
+            id="filterEnseignant"
+            type="text" 
+            placeholder="Filtrer par enseignant" 
+            [(ngModel)]="filterEnseignant" 
+            (input)="appliquerFiltres()"
+            class="filter-input"
+          />
+        </div>
+
+        <div class="filter-group">
+          <label for="filterStatut" class="filter-label">Statut</label>
+          <select 
+            id="filterStatut"
+            [(ngModel)]="filterStatut" 
+            (change)="appliquerFiltres()"
+            class="filter-select"
+          >
+            <option value="">Tous les statuts</option>
+            <option value="en attente">En attente</option>
+            <option value="validé">Validé</option>
+            <option value="rejeté">Rejeté</option>
+          </select>
+        </div>
+
+        <button class="btn-add-course" (click)="ajouterCours()">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+          </svg>
+          Ajouter un cours
+        </button>
+      </div>
+    </section>
+
+    <!-- COURSES TABLE SECTION -->
+    <section class="courses-table-section">
+      <div class="table-wrapper">
+        <table class="courses-table" *ngIf="coursFiltres.length > 0">
+          <thead>
+            <tr>
+              <th>Cours</th>
+              <th>Matière</th>
+              <th>Enseignant</th>
+              <th>Statut</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cours of coursFiltres" class="table-row">
+              <td data-label="Cours" class="cell-title">{{ cours.titre }}</td>
+              <td data-label="Matière">{{ cours.matiere }}</td>
+              <td data-label="Enseignant">{{ cours.enseignant.nom }}</td>
+              <td data-label="Statut">
+                <span class="status-badge" [ngClass]="'status-' + cours.statut">
+                  {{ cours.statut }}
+                </span>
+              </td>
+              <td data-label="Actions" class="cell-actions">
+                <button *ngIf="cours.statut==='en attente'" 
+                        class="btn-action btn-validate" 
+                        (click)="validerCours(cours)"
+                        title="Valider">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                  </svg>
+                </button>
+                <button *ngIf="cours.statut==='en attente'" 
+                        class="btn-action btn-reject" 
+                        (click)="rejeterCours(cours)"
+                        title="Rejeter">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+                  </svg>
+                </button>
+                <button class="btn-action btn-view" 
+                        (click)="voirDetails(cours)"
+                        title="Voir détails">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                  </svg>
+                </button>
+                <button class="btn-action btn-edit" 
+                        (click)="modifierCours(cours)"
+                        title="Modifier">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/>
+                    <path d="M20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                  </svg>
+                </button>
+                <button class="btn-action btn-delete" 
+                        (click)="supprimerCours(cours)"
+                        title="Supprimer">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-9l-1 1H5v2h14V4z"/>
+                  </svg>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div *ngIf="coursFiltres.length === 0" class="empty-state">
+          <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="13 2 13 9 20 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h3>Aucun cours trouvé</h3>
+          <p>Les filtres appliqués n'ont retourné aucun résultat. Essayez d'ajuster vos critères de recherche.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>

@@ -12,7 +12,7 @@ import { HomeComponent } from './pages/accueil/home/home.component';
 
 /* ==================== ENSEIGNANT ==================== */
 import { AddRessourceComponent } from './pages/enseignant/add-ressource/add-ressource.component';
-import { DetailCoursComponent } from './pages/enseignant/course-details/course-details.component';
+import { DetailCoursComponent as TeacherDetailCoursComponent } from './pages/enseignant/course-details/course-details.component';
 import { CourseExamsComponent } from './pages/enseignant/course-exams/course-exams.component';
 import { CourseListComponent } from './pages/enseignant/course-list/course-list.component';
 import { CreateCourseComponent } from './pages/enseignant/create-course/create-course.component';
@@ -44,6 +44,8 @@ import { AdminHomeComponent } from './pages/dashboard-admin/admin-home/admin-hom
 import { ListeEnseignantsComponent } from './pages/dashboard-admin/liste-enseignants/liste-enseignants.component';
 import { ListeEtudiantsComponent } from './pages/dashboard-admin/liste-etudiants/liste-etudiants.component';
 import { UsersComponent } from './pages/dashboard-admin/users/users.component';
+import { AdminCoursComponent } from './pages/dashboard-admin/admin-cours/admin-cours.component';
+import { DetailCoursComponent  as AdminDetailCoursComponent} from './pages/dashboard-admin/detail-cours/detail-cours.component';
 
 
 
@@ -70,6 +72,8 @@ const routes: Routes = [
       { path: 'users', component: UsersComponent },
       { path: 'liste-etudiants', component: ListeEtudiantsComponent },
       { path: 'liste-enseignants', component: ListeEnseignantsComponent },
+      { path: 'cours', component: AdminCoursComponent },
+      { path: 'cours/:id', component: AdminDetailCoursComponent },
       
     ]
   },
@@ -85,7 +89,7 @@ const routes: Routes = [
       { path: 'create-course', component: CreateCourseComponent },
       { path: 'profil-enseignant', component: ProfilEnseignantComponent },
 
-      { path: 'detailCours/:id', component: DetailCoursComponent },
+      { path: 'detailCours/:id', component:TeacherDetailCoursComponent  },
 
       { path: 'add-ressource/:id', component: AddRessourceComponent },
       { path: 'cours/:id/ressources', component: RessourceListComponent },

@@ -17,7 +17,7 @@ export class AdminDashboardComponent implements OnInit {
 
   menuItems = [
     { name: 'Accueil', icon: 'fa-solid fa-house', color: '#1a3b5f', route: '/dashboard-admin' },
-    { name: 'Cours', icon: 'fa-solid fa-book-open', color: '#1a3b5f', route: '/dashboard-admin/manage-courses' },
+    { name: 'Cours', icon: 'fa-solid fa-book-open', color: '#1a3b5f', route: '/dashboard-admin/cours' },
     { name: 'Utilisateurs', icon: 'fa-solid fa-users', color: '#1a3b5f', route: '/dashboard-admin/users' },
     { name: 'Rapports', icon: 'fa-solid fa-chart-line', color: '#1a3b5f', route: '/dashboard-admin/reports' },
     { name: 'Profil', icon: 'fa-solid fa-user-cog', color: '#1a3b5f', route: '/dashboard-admin/profile' },

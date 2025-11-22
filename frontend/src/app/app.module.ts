@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // <-- Ajouté
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterModule } from '@angular/router';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
-
-
 
 // Composants
 import { ContactComponent } from './pages/accueil/contact/contact.component';
@@ -28,6 +27,7 @@ import { ProfilEnseignantComponent } from './pages/enseignant/profil-enseignant/
 import { QuizListComponent } from './pages/enseignant/quiz-list/quiz-list.component';
 import { RessourceDetailComponent } from './pages/enseignant/ressource-detail/ressource-detail.component';
 import { RessourceListComponent } from './pages/enseignant/ressource-list/ressource-list.component';
+
 import { CoursDisponibleComponent } from './pages/Etudiant/cours-disponible/cours-disponible.component';
 import { CourseDetailsComponent } from './pages/Etudiant/course-details/course-details.component';
 import { DashboardEtudiantComponent } from './pages/Etudiant/dashboard-etudiant/dashboard-etudiant.component';
@@ -37,13 +37,14 @@ import { MesCoursComponent } from './pages/Etudiant/mescours/mescours.component'
 import { PageCoursEtudiantComponent } from './pages/Etudiant/page-cours-etudiant/page-cours-etudiant.component';
 import { ProfileComponent } from './pages/Etudiant/profileEtudiant/profile.component';
 import { RessourcesListEtudiantComponent } from './pages/Etudiant/ressources-list-etudiant/ressources-list-etudiant.component';
-import { SafeUrlPipe } from './safe-url.pipe';
 
 import { ListeEnseignantsComponent } from './pages/dashboard-admin/liste-enseignants/liste-enseignants.component';
 import { ListeEtudiantsComponent } from './pages/dashboard-admin/liste-etudiants/liste-etudiants.component';
 import { UsersComponent } from './pages/dashboard-admin/users/users.component';
 import { AccueilEtudiantComponent } from './pages/Etudiant/accueil-etudiant/accueil-etudiant.component';
 
+import { SafeUrlPipe } from './safe-url.pipe';
+import { AdminCoursComponent } from './pages/dashboard-admin/admin-cours/admin-cours.component';
 
 @NgModule({
   declarations: [
@@ -78,15 +79,16 @@ import { AccueilEtudiantComponent } from './pages/Etudiant/accueil-etudiant/accu
     UsersComponent,
     ListeEtudiantsComponent,
     ListeEnseignantsComponent,
+    AdminCoursComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule, // <-- Obligatoire pour Angular Material
     ReactiveFormsModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    RouterModule,
-    MatIconModule,
+    MatIconModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }

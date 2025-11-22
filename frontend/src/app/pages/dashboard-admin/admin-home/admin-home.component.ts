@@ -76,7 +76,7 @@ export class AdminHomeComponent implements OnInit {
   }
 
   gestionCours() {
-    this.router.navigate(['/dashboard-admin/courses']); // adapte la route selon ton projet
+    this.router.navigate(['/dashboard-admin/cours']); // adapte la route selon ton projet
   }
 
   voirRapports() {
