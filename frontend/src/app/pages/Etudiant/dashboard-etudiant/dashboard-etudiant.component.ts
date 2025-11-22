@@ -10,6 +10,14 @@ interface MenuItem {
   route: string;
 }
 
+interface StatCard {
+  icon: string;
+  title: string;
+  value: number;
+  unit?: string;
+  color?: string;
+}
+
 @Component({
   selector: 'app-dashboard-etudiant',
   templateUrl: './dashboard-etudiant.component.html',
@@ -20,12 +28,36 @@ export class DashboardEtudiantComponent implements OnInit {
   activeItem: string = 'Tableau de bord';
   userName: string = 'Utilisateur';
 
+statCards: StatCard[] = [
+  {
+    icon: '📚',
+    title: 'Cours inscrits',
+    value: 0,
+    unit: 'cours',
+    color: '#1a73e8',
+  },
+  {
+    icon: '📝',
+    title: 'Quiz complétés',
+    value: 0,
+    unit: 'quiz',
+    color: '#fbbc04',
+  },
+  {
+    icon: '🎓',
+    title: 'Examens réussis',
+    value: 0,
+    unit: 'examens',
+    color: '#34a853',
+  }
+];
+
   menuItems: MenuItem[] = [
     { name: 'Tableau de bord', icon: 'fa-solid fa-home', color: '#1a3b5f', route: '/dashboard-etudiant' },
     { name: 'Cours', icon: 'fa-solid fa-book', color: '#1a3b5f', route: '/dashboard-etudiant/cours' },
     { name: 'Profil', icon: 'fa-solid fa-user', color: '#1a3b5f', route: '/dashboard-etudiant/profile' },
   ];
-
+  myCourses: any[] = []; // Remplir avec les cours de l'étudiant
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
@@ -57,4 +89,13 @@ export class DashboardEtudiantComponent implements OnInit {
   logout(): void {
     this.router.navigate(['/login']);
   }
+  filteredMyCourses() {
+  // Si tu as un tableau myCourses provenant du backend
+  return this.myCourses || [];
+}
+
+openCourse(course: any) {
+  this.router.navigate(['/dashboard-etudiant/cours', course.id]);
+}
+
 }

@@ -23,7 +23,6 @@ export interface RessourceDTO {
   url: string;
   coursId: number;
 }
-
 export interface ParticipationCoursDto {
   coursId: any;
   titreCours: any;
