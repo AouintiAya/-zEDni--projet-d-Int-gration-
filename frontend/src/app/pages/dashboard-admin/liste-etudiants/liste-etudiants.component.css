@@ -1,0 +1,121 @@
+/* ===== Conteneur principal ===== */
+.list-container {
+  padding: 2rem;
+  font-family: 'Poppins', sans-serif;
+  background: #f5f7fa;
+  min-height: 100vh;
+}
+
+/* Titres */
+.list-container h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a3b5f;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #2d9cdb;
+  padding-bottom: 5px;
+}
+
+/* Tableaux */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 40px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+thead {
+  background: #2d9cdb;
+  color: #fff;
+}
+
+thead th {
+  text-align: left;
+  padding: 12px 15px;
+  font-weight: 600;
+}
+
+tbody td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+}
+
+tbody tr:hover {
+  background: #f0f4f8;
+}
+
+/* ===== Boutons icônes simples et colorés ===== */
+.actions button {
+  border: none;
+  background: none; /* pas de fond */
+  cursor: pointer;
+  font-size: 0; /* on masque le texte si jamais */
+  margin-right: 12px; /* espace entre les icônes */
+  transition: transform 0.3s ease;
+  padding: 0;
+}
+
+.actions button mat-icon {
+  font-size: 28px; /* icônes plus grandes */
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* Couleurs vives pour chaque icône */
+.actions button:nth-child(1) mat-icon { /* Voir / 👁️ */
+  color: #1976d2; /* bleu vif */
+}
+
+.actions button:nth-child(2) mat-icon { /* Modifier / ✏️ */
+  color: #a29626; /* jaune vif */
+}
+
+.actions button:nth-child(3) mat-icon { /* Supprimer / 🗑️ */
+  color: #c35a5a; /* rouge vif */
+}
+
+.actions button:nth-child(4) mat-icon { /* Accepter / ✅ */
+  color: #a4f294; /* vert vif */
+}
+
+.actions button:nth-child(5) mat-icon { /* Refuser / ❌ */
+  color: #c35a5a; /* rouge vif */
+}
+
+/* Effet hover */
+.actions button:hover mat-icon {
+  transform: scale(1.4); /* grossit au survol */
+}
+
+.btn-back {
+  background: linear-gradient(90deg, #2d9cdb, #1a3b5f);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.btn-back:hover {
+  background: linear-gradient(90deg, #1a3b5f, #2d9cdb);
+  transform: scale(1.05);
+}
+
+
+
+/* Responsive */
+@media (max-width: 900px) {
+  table {
+    font-size: 14px;
+  }
+
+  button {
+    padding: 4px 10px;
+    font-size: 12px;
+  }
+}

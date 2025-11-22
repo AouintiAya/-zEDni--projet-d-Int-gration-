@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router, NavigationEnd } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -18,7 +18,7 @@ export class AdminDashboardComponent implements OnInit {
   menuItems = [
     { name: 'Accueil', icon: 'fa-solid fa-house', color: '#1a3b5f', route: '/dashboard-admin' },
     { name: 'Cours', icon: 'fa-solid fa-book-open', color: '#1a3b5f', route: '/dashboard-admin/manage-courses' },
-    { name: 'Utilisateurs', icon: 'fa-solid fa-users', color: '#1a3b5f', route: '/dashboard-admin/manage-users' },
+    { name: 'Utilisateurs', icon: 'fa-solid fa-users', color: '#1a3b5f', route: '/dashboard-admin/users' },
     { name: 'Rapports', icon: 'fa-solid fa-chart-line', color: '#1a3b5f', route: '/dashboard-admin/reports' },
     { name: 'Profil', icon: 'fa-solid fa-user-cog', color: '#1a3b5f', route: '/dashboard-admin/profile' },
     { name: 'Déconnexion', icon: 'fa-solid fa-right-from-bracket', color: '#1a3b5f', route: '#' },

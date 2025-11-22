@@ -1,0 +1,65 @@
+<div class="list-container">
+  <!-- Bouton Retour -->
+  <button class="btn-back" (click)="retourDashboard()">
+    ← Retour
+  </button>
+
+  <!-- Étudiants actifs -->
+  <h2>Étudiants actifs</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let etudiant of etudiants">
+        <td>{{ etudiant.nom }}</td>
+        <td>{{ etudiant.email }}</td>
+
+        <td class="actions">
+          <button (click)="voirUtilisateur(etudiant)" mat-icon-button>
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button (click)="modifierUtilisateur(etudiant)" mat-icon-button>
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button (click)="supprimerUtilisateur(etudiant)" mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Étudiants en attente -->
+  <h2>Étudiants en attente</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let etudiant of etudiantsEnAttente">
+        <td>{{ etudiant.nom }}</td>
+        <td>{{ etudiant.email }}</td>
+
+        <td class="actions">
+          <button (click)="accepterUtilisateur(etudiant)" mat-icon-button>
+            <mat-icon>check_circle</mat-icon>
+          </button>
+          <button (click)="refuserUtilisateur(etudiant)" mat-icon-button>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

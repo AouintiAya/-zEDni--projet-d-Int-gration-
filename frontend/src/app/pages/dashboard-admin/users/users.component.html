@@ -1,0 +1,27 @@
+<div class="users-dashboard">
+  <div class="header-background">
+    <h1 class="page-title">Gestion des Utilisateurs</h1>
+  </div>
+
+  <div class="cards-wrapper">
+    <!-- ÉTUDIANTS -->
+    <div class="user-card" (click)="goToEtudiants()">
+      <div class="icon">
+        <img src="assets/images/student.png" alt="Étudiants">
+      </div>
+      <h2>Étudiants</h2>
+      <p>Gérez les comptes, niveaux et informations des étudiants.</p>
+      <button class="btn-blue">Voir la liste</button>
+    </div>
+
+    <!-- ENSEIGNANTS -->
+    <div class="user-card" (click)="goToEnseignants()">
+      <div class="icon">
+        <img src="assets/images/teacher.png" alt="Enseignants">
+      </div>
+      <h2>Enseignants</h2>
+      <p>Consultez et gérez les enseignants et leurs matières.</p>
+      <button class="btn-blue">Voir la liste</button>
+    </div>
+  </div>
+</div>

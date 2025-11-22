@@ -1,0 +1,145 @@
+/* ===== Conteneur principal ===== */
+.users-dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  background: #f5f7fa;
+  padding-bottom: 50px;
+}
+
+/* ===== Fond dégradé du titre ===== */
+.header-background {
+  width: 100%;
+  height: 120px;
+  padding: 50px 0 30px;
+  background: linear-gradient(135deg, #2d9cdb, #1a3b5f);
+  text-align: center;
+  color: #fff;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  position: relative;
+  z-index: 1;
+}
+
+.page-title {
+  font-size: 42px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* ===== Wrapper cartes ===== */
+.cards-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: -35px; /* superpose sur le header */
+  z-index: 2;
+  position: relative;
+}
+
+/* ===== Carte utilisateur ===== */
+.user-card {
+  width: 350px;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.18);
+  padding: 30px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #1575b1;
+}
+
+.user-card:hover {
+  transform: scale(1.05);
+  border: 2px solid #1a3b5f;
+  box-shadow: 0 14px 32px rgba(0,0,0,0.25);
+}
+
+/* Icones / images rondes avec bordure */
+.user-card .icon {
+  width: 250px;
+  height: 250px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #1575b1;
+  transition: all 0.3s ease;
+}
+
+.user-card:hover .icon {
+  border-color: #e9d877;
+  transform: scale(1.1);
+}
+
+.user-card .icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+}
+
+/* Titres et textes */
+.user-card h2 {
+  font-size: 24px;
+  color: #1a3b5f;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.user-card p {
+  color: #555;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+/* Boutons */
+.btn-blue {
+  background: linear-gradient(135deg, #2d9cdb, #1a3b5f);
+  color: #fff;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-blue:hover {
+  background: linear-gradient(135deg, #1a3b5f, #2d9cdb);
+  transform: scale(1.05);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .cards-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: -40px;
+  }
+
+  .user-card {
+    width: 90%;
+    padding: 25px;
+  }
+
+  .user-card .icon {
+    width: 150px;
+    height: 150px;
+  }
+
+  .header-background {
+    padding: 60px 0 30px;
+  }
+
+  .page-title {
+    font-size: 32px;
+  }
+}

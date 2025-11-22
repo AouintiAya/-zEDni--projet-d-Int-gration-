@@ -1,1 +1,77 @@
-<p>admin-home works!</p>
+<div class="dashboard-wrapper">
+
+  <!-- HERO / HEADER -->
+  <div class="hero-section">
+    <div class="hero-background"></div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">Bienvenue, Administrateur 👋</h1>
+        <p class="hero-subtitle">Gérez les utilisateurs, les cours et consultez vos rapports facilement.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTAINER -->
+  <div class="dashboard-container">
+
+    <!-- STATISTIQUES -->
+    <section class="stats-section">
+      <div class="section-header">
+        <h2>Statistiques globales</h2>
+        <p>Vue d’ensemble rapide</p>
+      </div>
+
+      <div class="stats-grid">
+        <div *ngFor="let stat of stats"
+             class="stat-card"
+             [style.--stat-color]="stat.color">
+
+          <div class="stat-card-inner">
+            <div class="stat-icon">{{ stat.icon }}</div>
+            <div class="stat-info">
+              <p class="stat-label">{{ stat.label }}</p>
+              <h3 class="stat-value">{{ stat.value }}</h3>
+            </div>
+          </div>
+
+          <div class="stat-card-accent"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACTIONS -->
+    <section class="courses-section">
+      <div class="section-header">
+        <h2>Actions rapides</h2>
+        <p>Accès direct aux fonctionnalités principales</p>
+      </div>
+
+     <div class="courses-grid">
+  <div *ngFor="let action of actions" class="course-card">
+
+    <div class="course-body">
+      <h3 class="course-title">
+        {{ action.icon }} {{ action.title }}
+      </h3>
+
+      <p class="course-description">
+        {{ action.description }}
+      </p>
+
+      <div class="course-body">
+  <button class="btn-manage" (click)="action.action()">
+    {{ action.buttonText }} <span class="arrow-icon">→</span>
+  </button>
+</div>
+
+    </div>
+
+  </div>
+</div>
+
+
+    </section>
+
+  </div>
+
+</div>

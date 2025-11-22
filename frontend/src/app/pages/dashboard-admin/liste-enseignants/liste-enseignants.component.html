@@ -1,0 +1,69 @@
+<div class="list-container">
+  <!-- Bouton Retour -->
+  <button class="btn-back" (click)="retourDashboard()">
+    ← Retour
+  </button>
+
+  <!-- Enseignants actifs -->
+  <h2>Enseignants actifs</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Matière</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let enseignant of enseignants">
+        <td>{{ enseignant.nom }}</td>
+        <td>{{ enseignant.email }}</td>
+        <td>{{ enseignant.matiere }}</td>
+
+        <td class="actions">
+          <button (click)="voirUtilisateur(enseignant)" mat-icon-button>
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button (click)="modifierUtilisateur(enseignant)" mat-icon-button>
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button (click)="supprimerUtilisateur(enseignant)" mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Enseignants en attente -->
+  <h2>Enseignants en attente</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Matière</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let enseignant of enseignantsEnAttente">
+        <td>{{ enseignant.nom }}</td>
+        <td>{{ enseignant.email }}</td>
+        <td>{{ enseignant.matiere }}</td>
+
+        <td class="actions">
+          <button (click)="accepterUtilisateur(enseignant)" mat-icon-button>
+            <mat-icon>check_circle</mat-icon>
+          </button>
+          <button (click)="refuserUtilisateur(enseignant)" mat-icon-button>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
