@@ -57,6 +57,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(req.getEmail());
         user.setPassword(encoder.encode(req.getPassword()));
         user.setRole(req.getRole());
+        user.setEnabled(false);
 
 
         userRepo.save(user);
@@ -93,19 +94,29 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public String login(String email, String password) {
-        Authentication authentication =
-                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
 
-        if (authentication.isAuthenticated()) {
-            // Get user details from authentication object
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
-            // Generate token with role inside
-            return jwtService.generateToken(userDetails);
+        Authentication authentication;
+        try {
+            authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(email, password)
+            );
+        } catch (Exception e) {
+            throw new RuntimeException("Invalid email/password");
         }
 
-        throw new RuntimeException("Invalid email/password");
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        // Optional: if you use business-enable logic
+        if (!userDetails.isEnabled()) {
+            throw new IllegalStateException(
+                    "Account not enabled. Please wait for admin approval."
+            );
+        }
+
+        // ✅ SUCCESS → return token or success message
+        return jwtService.generateToken(userDetails);
     }
+
 
     //OtpUtil
     private static final SecureRandom random = new SecureRandom();
@@ -146,5 +157,28 @@ public class UserServiceImpl implements UserService {
         userRepo.save(user);
     }
 
+    @Override
+    public String loginAdmin(String email, String password) {
+        // Vérifier que l'admin existe
+        Users user = userRepo.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Admin not found"));
 
+        if (!"ADMIN".equals(user.getRole())) {
+            throw new RuntimeException("Not authorized");
+        }
+
+        // Authentification
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(email, password)
+        );
+
+        // Récupérer UserDetails de l'authentification
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        // Générer le token avec jwtService exactement comme pour login normal
+        return jwtService.generateToken(userDetails);
     }
+
+
+
+}

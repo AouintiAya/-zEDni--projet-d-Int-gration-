@@ -1,6 +1,7 @@
 package com.zedni.backend.service;
 
 import com.zedni.backend.dto.Examen.*;
+import com.zedni.backend.model.CoursStatus;
 import com.zedni.backend.model.Examen;
 import com.zedni.backend.model.ParticipationExamen;
 
@@ -24,4 +25,8 @@ public interface ExamenService {
 
     // Etudiant: Voir sa participation
     ParticipationExamenDTO getParticipationByExamenAndStudent(Long examenId, String studentEmail);
+
+    List<ExamenDTO> getExamensEnAttente();
+
+    void updateExamenStatus(Long id, CoursStatus status);
 }

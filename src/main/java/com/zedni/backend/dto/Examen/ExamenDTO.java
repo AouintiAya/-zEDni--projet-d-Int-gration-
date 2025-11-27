@@ -15,4 +15,5 @@ public class ExamenDTO {
     private String titre;
     private String url;
     private Long idCours;
+    private String status;
 }

@@ -2,6 +2,7 @@ package com.zedni.backend.serviceImpl;
 import com.zedni.backend.dto.Cours.CoursDTO;
 import com.zedni.backend.dto.Ressource.RessourceDTO;
 import com.zedni.backend.model.Cours;
+import com.zedni.backend.model.CoursStatus;
 import com.zedni.backend.model.Enseignant;
 import com.zedni.backend.model.Users;
 import com.zedni.backend.repository.CoursRepo;
@@ -46,6 +47,7 @@ public class CoursServiceImpl implements CoursService {
         Cours cours = new Cours();
         cours.setTitre(titre);
         cours.setDescription(description);
+        cours.setStatus(CoursStatus.EN_ATTENTE);
 
         // Upload image si fournie
         if (image != null && !image.isEmpty()) {
@@ -62,16 +64,19 @@ public class CoursServiceImpl implements CoursService {
                 cours.getDescription(),
                 enseignant.getEmail(),
                 cours.getImageUrl(),
+                cours.getStatus().name(),
                 new ArrayList<>());
     }
 
-    @Transactional(readOnly = true)
     @Override
+    @Transactional(readOnly = true)
     public List<CoursDTO> getAllCours() {
-        return coursRepo.findAll().stream()
+        return coursRepo.findByStatus(CoursStatus.VALIDE)
+                .stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
+
 
     private CoursDTO convertToDTO(Cours cours) {
         List<RessourceDTO> ressourceDTOs = cours.getRessources() != null
@@ -90,7 +95,8 @@ public class CoursServiceImpl implements CoursService {
                 cours.getTitre(),
                 cours.getDescription(),
                 cours.getEnseignant() != null ? cours.getEnseignant().getEmail() : null,
-                cours.getImageUrl(),                  // << CORRECT NOW
+                cours.getImageUrl(),
+                cours.getStatus().name(),// << CORRECT NOW
                 ressourceDTOs
         );
     }
@@ -154,6 +160,25 @@ public class CoursServiceImpl implements CoursService {
                 .map(this::convertToDTO)  // <-- utiliser this::convertToDTO
                 .collect(Collectors.toList());
     }
+
+    @Transactional
+    public void updateCoursStatus(Long coursId, CoursStatus status) {
+        Cours cours = coursRepo.findById(coursId)
+                .orElseThrow(() -> new RuntimeException("Cours not found"));
+
+        cours.setStatus(status);
+        coursRepo.save(cours);
+    }
+
+    @Transactional(readOnly = true)
+    public List<CoursDTO> getCoursEnAttente() {
+        return coursRepo.findByStatus(CoursStatus.EN_ATTENTE)
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+
 
 
 }

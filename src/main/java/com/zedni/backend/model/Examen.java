@@ -27,4 +27,7 @@ public class Examen {
     @OneToMany(mappedBy = "examen", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<ParticipationExamen> participations;
+
+    @Enumerated(EnumType.STRING)
+    private CoursStatus status = CoursStatus.EN_ATTENTE;
 }

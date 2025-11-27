@@ -3,6 +3,8 @@ package com.zedni.backend.restImpl;
 import com.zedni.backend.dto.Auth.LoginRequest;
 import com.zedni.backend.dto.Auth.RegisterRequest;
 import com.zedni.backend.dto.Auth.ResetPasswordRequest;
+import com.zedni.backend.model.Users;
+import com.zedni.backend.repository.UserRepo;
 import com.zedni.backend.rest.AuthRest;
 import com.zedni.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ import java.util.Map;
 public class AuthRestImpl implements AuthRest {
     @Autowired
     UserService userService ;
+
+    @Autowired
+    UserRepo userRepo;
     @Override
     public ResponseEntity<String> register(RegisterRequest request) {
         String result = userService.register(request);
@@ -56,4 +61,10 @@ public class AuthRestImpl implements AuthRest {
         return ResponseEntity.ok("Password reset successfully");
 
     }
+
+    @Override
+    public ResponseEntity<String> loginAdmin(LoginRequest request) {
+        String result = userService.loginAdmin(request.getEmail(), request.getPassword());
+    return ResponseEntity.ok(result);
+}
 }

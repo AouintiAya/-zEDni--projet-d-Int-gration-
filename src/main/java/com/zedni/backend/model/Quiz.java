@@ -29,4 +29,7 @@ public class Quiz {
 
     @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY)
     private List<ParticipationQuiz> participations;
+
+    @Enumerated(EnumType.STRING)
+    private CoursStatus status = CoursStatus.EN_ATTENTE;
 }

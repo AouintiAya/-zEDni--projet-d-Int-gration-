@@ -3,15 +3,13 @@ package com.zedni.backend.serviceImpl;
 import com.zedni.backend.dto.Cours.CoursDTO;
 import com.zedni.backend.dto.Examen.*;
 import com.zedni.backend.dto.Person.EtudiantDTO;
-import com.zedni.backend.model.Cours;
-import com.zedni.backend.model.Examen;
-import com.zedni.backend.model.ParticipationExamen;
-import com.zedni.backend.model.Users;
+import com.zedni.backend.model.*;
 import com.zedni.backend.repository.CoursRepo;
 import com.zedni.backend.repository.ExamenRepo;
 import com.zedni.backend.repository.ParticipationExamenRepo;
 import com.zedni.backend.repository.UserRepo;
 import com.zedni.backend.service.ExamenService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -130,7 +128,6 @@ public class ExamenServiceImpl implements ExamenService {
         EtudiantDTO dto = new EtudiantDTO();
         dto.setId(student.getId());
         dto.setEmail(student.getEmail());
-        dto.setRole(student.getRole());
         return dto;
     }
     private ExamenResponseDTO toExamenResponseDTO(Examen examen) {
@@ -163,6 +160,7 @@ public class ExamenServiceImpl implements ExamenService {
         dto.setTitre(examen.getTitre());
         dto.setUrl(examen.getUrl());
         dto.setIdCours(examen.getCours().getId());
+        dto.setStatus(examen.getStatus().name());
         return dto;
     }
 
@@ -174,6 +172,25 @@ public class ExamenServiceImpl implements ExamenService {
         examen.setCours(cours);
         return examen;
     }
+
+    @Override
+    @Transactional
+    public List<ExamenDTO> getExamensEnAttente() {
+        return examenRepo.findByStatus(CoursStatus.EN_ATTENTE)
+                .stream()
+                .map(this::toExamenDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void updateExamenStatus(Long id, CoursStatus status) {
+        Examen examen = examenRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Examen non trouvé"));
+        examen.setStatus(status);
+        examenRepo.save(examen);
+    }
+
 
 
 }
