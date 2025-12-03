@@ -1,28 +1,21 @@
 package com.zedni.backend.serviceImpl;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.zedni.backend.dto.Cours.CoursDTO;
-import com.zedni.backend.dto.Examen.ExamenDTO;
-import com.zedni.backend.dto.Examen.ExamenNotationRequest;
-import com.zedni.backend.dto.Examen.ExamenResponseDTO;
-import com.zedni.backend.dto.Examen.ExamenSubmissionRequest;
-import com.zedni.backend.dto.Examen.ParticipationExamenDTO;
+import com.zedni.backend.dto.Examen.*;
 import com.zedni.backend.dto.Person.EtudiantDTO;
-import com.zedni.backend.model.Cours;
-import com.zedni.backend.model.Examen;
-import com.zedni.backend.model.ParticipationExamen;
-import com.zedni.backend.model.Users;
+import com.zedni.backend.model.*;
 import com.zedni.backend.repository.CoursRepo;
 import com.zedni.backend.repository.ExamenRepo;
 import com.zedni.backend.repository.ParticipationExamenRepo;
 import com.zedni.backend.repository.UserRepo;
 import com.zedni.backend.service.ExamenService;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ExamenServiceImpl implements ExamenService {
@@ -135,7 +128,6 @@ public class ExamenServiceImpl implements ExamenService {
         EtudiantDTO dto = new EtudiantDTO();
         dto.setId(student.getId());
         dto.setEmail(student.getEmail());
-        dto.setRole(student.getRole());
         return dto;
     }
     private ExamenResponseDTO toExamenResponseDTO(Examen examen) {
@@ -168,6 +160,7 @@ public class ExamenServiceImpl implements ExamenService {
         dto.setTitre(examen.getTitre());
         dto.setUrl(examen.getUrl());
         dto.setIdCours(examen.getCours().getId());
+        dto.setStatus(examen.getStatus().name());
         return dto;
     }
 
@@ -180,12 +173,24 @@ public class ExamenServiceImpl implements ExamenService {
         return examen;
     }
 
-@Override
-public List<ExamenDTO> getExamensByCoursId(Long coursId) {
-    List<Examen> examens = examenRepo.findByCoursId(coursId);
-    return examens.stream()
-            .map(this::toExamenDTO)
-            .collect(Collectors.toList());
-}
+    @Override
+    @Transactional
+    public List<ExamenDTO> getExamensEnAttente() {
+        return examenRepo.findByStatus(CoursStatus.EN_ATTENTE)
+                .stream()
+                .map(this::toExamenDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void updateExamenStatus(Long id, CoursStatus status) {
+        Examen examen = examenRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Examen non trouvé"));
+        examen.setStatus(status);
+        examenRepo.save(examen);
+    }
+
+
 
 }

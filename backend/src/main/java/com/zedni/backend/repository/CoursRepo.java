@@ -1,6 +1,7 @@
 package com.zedni.backend.repository;
 
 import com.zedni.backend.model.Cours;
+import com.zedni.backend.model.CoursStatus;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,6 +18,7 @@ public interface CoursRepo extends JpaRepository<Cours,Long> {
 
     List<Cours> findByEnseignantId(Long enseignantId);
 
+    List<Cours> findByStatus(CoursStatus status);
 
 
 }

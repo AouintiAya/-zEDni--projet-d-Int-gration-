@@ -4,6 +4,7 @@ import com.zedni.backend.dto.Quiz.ParticipationQuizResponseDTO;
 import com.zedni.backend.dto.Quiz.QuizNotationRequest;
 import com.zedni.backend.dto.Quiz.QuizResponseDTO;
 import com.zedni.backend.dto.Quiz.QuizSubmissionRequest;
+import com.zedni.backend.model.CoursStatus;
 import com.zedni.backend.model.ParticipationQuiz;
 import com.zedni.backend.model.Quiz;
 
@@ -29,4 +30,8 @@ public interface QuizService {
     ParticipationQuizResponseDTO getParticipationByQuizAndStudent(Long quizId, String studentEmail);
 
     void deleteQuiz(Long id);
+
+    List<QuizResponseDTO> getQuizzesEnAttente();
+
+    void updateQuizStatus(Long id, CoursStatus status);
 }

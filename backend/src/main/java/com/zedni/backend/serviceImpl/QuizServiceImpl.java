@@ -191,7 +191,6 @@ public class QuizServiceImpl implements QuizService {
         EtudiantDTO dto = new EtudiantDTO();
         dto.setId(student.getId());
         dto.setEmail(student.getEmail());
-        dto.setRole(student.getRole());
         // Add other safe fields from Users model if needed
         return dto;
     }
@@ -267,4 +266,21 @@ public class QuizServiceImpl implements QuizService {
 
         return dto;
     }
+
+    @Transactional(readOnly = true)
+    public List<QuizResponseDTO> getQuizzesEnAttente() {
+        return quizRepo.findByStatus(CoursStatus.EN_ATTENTE)
+                .stream()
+                .map(this::toQuizResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void updateQuizStatus(Long id, CoursStatus status) {
+        Quiz quiz = quizRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Quiz non trouvé"));
+        quiz.setStatus(status);
+        quizRepo.save(quiz);
+    }
+
 }

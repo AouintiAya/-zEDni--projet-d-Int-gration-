@@ -16,6 +16,7 @@ public class CoursDTO {
     private String description;
     private String enseignantEmail;
     private String imageUrl;
+    private String status; //validé - en attende - rejectée
     private List<RessourceDTO> ressources;
 
 }

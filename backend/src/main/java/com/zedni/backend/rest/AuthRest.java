@@ -27,5 +27,10 @@ public interface AuthRest {
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest req);
 
+    @PostMapping("/admin/login")
+     ResponseEntity<?> loginAdmin(@RequestBody LoginRequest request) ;
+
+
+
 
 }
