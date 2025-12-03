@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { CoursService } from 'src/app/services/coursService/cours.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Location } from '@angular/common';
+
 
 export interface RessourceDTO {
   id: number;
@@ -20,7 +22,7 @@ export class RessourceListComponent implements OnInit, OnChanges {
   ressources: RessourceDTO[] = [];
   loading = false;
 
-  constructor(private coursService: CoursService,private route: ActivatedRoute) {}
+  constructor(private coursService: CoursService,private route: ActivatedRoute,private location: Location) {}
 
   ngOnInit(): void {
     this.courseId = +this.route.snapshot.paramMap.get('id')!;
@@ -96,4 +98,10 @@ export class RessourceListComponent implements OnInit, OnChanges {
       },
     });
   }
+
+
+  goBack(): void {
+  this.location.back();
+}
+
 }

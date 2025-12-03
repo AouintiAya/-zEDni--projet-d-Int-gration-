@@ -24,7 +24,7 @@ interface StatCard {
   styleUrls: ['./dashboard-etudiant.component.css'],
 })
 export class DashboardEtudiantComponent implements OnInit {
-  isSidebarOpen = false;
+  isSidebarOpen = true;
   activeItem: string = 'Tableau de bord';
   userName: string = 'Utilisateur';
 

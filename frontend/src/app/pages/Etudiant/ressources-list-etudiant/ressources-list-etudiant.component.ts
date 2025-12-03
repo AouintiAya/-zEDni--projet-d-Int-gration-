@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CoursService } from 'src/app/services/coursService/cours.service';
+import { Location } from '@angular/common';
 export interface RessourceDTO {
   id: number;
   titre: string;
@@ -18,7 +19,7 @@ export class RessourcesListEtudiantComponent implements OnInit {
    ressources: RessourceDTO[] = [];
    loading = false;
  
-   constructor(private coursService: CoursService) {}
+   constructor(private coursService: CoursService,private location: Location) {}
  
    ngOnInit(): void {
      if (this.courseId) this.loadRessources();
@@ -93,5 +94,9 @@ export class RessourcesListEtudiantComponent implements OnInit {
        },
      });
    }
+
+   goBack(): void {
+  this.location.back();
+}
  }
  

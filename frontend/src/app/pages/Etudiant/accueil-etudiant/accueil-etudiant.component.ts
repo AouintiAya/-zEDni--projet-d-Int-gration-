@@ -24,8 +24,8 @@ export class AccueilEtudiantComponent implements OnInit {
 
   statCards: StatCard[] = [
     { icon: '📚', title: 'Cours inscrits', value: 0, unit: 'cours', color: '#2d9cdb' },
-    { icon: '📊', title: 'Progression moyenne', value: 65, unit: '%', color: '#f2c94c' },
-    { icon: '⏱️', title: "Temps d'apprentissage", value: 42, unit: 'h', color: '#1a3b5f' },
+    { icon: '📊', title: 'Nombre de quiz', value: 65, unit: 'quiz', color: '#f2c94c' },
+   
   ];
 
   constructor(private authService: AuthService, private coursService: CoursService, private router: Router) {}
