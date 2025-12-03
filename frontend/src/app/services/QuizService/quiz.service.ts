@@ -55,43 +55,42 @@ export interface EtudiantDTO {
 })
 
 export class QuizService {
-
   private baseUrl = 'http://localhost:9091/api/quiz';
 
   constructor(private http: HttpClient) {}
 
-  // Créer ou mettre à jour un quiz
-  saveQuiz(quiz: QuizResponseDTO): Observable<QuizResponseDTO> {
-    return this.http.post<QuizResponseDTO>(`${this.baseUrl}/save`, quiz);
+  /** Enregistrer ou modifier un quiz */
+  saveQuiz(quiz: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/save`, quiz);
   }
 
-  // Soumettre les réponses d'un étudiant
-  submitParticipation(request: QuizSubmissionRequest): Observable<ParticipationQuizResponseDTO> {
-    return this.http.post<ParticipationQuizResponseDTO>(`${this.baseUrl}/submit`, request);
+  /** Récupérer un quiz */
+  getQuizById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${id}`);
   }
 
-  // Noter une participation
-  noteParticipation(request: QuizNotationRequest): Observable<ParticipationQuizResponseDTO> {
-    return this.http.post<ParticipationQuizResponseDTO>(`${this.baseUrl}/note`, request);
+  /** Soumettre une participation étudiant */
+  submitQuiz(data: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/submit`, data);
   }
 
-  // Récupérer un quiz par son ID
-  getQuizById(quizId: number): Observable<QuizResponseDTO> {
-    return this.http.get<QuizResponseDTO>(`${this.baseUrl}/${quizId}`);
+  /** Voir la participation d'un étudiant */
+  getMyParticipation(quizId: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${quizId}/participation`);
   }
 
-  // Récupérer toutes les participations d'un quiz
-  getParticipationsByQuizId(quizId: number): Observable<ParticipationQuizResponseDTO[]> {
-    return this.http.get<ParticipationQuizResponseDTO[]>(`${this.baseUrl}/${quizId}/participations`);
+  /** Enseignant : noter la participation */
+  noteParticipation(data: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/note`, data);
   }
 
-  // Récupérer la participation d'un étudiant pour un quiz
-  getParticipationByQuizAndStudent(quizId: number): Observable<ParticipationQuizResponseDTO> {
-    return this.http.get<ParticipationQuizResponseDTO>(`${this.baseUrl}/${quizId}/participation`);
+  /** Enseignant : participations d’un quiz */
+  getQuizParticipations(quizId: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${quizId}/participations`);
   }
 
-  // Supprimer un quiz
-  deleteQuiz(id: number): Observable<string> {
-    return this.http.delete<string>(`${this.baseUrl}/${id}`);
+  /** Supprimer un quiz */
+  deleteQuiz(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
   }
 }

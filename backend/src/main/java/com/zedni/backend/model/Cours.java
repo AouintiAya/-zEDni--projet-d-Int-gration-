@@ -26,6 +26,9 @@ public class Cours {
 
     private String imageUrl;
 
+    @Enumerated(EnumType.STRING)
+    private CoursStatus status = CoursStatus.EN_ATTENTE;
+
     @JsonIgnoreProperties({"user"})
     @ManyToOne
     @JoinColumn(name = "id_enseignant")

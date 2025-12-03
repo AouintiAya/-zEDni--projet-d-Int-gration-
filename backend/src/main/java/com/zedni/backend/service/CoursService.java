@@ -1,6 +1,7 @@
 package com.zedni.backend.service;
 import com.zedni.backend.dto.Cours.CoursDTO;
 import com.zedni.backend.model.Cours;
+import com.zedni.backend.model.CoursStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -13,4 +14,6 @@ public interface CoursService {
     void deleteCours(Long id);
     CoursDTO updateCours(Long id, String titre, String description, MultipartFile image, String email) throws IOException;
     public List<CoursDTO> getCoursByEnseignantEmail(String email);
+    void updateCoursStatus(Long coursId, CoursStatus status);
+    List<CoursDTO> getCoursEnAttente();
 }

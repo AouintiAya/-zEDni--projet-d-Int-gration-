@@ -1,12 +1,11 @@
 package com.zedni.backend.service;
 
-import java.util.List;
+import com.zedni.backend.dto.Examen.*;
+import com.zedni.backend.model.CoursStatus;
+import com.zedni.backend.model.Examen;
+import com.zedni.backend.model.ParticipationExamen;
 
-import com.zedni.backend.dto.Examen.ExamenDTO;
-import com.zedni.backend.dto.Examen.ExamenNotationRequest;
-import com.zedni.backend.dto.Examen.ExamenResponseDTO;
-import com.zedni.backend.dto.Examen.ExamenSubmissionRequest;
-import com.zedni.backend.dto.Examen.ParticipationExamenDTO;
+import java.util.List;
 
 public interface ExamenService {
     // Enseignant: Créer/Mettre à jour un examen (avec l'URL du PDF)
@@ -18,8 +17,6 @@ public interface ExamenService {
     // Enseignant: Noter une participation
     ParticipationExamenDTO noteParticipation(ExamenNotationRequest request);
 
-    List<ExamenDTO> getExamensByCoursId(Long coursId);
-
     // Etudiant: Télécharger l'examen (récupérer l'URL)
     ExamenResponseDTO getExamenById(Long examenId);
 
@@ -28,4 +25,8 @@ public interface ExamenService {
 
     // Etudiant: Voir sa participation
     ParticipationExamenDTO getParticipationByExamenAndStudent(Long examenId, String studentEmail);
+
+    List<ExamenDTO> getExamensEnAttente();
+
+    void updateExamenStatus(Long id, CoursStatus status);
 }
