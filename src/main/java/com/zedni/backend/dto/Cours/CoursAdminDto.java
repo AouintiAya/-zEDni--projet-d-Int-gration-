@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CoursDTO {
+public class CoursAdminDto {
     private Long id;
     private String titre;
     private String description;
@@ -20,5 +20,7 @@ public class CoursDTO {
     private String imageUrl;
     private String status; //validé - en attende - rejectée
     private List<RessourceDTO> ressources;
+    private List<ExamenDTO> examens;
+    private List<QuizResponseDTO> quizzes;
 
 }

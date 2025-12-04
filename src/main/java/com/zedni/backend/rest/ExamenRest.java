@@ -12,7 +12,7 @@ import java.util.List;
 public interface ExamenRest {
 
     // Enseignant: Créer/Mettre à jour un examen
-    @PreAuthorize("hasAuthority('ROLE_ENSEIGNANT')")
+    //@PreAuthorize("hasAuthority('ROLE_ENSEIGNANT')")
     @PostMapping("/save")
         ResponseEntity<ExamenDTO> saveExamen(@RequestBody ExamenDTO examen);
 
@@ -27,7 +27,7 @@ public interface ExamenRest {
     ResponseEntity<ParticipationExamenDTO> noteParticipation(@RequestBody ExamenNotationRequest request);
 
     // Etudiant: Télécharger l'examen (récupérer l'URL)
-    @PreAuthorize("hasAnyAuthority('ROLE_ENSEIGNANT', 'ROLE_ETUDIANT')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_ENSEIGNANT', 'ROLE_ETUDIANT')")
     @GetMapping("/{examenId}")
     ResponseEntity<ExamenResponseDTO> getExamenById(@PathVariable Long examenId);
 

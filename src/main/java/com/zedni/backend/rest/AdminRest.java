@@ -1,4 +1,5 @@
 package com.zedni.backend.rest;
+import com.zedni.backend.dto.Cours.CoursAdminDto;
 import com.zedni.backend.dto.Cours.CoursDTO;
 import com.zedni.backend.dto.DashboardDTO;
 import com.zedni.backend.dto.Examen.ExamenDTO;
@@ -37,7 +38,7 @@ public interface AdminRest {
 
     @PutMapping("/etudiants/{id}/toggle")
     //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    ResponseEntity<Void> toggleEtudiant(Long id);
+    ResponseEntity<Void> toggleEtudiant(@PathVariable Long id);
 
     @PutMapping("/cours/{id}/valider")
     public ResponseEntity<?> validerCours(@PathVariable Long id);
@@ -47,6 +48,12 @@ public interface AdminRest {
 
     @GetMapping("/cours/en-attente")
     public ResponseEntity<List<CoursDTO>> getCoursEnAttente();
+
+    @GetMapping("/cours/{id}")
+    public ResponseEntity<CoursAdminDto> getCours(@PathVariable Long id);
+
+    @GetMapping("/cours/all")
+    public ResponseEntity<List<CoursAdminDto>> getAllCours();
 
     @GetMapping("/examens/en-attente")
     public ResponseEntity<List<ExamenDTO>> getExamensEnAttente();
@@ -67,4 +74,12 @@ public interface AdminRest {
 
     @GetMapping("/dashboard")
     public DashboardDTO getDashboard();
+
+    @GetMapping("/enseignants/{id}")
+    //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    ResponseEntity<EnseignantDTO> getEnseignantDetails(@PathVariable Long id);
+
+    @GetMapping("/etudiants/{id}")
+    //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    ResponseEntity<EtudiantDTO> getEtudiantDetails(@PathVariable Long id);
 }

@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 public class QuestionResponseDTO {
     private Long id;
     private String enonce;
-    private String status; // Corresponds to 'texte' in the model
 }

@@ -1,4 +1,5 @@
 package com.zedni.backend.restImpl;
+import com.zedni.backend.dto.Cours.CoursAdminDto;
 import com.zedni.backend.dto.Cours.CoursDTO;
 import com.zedni.backend.dto.DashboardDTO;
 import com.zedni.backend.dto.Examen.ExamenDTO;
@@ -84,6 +85,18 @@ public class AdminRestImpl implements AdminRest {
     }
 
     @Override
+    public ResponseEntity<CoursAdminDto> getCours(Long id) {
+        CoursAdminDto cours = coursService.getCours(id);
+        return ResponseEntity.ok(cours);
+    }
+
+    @Override
+    public ResponseEntity<List<CoursAdminDto>> getAllCours() {
+        List<CoursAdminDto> cours = coursService.gettousCours();
+        return ResponseEntity.ok(cours);
+    }
+
+    @Override
     public ResponseEntity<List<ExamenDTO>> getExamensEnAttente() {
         return ResponseEntity.ok(examenService.getExamensEnAttente());
     }
@@ -96,7 +109,7 @@ public class AdminRestImpl implements AdminRest {
 
     @Override
     public ResponseEntity<String> rejeterExamen(Long id) {
-        examenService.updateExamenStatus(id, CoursStatus.VALIDE);
+        examenService.updateExamenStatus(id, CoursStatus.REJETE);
         return ResponseEntity.ok("Examen validé");
     }
 
@@ -120,5 +133,17 @@ public class AdminRestImpl implements AdminRest {
     @Override
     public DashboardDTO getDashboard() {
         return adminService.getDashboardStats();
+    }
+
+    @Override
+    public ResponseEntity<EnseignantDTO> getEnseignantDetails(Long id) {
+        EnseignantDTO enseignantDTO = adminService.getEnseignantById(id);
+        return ResponseEntity.ok(enseignantDTO);
+    }
+
+    @Override
+    public ResponseEntity<EtudiantDTO> getEtudiantDetails(Long id) {
+        EtudiantDTO etudiantDTO = adminService.getEtudiantById(id);
+        return ResponseEntity.ok(etudiantDTO);
     }
 }

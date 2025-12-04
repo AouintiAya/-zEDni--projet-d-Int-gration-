@@ -20,5 +20,8 @@ public interface CoursRepo extends JpaRepository<Cours,Long> {
 
     List<Cours> findByStatus(CoursStatus status);
 
+    @Query("SELECT c FROM Cours c JOIN FETCH c.enseignant")
+    List<Cours> findAllWithEnseignantEagerly();
+
 
 }

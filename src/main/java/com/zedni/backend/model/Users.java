@@ -22,10 +22,17 @@ public class Users {
     private String email;
     private String password;
     private String role;
-    private boolean enabled = true;
+    public boolean enabled;
     private String otp;
     private LocalDateTime otpExpiry;
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
 
 

@@ -28,7 +28,7 @@ public interface CoursRest {
     @GetMapping("/all")
     public ResponseEntity<List<CoursDTO>> getAllCours();
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ENSEIGNANT', 'ROLE_ETUDIANT')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_ENSEIGNANT', 'ROLE_ETUDIANT')")
     @GetMapping("/{id}")
     public ResponseEntity<CoursDTO> getCoursById(@PathVariable Long id);
 

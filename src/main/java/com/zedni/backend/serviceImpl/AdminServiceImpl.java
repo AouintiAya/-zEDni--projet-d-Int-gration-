@@ -105,4 +105,19 @@ public class AdminServiceImpl implements AdminService {
 
         return new DashboardDTO(nbEtudiants, nbEnseignants, nbCours);
     }
+
+    @Override
+    public EnseignantDTO getEnseignantById(Long id) {
+        return enseignantRepo.findById(id)
+                .map(this::toEnseignantDTO) // Utilisation du mapper local
+                .orElseThrow(() -> new RuntimeException("Enseignant non trouvé avec l'ID: " + id));
+    }
+
+    @Override
+    public EtudiantDTO getEtudiantById(Long id) {
+        return etudiantRepo.findById(id)
+                .map(this::toEtudiantDTO) // Utilisation du mapper local
+                .orElseThrow(() -> new RuntimeException("Etudiant non trouvé avec l'ID: " + id));
+    }
+
 }

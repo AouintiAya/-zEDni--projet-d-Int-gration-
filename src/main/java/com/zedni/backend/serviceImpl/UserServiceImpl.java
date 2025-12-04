@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.attribute.UserPrincipal;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 
@@ -86,6 +87,9 @@ public class UserServiceImpl implements UserService {
 
             enseignantRepo.save(ens);
         }
+        else if (req.getRole().equalsIgnoreCase("ADMIN")) {
+            return "Admin registered successfully!";
+        }
         else {
             return "Role not valid";
         }
@@ -94,7 +98,6 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public String login(String email, String password) {
-
         Authentication authentication;
         try {
             authentication = authenticationManager.authenticate(
@@ -104,18 +107,19 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Invalid email/password");
         }
 
+        // Récupérer UserPrincipal depuis l'authentification
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        // Optional: if you use business-enable logic
-        if (!userDetails.isEnabled()) {
-            throw new IllegalStateException(
-                    "Account not enabled. Please wait for admin approval."
-            );
+        // Vérifier si le compte est activé
+        if (userDetails.isEnabled()) {
+            throw new IllegalStateException("Account not enabled. Please wait for admin approval.");
         }
 
-        // ✅ SUCCESS → return token or success message
+        // Générer et retourner le JWT
         return jwtService.generateToken(userDetails);
     }
+
+
 
 
     //OtpUtil

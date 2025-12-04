@@ -1,10 +1,11 @@
 package com.zedni.backend.serviceImpl;
+import com.zedni.backend.dto.Cours.CoursAdminDto;
 import com.zedni.backend.dto.Cours.CoursDTO;
+import com.zedni.backend.dto.Examen.ExamenDTO;
+import com.zedni.backend.dto.Quiz.QuestionCreationDTO;
+import com.zedni.backend.dto.Quiz.QuizResponseDTO;
 import com.zedni.backend.dto.Ressource.RessourceDTO;
-import com.zedni.backend.model.Cours;
-import com.zedni.backend.model.CoursStatus;
-import com.zedni.backend.model.Enseignant;
-import com.zedni.backend.model.Users;
+import com.zedni.backend.model.*;
 import com.zedni.backend.repository.CoursRepo;
 import com.zedni.backend.repository.EnseignantRepo;
 import com.zedni.backend.repository.UserRepo;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,6 +70,60 @@ public class CoursServiceImpl implements CoursService {
                 new ArrayList<>());
     }
 
+    private CoursAdminDto convert(Cours cours) {
+
+        // Mapper les ressources
+        List<RessourceDTO> ressources = cours.getRessources() != null
+                ? cours.getRessources().stream()
+                .map(r -> new RessourceDTO(r.getId(), r.getTitre(), r.getType(), r.getUrl(), cours.getId()))
+                .toList()
+                : List.of();
+
+        // Mapper les examens
+        List<ExamenDTO> examens = cours.getExamens() != null
+                ? cours.getExamens().stream()
+                .map(e -> new ExamenDTO(e.getId(), e.getTitre(), e.getUrl(), cours.getId(), e.getStatus().name()))
+                .toList()
+                : List.of();
+
+        // Mapper les quizzes via mapQuizToDTO
+        List<QuizResponseDTO> quizzes = cours.getQuizzes() != null
+                ? cours.getQuizzes().stream()
+                .map(this::mapQuizToDTO)
+                .toList()
+                : List.of();
+
+        return new CoursAdminDto(
+                cours.getId(),
+                cours.getTitre(),
+                cours.getDescription(),
+                cours.getEnseignant().getUser().getEmail(),
+                cours.getImageUrl(),
+                cours.getStatus().name(),
+                ressources,
+                examens,
+                quizzes
+        );
+    }
+
+    private QuizResponseDTO mapQuizToDTO(Quiz quiz) {
+        List<QuestionCreationDTO> questionsDTO = quiz.getQuestions() != null
+                ? quiz.getQuestions().stream()
+                .map(q -> new QuestionCreationDTO(q.getId(), q.getTexte(),""))
+                .toList()
+                : List.of();
+
+        return new QuizResponseDTO(
+                quiz.getId(),
+                quiz.getTitre(),
+                quiz.getCours().getId(),
+                questionsDTO,
+                quiz.getStatus()
+        );
+    }
+
+
+
     @Override
     @Transactional(readOnly = true)
     public List<CoursDTO> getAllCours() {
@@ -76,6 +132,32 @@ public class CoursServiceImpl implements CoursService {
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
+
+    @Transactional
+    @Override
+    public List<CoursAdminDto> gettousCours() {
+        List<Cours> coursList = coursRepo.findAllWithEnseignantEagerly();
+
+        return coursList.stream()
+                .map(this::convert) // Maintenant convertToDTO peut accéder à l'enseignant
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    @Override
+    public CoursAdminDto getCours(Long id) {
+        Optional<Cours> coursOpt = coursRepo.findById(id);
+
+        // Vérifier si le cours existe
+        if (coursOpt.isPresent()) {
+            return convert(coursOpt.get()); // extraire le Cours de l'Optional
+        } else {
+            // Gérer le cas où le cours n'existe pas
+            throw new RuntimeException("Cours avec id " + id + " non trouvé");
+            // ou return null; selon ton choix
+        }
+    }
+
 
 
     private CoursDTO convertToDTO(Cours cours) {

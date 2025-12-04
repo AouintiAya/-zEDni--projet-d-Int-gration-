@@ -26,7 +26,7 @@ public interface QuizRest {
     ResponseEntity<ParticipationQuizResponseDTO> noteParticipation(@RequestBody QuizNotationRequest request);
 
     // Général: Récupérer un quiz par ID
-    @PreAuthorize("hasAnyAuthority('ROLE_ENSEIGNANT', 'ROLE_ETUDIANT')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_ENSEIGNANT', 'ROLE_ETUDIANT')")
     @GetMapping("/{quizId}")
     ResponseEntity<QuizResponseDTO> getQuizById(@PathVariable Long quizId);
 

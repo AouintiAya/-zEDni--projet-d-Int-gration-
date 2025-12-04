@@ -14,4 +14,6 @@ public interface AdminService {
     List<EtudiantDTO> getEtudiantsActifs();
     void toggleEnableEtudiant(Long id);
     DashboardDTO getDashboardStats();
+    EnseignantDTO getEnseignantById(Long id);
+    EtudiantDTO getEtudiantById(Long id);
 }

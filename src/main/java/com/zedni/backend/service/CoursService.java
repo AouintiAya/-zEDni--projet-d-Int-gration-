@@ -1,4 +1,5 @@
 package com.zedni.backend.service;
+import com.zedni.backend.dto.Cours.CoursAdminDto;
 import com.zedni.backend.dto.Cours.CoursDTO;
 import com.zedni.backend.model.Cours;
 import com.zedni.backend.model.CoursStatus;
@@ -16,4 +17,6 @@ public interface CoursService {
     public List<CoursDTO> getCoursByEnseignantEmail(String email);
     void updateCoursStatus(Long coursId, CoursStatus status);
     List<CoursDTO> getCoursEnAttente();
+    public List<CoursAdminDto> gettousCours();
+    CoursAdminDto getCours(Long id);
 }
